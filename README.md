@@ -2,12 +2,16 @@
 
 # ZXing
 
+Looking for an actively maintained barcode scanning library with commercial support? 
+Check out [STRICH](https://strich.io/) – Barcode Scanning for Web Apps.
+
 ## Project in Maintenance Mode Only
 
-The project is in maintenance mode, meaning, changes are driven by contributed patches.
-Only bug fixes and minor enhancements will be considered. The Barcode Scanner app can
-no longer be published, so it's unlikely any changes will be accepted for it.
-There is otherwise no active development or roadmap for this project. It is "DIY".
+> [!WARNING]
+> The project is in maintenance mode, meaning, changes are driven by contributed patches.
+> Only bug fixes and minor enhancements will be considered. The Barcode Scanner app can
+> no longer be published, so it's unlikely any changes will be accepted for it.
+> There is otherwise no active development or roadmap for this project. It is "DIY".
 
 ### Runs on your favorite ECMAScript ecosystem
 
