@@ -38,13 +38,14 @@ export default class StringEncoding {
   }
 
   /**
-   * Checks if the decoding method should use the fallback for decoding
-   * once Node TextDecoder doesn't support all encoding formats.
+   * Checks if the decoding method should use the fallback for decoding.
+   * Node.js 18+ supports ISO-8859-1 natively via TextDecoder, so no fallback
+   * is needed for supported Node versions.
    *
    * @param encodingName
    */
   private static shouldDecodeOnFallback(encodingName: string): boolean {
-    return !StringEncoding.isBrowser() && encodingName === 'ISO-8859-1';
+    return false;
   }
 
   /**
