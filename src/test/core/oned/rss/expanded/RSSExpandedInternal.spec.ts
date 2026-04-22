@@ -26,7 +26,6 @@
 
 // package com.google.zxing.oned.rss.expanded;
 
-import { describe } from 'mocha';
 import * as path from 'path';
 
 import { BinaryBitmap, FinderPattern, GlobalHistogramBinarizer, NotFoundException, RSSExpandedReader } from '@zxing/library';

@@ -26,7 +26,6 @@
 
 // package com.google.zxing.oned.rss.expanded;
 
-import { describe } from 'mocha';
 import { NotFoundException, RSSExpandedReader } from '@zxing/library';
 import TestCaseUtil from '../../../oned/rss/expanded/TestCaseUtil';
 import { assertEquals } from '../../../util/AssertUtils';

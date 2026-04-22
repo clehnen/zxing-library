@@ -6,7 +6,7 @@ import DecodeHintType from '../core/DecodeHintType';
 
 export class BrowserMultiFormatReader extends BrowserCodeReader {
 
-  protected readonly reader: MultiFormatReader;
+  protected declare readonly reader: MultiFormatReader;
 
   set hints(hints: Map<DecodeHintType, any>) {
     this._hints = hints || null;

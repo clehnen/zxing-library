@@ -5,16 +5,23 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
-      "es7",
+      "es2016",
       "dom"
     ],
-    "outDir": "output/tests"
+    "types": ["jest", "node"],
+    "paths": {
+      "@zxing/library": [
+        "./src"
+      ],
+      "@zxing/library/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
-    "src/test/**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "src/core"
+    "node_modules"
   ]
 }
