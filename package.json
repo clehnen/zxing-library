@@ -1,6 +1,6 @@
 {
   "name": "@zxing/library",
-  "version": "0.21.3",
+  "version": "0.22.0",
   "description": "TypeScript port of ZXing multi-format 1D/2D barcode image processing library.",
   "keywords": [
     "reader",
@@ -30,7 +30,7 @@
     }
   ],
   "engines": {
-    "node": ">= 18.0.0"
+    "node": ">= 24.0.0"
   },
   "license": "Apache-2.0",
   "bugs": "https://github.com/zxing-js/library/issues/new",
@@ -48,7 +48,7 @@
   "scripts": {
     "lint": "eslint \"./src/**/*.ts\"",
     "clean": "shx rm -rf dist output",
-    "test": "jest --maxWorkers=90%",
+    "test": "jest",
     "cover": "jest --coverage",
     "build": "npm run clean && npm run build:es2015 && npm run build:esm && npm run build:esnext && npm run build:cjs && npm run build:umd && npm run build:umd:min && npm run build:copy",
     "build:es2015": "tsc --build tsconfig.lib-es2015.json",

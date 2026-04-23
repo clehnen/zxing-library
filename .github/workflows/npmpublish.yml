@@ -11,10 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 24
 
       - uses: actions/cache@v4
         with:
@@ -54,9 +54,9 @@ jobs:
         with:
           name: pack-artifact
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 24
           registry-url: https://registry.npmjs.org/
 
       - run: npm publish ./pack-artifact/package.tgz
