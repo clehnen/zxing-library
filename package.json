@@ -48,7 +48,7 @@
   "scripts": {
     "lint": "eslint \"./src/**/*.ts\"",
     "clean": "shx rm -rf dist output",
-    "test": "jest",
+    "test": "jest --maxWorkers=90%",
     "cover": "jest --coverage",
     "build": "npm run clean && npm run build:es2015 && npm run build:esm && npm run build:esnext && npm run build:cjs && npm run build:umd && npm run build:umd:min && npm run build:copy",
     "build:es2015": "tsc --build tsconfig.lib-es2015.json",

@@ -99,6 +99,12 @@ export { default as QRCodeMatrixUtil } from './core/qrcode/encoder/MatrixUtil';
 export { default as QRCodeByteMatrix } from './core/qrcode/encoder/ByteMatrix';
 export { default as QRCodeMaskUtil } from './core/qrcode/encoder/MaskUtil';
 
+// core/microqr
+export { default as MicroQRCodeReader } from './core/microqr/MicroQRCodeReader';
+export { default as MicroQRVersion } from './core/microqr/decoder/MicroQRVersion';
+export { default as MicroQRFormatInformation } from './core/microqr/decoder/MicroQRFormatInformation';
+export { default as MicroQRDetector } from './core/microqr/detector/MicroQRDetector';
+
 // core/twod/aztec
 export { default as AztecCodeReader } from './core/aztec/AztecReader';
 export { default as AztecCodeWriter } from './core/aztec/AztecWriter';

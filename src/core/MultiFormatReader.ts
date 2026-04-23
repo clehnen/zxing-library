@@ -20,6 +20,7 @@ import Result from './Result';
 import BinaryBitmap from './BinaryBitmap';
 import BarcodeFormat from './BarcodeFormat';
 import QRCodeReader from './qrcode/QRCodeReader';
+import MicroQRCodeReader from './microqr/MicroQRCodeReader';
 
 import AztecReader from './aztec/AztecReader';
 import MultiFormatOneDReader from './oned/MultiFormatOneDReader';
@@ -129,6 +130,9 @@ export default class MultiFormatReader implements Reader {
             if (formats.includes(BarcodeFormat.QR_CODE)) {
                 readers.push(new QRCodeReader());
             }
+            if (formats.includes(BarcodeFormat.MICRO_QR_CODE)) {
+                readers.push(new MicroQRCodeReader());
+            }
             if (formats.includes(BarcodeFormat.DATA_MATRIX)) {
               readers.push(new DataMatrixReader());
             }
@@ -152,6 +156,7 @@ export default class MultiFormatReader implements Reader {
             }
 
             readers.push(new QRCodeReader());
+            readers.push(new MicroQRCodeReader());
             readers.push(new DataMatrixReader());
             readers.push(new AztecReader());
             readers.push(new PDF417Reader());
