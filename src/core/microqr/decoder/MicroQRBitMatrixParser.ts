@@ -76,6 +76,10 @@ export default class MicroQRBitMatrixParser {
     /**
      * Read all codewords from the Micro QR BitMatrix.
      * Applies data mask before reading.
+     *
+     * For M1 (versionNumber=1) and M3 (versionNumber=3), the last DATA codeword
+     * is only 4 bits (half-codeword). The bit stream layout is:
+     *   [numDataCodewords-1 full 8-bit data CWs][4-bit half data CW][numECCodewords full 8-bit EC CWs]
      */
     public readCodewords(): Uint8Array {
         const formatInfo = this.readFormatInformation();
@@ -89,6 +93,9 @@ export default class MicroQRBitMatrixParser {
         // Build function pattern (modules we skip during codeword extraction)
         const functionPattern = version.buildFunctionPattern();
 
+        const numDataCodewords = version.getNumDataCodewords();
+        const hasHalfCW = (version.getVersionNumber() === 1 || version.getVersionNumber() === 3);
+
         let readingUp = true;
         const result = new Uint8Array(version.getTotalCodewords());
         let resultOffset = 0;
@@ -97,22 +104,28 @@ export default class MicroQRBitMatrixParser {
 
         // Traverse column pairs from right to left.
         // Micro QR timing is in col 0 and row 0; both are marked in functionPattern.
-        // No special skip needed (unlike QR which skips j==6).
         for (let j = dimension - 1; j > 0; j -= 2) {
-            // Read alternately from bottom-to-top then top-to-bottom
             for (let count = 0; count < dimension; count++) {
                 const i = readingUp ? dimension - 1 - count : count;
                 for (let col = 0; col < 2; col++) {
                     const x = j - col;
-                    // Skip function modules
                     if (!functionPattern.get(x, i)) {
                         bitsRead++;
                         currentByte <<= 1;
                         if (this.bitMatrix.get(x, i)) {
                             currentByte |= 1;
                         }
-                        if (bitsRead === 8) {
-                            result[resultOffset++] = currentByte & 0xFF;
+
+                        // Determine how many bits complete the current codeword.
+                        // The last data codeword for M1/M3 is only 4 bits (half-codeword).
+                        const isLastDataCW = hasHalfCW && resultOffset === numDataCodewords - 1;
+                        const cwBits = isLastDataCW ? 4 : 8;
+
+                        if (bitsRead === cwBits) {
+                            // For the 4-bit half-codeword, place the nibble in the high 4 bits.
+                            result[resultOffset++] = isLastDataCW
+                                ? (currentByte << 4) & 0xFF
+                                : currentByte & 0xFF;
                             bitsRead = 0;
                             currentByte = 0;
                         }

@@ -17,13 +17,14 @@
 import BitMatrix from '../../common/BitMatrix';
 
 /**
- * Micro QR Code data mask patterns (ISO 18004 Annex E).
+ * Micro QR Code data mask patterns per ISO 18004:2015 Table 10.
  *
- * Micro QR uses 4 of the 8 QR mask patterns (indices 0-3):
- *   0: (i + j) mod 2 = 0
- *   1: i mod 2 = 0
- *   2: j mod 3 = 0
- *   3: (i + j) mod 3 = 0
+ * These differ from the QR Code mask patterns. Indices correspond to the
+ * 2-bit data mask field in the format information word (binary 00–11):
+ *   00 (0): i mod 2 = 0
+ *   01 (1): ((i div 2) + (j div 3)) mod 2 = 0
+ *   10 (2): ((i*j mod 2) + (i*j mod 3)) mod 2 = 0
+ *   11 (3): ((i+j) mod 2 + i*j mod 3) mod 2 = 0
  *
  * Where i = row, j = column.
  */
@@ -35,10 +36,14 @@ export default class MicroQRDataMask {
     ) {}
 
     private static readonly MASKS: ReadonlyArray<MicroQRDataMask> = [
-        new MicroQRDataMask(0, (i, j) => ((i + j) & 0x01) === 0),
-        new MicroQRDataMask(1, (i, j) => (i & 0x01) === 0),
-        new MicroQRDataMask(2, (i, j) => (j % 3) === 0),
-        new MicroQRDataMask(3, (i, j) => ((i + j) % 3) === 0),
+        // 00: i mod 2 = 0
+        new MicroQRDataMask(0, (i, _j) => (i & 0x01) === 0),
+        // 01: ((i div 2) + (j div 3)) mod 2 = 0
+        new MicroQRDataMask(1, (i, j) => (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0),
+        // 10: ((i*j mod 2) + (i*j mod 3)) mod 2 = 0
+        new MicroQRDataMask(2, (i, j) => { const tmp = i * j; return ((tmp & 0x01) + (tmp % 3)) % 2 === 0; }),
+        // 11: ((i+j) mod 2 + i*j mod 3) mod 2 = 0
+        new MicroQRDataMask(3, (i, j) => (((i + j) & 0x01) + ((i * j) % 3)) % 2 === 0),
     ];
 
     public static forIndex(maskIndex: number): MicroQRDataMask {
