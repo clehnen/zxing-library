@@ -26,6 +26,9 @@ export class MicroQRBlackBox1TestCase extends AbstractBlackBoxSpec {
     public constructor() {
         super('src/test/resources/blackbox/microqr-1', new MicroQRCodeReader(), BarcodeFormat.MICRO_QR_CODE);
         this.addTest(3, 3, 0.0);
+        this.addTest(3, 3, 90.0);
+        this.addTest(3, 3, 180.0);
+        this.addTest(3, 3, 270.0);
     }
 
 }

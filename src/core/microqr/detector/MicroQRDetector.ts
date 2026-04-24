@@ -223,25 +223,31 @@ export default class MicroQRDetector {
             throw new NotFoundException('Module size too small.');
         }
 
-        const dim = this.determineDimension(fx, fy, moduleSize);
-        if (dim === null) {
+        const detected = this.determineDimension(fx, fy, moduleSize);
+        if (detected === null) {
             throw new NotFoundException('Cannot determine Micro QR symbol dimension.');
         }
+        const { dim, orientation } = detected;
 
-        // Map source module (dim-4, 3) to image: (dim-7) modules right and (dim-7) down of finder center.
-        // In the createTransform source, this anchor is at (dim-3.5, 3.5) which is (dim-7) units
-        // from the finder center source point (3.5, 3.5).
+        // The finder is always at the "top-left" of the symbol in its own coordinate system.
+        // topRight and bottomLeft offsets rotate with the symbol orientation.
+        //   orientation 0 (0°):   symbol extends right (+) and down (+)
+        //   orientation 1 (90°CW): symbol extends down (+) and left (-)
+        //   orientation 2 (180°): symbol extends left (-) and up (-)
+        //   orientation 3 (270°CW): symbol extends up (-) and right (+)
         const dist = (dim - 7) * moduleSize;
+        const trDx = [dist,   0,     -dist, 0    ][orientation];
+        const trDy = [0,      dist,   0,    -dist ][orientation];
+        const blDx = [0,      -dist,  0,     dist ][orientation];
+        const blDy = [dist,   0,     -dist,  0    ][orientation];
 
-        const topLeftX = fx;
-        const topLeftY = fy;
-        const topRightX = fx + dist;
-        const topRightY = fy;
-        const bottomLeftX = fx;
-        const bottomLeftY = fy + dist;
+        const topRightX = fx + trDx;
+        const topRightY = fy + trDy;
+        const bottomLeftX = fx + blDx;
+        const bottomLeftY = fy + blDy;
 
         const transform = MicroQRDetector.createTransform(
-            topLeftX, topLeftY,
+            fx, fy,
             topRightX, topRightY,
             bottomLeftX, bottomLeftY,
             dim
@@ -250,7 +256,7 @@ export default class MicroQRDetector {
         const bits = MicroQRDetector.sampleGrid(this.image, transform, dim);
 
         const points: ResultPoint[] = [
-            new ResultPoint(topLeftX, topLeftY),
+            new ResultPoint(fx, fy),
             new ResultPoint(topRightX, topRightY),
             new ResultPoint(bottomLeftX, bottomLeftY),
         ];
@@ -259,30 +265,51 @@ export default class MicroQRDetector {
     }
 
     /**
-     * Determine the Micro QR symbol dimension by probing the timing patterns.
+     * Determine the Micro QR symbol dimension and orientation by probing timing patterns.
      *
-     * The timing pattern in row 0 runs from column 8 to dim-1.
-     * The timing pattern in col 0 runs from row 8 to dim-1.
-     * Both start with a dark module (even index) and alternate.
+     * The timing pattern in row 0 (cols 8+) and col 0 (rows 8+) each alternate dark/light.
+     * From the finder center (fx, fy) the timing probes rotate with the symbol orientation:
      *
-     * Module (col, row) center in image = (fx - 3.5*ms + (col+0.5)*ms, fy - 3.5*ms + (row+0.5)*ms)
-     * Timing row 0, col 8: x = fx + 5.0*ms, y = fy - 3.0*ms
-     * Timing col 0, row 8: x = fx - 3.0*ms, y = fy + 5.0*ms
+     *   orientation 0 (0°):    row probe (+5,-3)→right,  col probe (-3,+5)→down
+     *   orientation 1 (90°CW): row probe (+3,+5)→down,   col probe (-5,-3)→left
+     *   orientation 2 (180°):  row probe (-5,+3)→left,   col probe (+3,-5)→up
+     *   orientation 3 (270°CW):row probe (-3,-5)→up,     col probe (+5,+3)→right
      */
-    private determineDimension(fx: number, fy: number, moduleSize: number): number | null {
-        const timingRowY = fy - 3.0 * moduleSize;
-        const timingStartX = fx + 5.0 * moduleSize;
-        const dimH = this.probeTimingLine(timingStartX, timingRowY, 1, 0, moduleSize);
+    private determineDimension(fx: number, fy: number, ms: number): { dim: number; orientation: number } | null {
+        // Each entry: [rowStartDx, rowStartDy, rowDirX, rowDirY, colStartDx, colStartDy, colDirX, colDirY]
+        const ORIENTATION_PROBES: ReadonlyArray<[number, number, number, number, number, number, number, number]> = [
+            [ 5, -3,  1,  0,  -3,  5,  0,  1], // 0°
+            [ 3,  5,  0,  1,  -5, -3, -1,  0], // 90° CW
+            [-5,  3, -1,  0,   3, -5,  0, -1], // 180°
+            [-3, -5,  0, -1,   5,  3,  1,  0], // 270° CW
+        ];
 
-        const timingColX = fx - 3.0 * moduleSize;
-        const timingStartY = fy + 5.0 * moduleSize;
-        const dimV = this.probeTimingLine(timingColX, timingStartY, 0, 1, moduleSize);
+        // First pass: require both timing probes to agree — avoids false positives from data modules.
+        let bestSingle: { dim: number; orientation: number } | null = null;
+        for (let orientation = 0; orientation < 4; orientation++) {
+            const [rDx, rDy, rdx, rdy, cDx, cDy, cdx, cdy] = ORIENTATION_PROBES[orientation];
+            const dimH = this.probeTimingLine(fx + rDx * ms, fy + rDy * ms, rdx, rdy, ms);
+            const dimV = this.probeTimingLine(fx + cDx * ms, fy + cDy * ms, cdx, cdy, ms);
 
-        if (dimH === null && dimV === null) return null;
+            if (dimH !== null && dimV !== null) {
+                const dim = this.snapDimension(dimH, dimV);
+                if (dim !== null) {
+                    return { dim, orientation };
+                }
+            } else if (bestSingle === null && (dimH !== null || dimV !== null)) {
+                const dim = this.snapDimension(dimH, dimV);
+                if (dim !== null) {
+                    bestSingle = { dim, orientation };
+                }
+            }
+        }
+        // Fallback: accept single-probe result (e.g. near image boundary).
+        return bestSingle;
+    }
+
+    private snapDimension(dimH: number | null, dimV: number | null): number | null {
         if (dimH === null) return dimV;
         if (dimV === null) return dimH;
-
-        // Both found: prefer agreement, otherwise round average
         if (dimH === dimV) return dimH;
         const avg = Math.round((dimH + dimV) / 2);
         const nearest = [11, 13, 15, 17].reduce((prev, curr) =>
