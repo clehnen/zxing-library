@@ -119,7 +119,7 @@ export default class StringEncoding {
     }
 
     if (characterSet.equals(CharacterSetECI.UnicodeBigUnmarked)) {
-      return String.fromCharCode.apply(null, new Uint16Array(bytes.buffer));
+      return String.fromCharCode.apply(null, Array.from(new Uint16Array(bytes.buffer)));
     }
 
     throw new UnsupportedOperationException(`Encoding ${this.encodingName(encoding)} not supported by fallback.`);
