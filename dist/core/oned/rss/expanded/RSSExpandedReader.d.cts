@@ -1,0 +1,65 @@
+import { BitArray } from '../../../common/BitArray.cjs';
+import { DecodeHintType } from '../../../DecodeHintType.cjs';
+import { Result } from '../../../Result.cjs';
+import { AbstractRSSReader } from '../AbstractRSSReader.cjs';
+import { DataCharacter } from '../DataCharacter.cjs';
+import { FinderPattern } from '../FinderPattern.cjs';
+import { ExpandedPair } from './ExpandedPair.cjs';
+import { ExpandedRow } from './ExpandedRow.cjs';
+import '../../../ResultPoint.cjs';
+import '../../../../customTypings.cjs';
+import '../../../BarcodeFormat.cjs';
+import '../../../ResultMetadataType.cjs';
+import '../../OneDReader.cjs';
+import '../../../BinaryBitmap.cjs';
+import '../../../Binarizer.cjs';
+import '../../../LuminanceSource.cjs';
+import '../../../common/BitMatrix.cjs';
+import '../../../Reader.cjs';
+
+/** @experimental */
+declare class RSSExpandedReader extends AbstractRSSReader {
+    private static readonly SYMBOL_WIDEST;
+    private static readonly EVEN_TOTAL_SUBSET;
+    private static readonly GSUM;
+    private static readonly FINDER_PATTERNS;
+    private static readonly WEIGHTS;
+    private static readonly FINDER_PAT_A;
+    private static readonly FINDER_PAT_B;
+    private static readonly FINDER_PAT_C;
+    private static readonly FINDER_PAT_D;
+    private static readonly FINDER_PAT_E;
+    private static readonly FINDER_PAT_F;
+    private static readonly FINDER_PATTERN_SEQUENCES;
+    private static readonly MAX_PAIRS;
+    private static readonly FINDER_PATTERN_MODULES;
+    private static readonly DATA_CHARACTER_MODULES;
+    private static readonly MAX_FINDER_PATTERN_DISTANCE_VARIANCE;
+    private pairs;
+    private rows;
+    private readonly startEnd;
+    private startFromEven;
+    decodeRow(rowNumber: number, row: BitArray, hints: Map<DecodeHintType, any>): Result;
+    reset(): void;
+    decodeRow2pairs(rowNumber: number, row: BitArray): Array<ExpandedPair>;
+    private checkRowsBoolean;
+    private checkRows;
+    private static isValidSequence;
+    private static mayFollow;
+    private storeRow;
+    private removePartialRows;
+    private static isPartialRow;
+    getRows(): ExpandedRow[];
+    static constructResult(pairs: Array<ExpandedPair>): Result;
+    private checkChecksum;
+    private static getNextSecondBar;
+    retrieveNextPair(row: BitArray, previousPairs: Array<ExpandedPair>, rowNumber: number): ExpandedPair;
+    private findNextPair;
+    private static reverseCounters;
+    private parseFoundFinderPattern;
+    decodeDataCharacter(row: BitArray, pattern: FinderPattern, isOddPattern: boolean, leftChar: boolean): DataCharacter;
+    private static isNotA1left;
+    private adjustOddEvenCounts;
+}
+
+export { RSSExpandedReader };

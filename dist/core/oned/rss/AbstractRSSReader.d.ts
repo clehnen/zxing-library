@@ -1,0 +1,47 @@
+import { OneDReader } from '../OneDReader.js';
+import '../../BinaryBitmap.js';
+import '../../Binarizer.js';
+import '../../LuminanceSource.js';
+import '../../common/BitArray.js';
+import '../../common/BitMatrix.js';
+import '../../../customTypings.js';
+import '../../DecodeHintType.js';
+import '../../Reader.js';
+import '../../Result.js';
+import '../../ResultPoint.js';
+import '../../BarcodeFormat.js';
+import '../../ResultMetadataType.js';
+
+declare abstract class AbstractRSSReader extends OneDReader {
+    private static readonly MAX_AVG_VARIANCE;
+    private static readonly MAX_INDIVIDUAL_VARIANCE;
+    /** Minimum ratio 10:12 (minus 0.5 for variance), from section 7.2.7 of ISO/IEC 24724:2006. */
+    private static readonly MIN_FINDER_PATTERN_RATIO;
+    /** Maximum ratio 12:14 (plus 0.5 for variance), from section 7.2.7 of ISO/IEC 24724:2006. */
+    private static readonly MAX_FINDER_PATTERN_RATIO;
+    private readonly decodeFinderCounters;
+    private readonly dataCharacterCounters;
+    private readonly oddRoundingErrors;
+    private readonly evenRoundingErrors;
+    private readonly oddCounts;
+    private readonly evenCounts;
+    constructor();
+    protected getDecodeFinderCounters(): Int32Array;
+    protected getDataCharacterCounters(): Int32Array;
+    protected getOddRoundingErrors(): number[];
+    protected getEvenRoundingErrors(): number[];
+    protected getOddCounts(): number[];
+    protected getEvenCounts(): number[];
+    protected parseFinderValue(counters: Int32Array, finderPatterns: Int32Array[]): number;
+    /**
+     * @param array values to sum
+     * @return sum of values
+     * @deprecated call {@link MathUtils#sum(int[])}
+     */
+    protected static count(array: number[]): number;
+    protected static increment(array: number[], errors: number[]): void;
+    protected static decrement(array: number[], errors: number[]): void;
+    protected static isFinderPattern(counters: Int32Array): boolean;
+}
+
+export { AbstractRSSReader };

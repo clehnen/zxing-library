@@ -1,0 +1,47 @@
+'use strict';
+
+var BarcodeFormat = require('../BarcodeFormat');
+var Result = require('../Result');
+var NotFoundException = require('../NotFoundException');
+var EAN13Reader = require('./EAN13Reader');
+var UPCEANReader = require('./UPCEANReader');
+
+class UPCAReader extends UPCEANReader.UPCEANReader {
+  ean13Reader = new EAN13Reader.EAN13Reader();
+  // @Override
+  getBarcodeFormat() {
+    return BarcodeFormat.BarcodeFormat.UPC_A;
+  }
+  // Note that we don't try rotation without the try harder flag, even if rotation was supported.
+  // @Override
+  decode(image, hints) {
+    return this.maybeReturnResult(this.ean13Reader.decode(image));
+  }
+  // @Override
+  decodeRow(rowNumber, row, hints) {
+    return this.maybeReturnResult(this.ean13Reader.decodeRow(rowNumber, row, hints));
+  }
+  // @Override
+  decodeMiddle(row, startRange, resultString) {
+    return this.ean13Reader.decodeMiddle(row, startRange, resultString);
+  }
+  maybeReturnResult(result) {
+    let text = result.getText();
+    if (text.charAt(0) === "0") {
+      let upcaResult = new Result.Result(text.substring(1), null, null, result.getResultPoints(), BarcodeFormat.BarcodeFormat.UPC_A);
+      if (result.getResultMetadata() != null) {
+        upcaResult.putAllMetadata(result.getResultMetadata());
+      }
+      return upcaResult;
+    } else {
+      throw new NotFoundException.NotFoundException();
+    }
+  }
+  reset() {
+    this.ean13Reader.reset();
+  }
+}
+
+exports.UPCAReader = UPCAReader;
+//# sourceMappingURL=UPCAReader.cjs.map
+//# sourceMappingURL=UPCAReader.cjs.map

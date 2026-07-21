@@ -1,0 +1,343 @@
+'use strict';
+
+var ASCIIEncoder = require('./ASCIIEncoder');
+var Base256Encoder = require('./Base256Encoder');
+var C40Encoder = require('./C40Encoder');
+var constants = require('./constants');
+var EdifactEncoder = require('./EdifactEncoder');
+var EncoderContext = require('./EncoderContext');
+var X12Encoder = require('./X12Encoder');
+var TextEncoder = require('./TextEncoder');
+var ZXingArrays = require('../../util/ZXingArrays');
+var ZXingInteger = require('../../util/ZXingInteger');
+
+class DataMatrixHighLevelEncoder {
+  static randomize253State(codewordPosition) {
+    const pseudoRandom = 149 * codewordPosition % 253 + 1;
+    const tempVariable = constants.PAD + pseudoRandom;
+    return tempVariable <= 254 ? tempVariable : tempVariable - 254;
+  }
+  /**
+   * Performs message encoding of a DataMatrix message using the algorithm described in annex P
+   * of ISO/IEC 16022:2000(E).
+   *
+   * @param msg     the message
+   * @param shape   requested shape. May be {@code SymbolShapeHint.FORCE_NONE},
+   *                {@code SymbolShapeHint.FORCE_SQUARE} or {@code SymbolShapeHint.FORCE_RECTANGLE}.
+   * @param minSize the minimum symbol size constraint or null for no constraint
+   * @param maxSize the maximum symbol size constraint or null for no constraint
+   * @param forceC40 enforce C40 encoding
+   * @return the encoded message (the char values range from 0 to 255)
+   */
+  static encodeHighLevel(msg, shape = constants.SymbolShapeHint.FORCE_NONE, minSize = null, maxSize = null, forceC40 = false) {
+    const c40Encoder = new C40Encoder.C40Encoder();
+    const encoders = [
+      new ASCIIEncoder.ASCIIEncoder(),
+      c40Encoder,
+      new TextEncoder.TextEncoder(),
+      new X12Encoder.X12Encoder(),
+      new EdifactEncoder.EdifactEncoder(),
+      new Base256Encoder.Base256Encoder()
+    ];
+    const context = new EncoderContext.EncoderContext(msg);
+    context.setSymbolShape(shape);
+    context.setSizeConstraints(minSize, maxSize);
+    if (msg.startsWith(constants.MACRO_05_HEADER) && msg.endsWith(constants.MACRO_TRAILER)) {
+      context.writeCodeword(constants.MACRO_05);
+      context.setSkipAtEnd(2);
+      context.pos += constants.MACRO_05_HEADER.length;
+    } else if (msg.startsWith(constants.MACRO_06_HEADER) && msg.endsWith(constants.MACRO_TRAILER)) {
+      context.writeCodeword(constants.MACRO_06);
+      context.setSkipAtEnd(2);
+      context.pos += constants.MACRO_06_HEADER.length;
+    }
+    let encodingMode = constants.ASCII_ENCODATION;
+    if (forceC40) {
+      c40Encoder.encodeMaximal(context);
+      encodingMode = context.getNewEncoding();
+      context.resetEncoderSignal();
+    }
+    while (context.hasMoreCharacters()) {
+      encoders[encodingMode].encode(context);
+      if (context.getNewEncoding() >= 0) {
+        encodingMode = context.getNewEncoding();
+        context.resetEncoderSignal();
+      }
+    }
+    const len = context.getCodewordCount();
+    context.updateSymbolInfo();
+    const capacity = context.getSymbolInfo().getDataCapacity();
+    if (len < capacity && encodingMode !== constants.ASCII_ENCODATION && encodingMode !== constants.BASE256_ENCODATION && encodingMode !== constants.EDIFACT_ENCODATION) {
+      context.writeCodeword("\xFE");
+    }
+    const codewords = context.getCodewords();
+    if (codewords.length() < capacity) {
+      codewords.append(constants.PAD);
+    }
+    while (codewords.length() < capacity) {
+      codewords.append(this.randomize253State(codewords.length() + 1));
+    }
+    return context.getCodewords().toString();
+  }
+  static lookAheadTest(msg, startpos, currentMode) {
+    const newMode = this.lookAheadTestIntern(msg, startpos, currentMode);
+    if (currentMode === constants.X12_ENCODATION && newMode === constants.X12_ENCODATION) {
+      const endpos = Math.min(startpos + 3, msg.length);
+      for (let i = startpos; i < endpos; i++) {
+        if (!this.isNativeX12(msg.charCodeAt(i))) {
+          return constants.ASCII_ENCODATION;
+        }
+      }
+    } else if (currentMode === constants.EDIFACT_ENCODATION && newMode === constants.EDIFACT_ENCODATION) {
+      const endpos = Math.min(startpos + 4, msg.length);
+      for (let i = startpos; i < endpos; i++) {
+        if (!this.isNativeEDIFACT(msg.charCodeAt(i))) {
+          return constants.ASCII_ENCODATION;
+        }
+      }
+    }
+    return newMode;
+  }
+  static lookAheadTestIntern(msg, startpos, currentMode) {
+    if (startpos >= msg.length) {
+      return currentMode;
+    }
+    let charCounts;
+    if (currentMode === constants.ASCII_ENCODATION) {
+      charCounts = [0, 1, 1, 1, 1, 1.25];
+    } else {
+      charCounts = [1, 2, 2, 2, 2, 2.25];
+      charCounts[currentMode] = 0;
+    }
+    let charsProcessed = 0;
+    const mins = new Uint8Array(6);
+    const intCharCounts = [];
+    while (true) {
+      if (startpos + charsProcessed === msg.length) {
+        ZXingArrays.ZXingArrays.fill(mins, 0);
+        ZXingArrays.ZXingArrays.fill(intCharCounts, 0);
+        const min = this.findMinimums(
+          charCounts,
+          intCharCounts,
+          ZXingInteger.ZXingInteger.MAX_VALUE,
+          mins
+        );
+        const minCount = this.getMinimumCount(mins);
+        if (intCharCounts[constants.ASCII_ENCODATION] === min) {
+          return constants.ASCII_ENCODATION;
+        }
+        if (minCount === 1) {
+          if (mins[constants.BASE256_ENCODATION] > 0) {
+            return constants.BASE256_ENCODATION;
+          }
+          if (mins[constants.EDIFACT_ENCODATION] > 0) {
+            return constants.EDIFACT_ENCODATION;
+          }
+          if (mins[constants.TEXT_ENCODATION] > 0) {
+            return constants.TEXT_ENCODATION;
+          }
+          if (mins[constants.X12_ENCODATION] > 0) {
+            return constants.X12_ENCODATION;
+          }
+        }
+        return constants.C40_ENCODATION;
+      }
+      const c = msg.charCodeAt(startpos + charsProcessed);
+      charsProcessed++;
+      if (this.isDigit(c)) {
+        charCounts[constants.ASCII_ENCODATION] += 0.5;
+      } else if (this.isExtendedASCII(c)) {
+        charCounts[constants.ASCII_ENCODATION] = Math.ceil(charCounts[constants.ASCII_ENCODATION]);
+        charCounts[constants.ASCII_ENCODATION] += 2;
+      } else {
+        charCounts[constants.ASCII_ENCODATION] = Math.ceil(charCounts[constants.ASCII_ENCODATION]);
+        charCounts[constants.ASCII_ENCODATION]++;
+      }
+      if (this.isNativeC40(c)) {
+        charCounts[constants.C40_ENCODATION] += 2 / 3;
+      } else if (this.isExtendedASCII(c)) {
+        charCounts[constants.C40_ENCODATION] += 8 / 3;
+      } else {
+        charCounts[constants.C40_ENCODATION] += 4 / 3;
+      }
+      if (this.isNativeText(c)) {
+        charCounts[constants.TEXT_ENCODATION] += 2 / 3;
+      } else if (this.isExtendedASCII(c)) {
+        charCounts[constants.TEXT_ENCODATION] += 8 / 3;
+      } else {
+        charCounts[constants.TEXT_ENCODATION] += 4 / 3;
+      }
+      if (this.isNativeX12(c)) {
+        charCounts[constants.X12_ENCODATION] += 2 / 3;
+      } else if (this.isExtendedASCII(c)) {
+        charCounts[constants.X12_ENCODATION] += 13 / 3;
+      } else {
+        charCounts[constants.X12_ENCODATION] += 10 / 3;
+      }
+      if (this.isNativeEDIFACT(c)) {
+        charCounts[constants.EDIFACT_ENCODATION] += 3 / 4;
+      } else if (this.isExtendedASCII(c)) {
+        charCounts[constants.EDIFACT_ENCODATION] += 17 / 4;
+      } else {
+        charCounts[constants.EDIFACT_ENCODATION] += 13 / 4;
+      }
+      if (this.isSpecialB256(c)) {
+        charCounts[constants.BASE256_ENCODATION] += 4;
+      } else {
+        charCounts[constants.BASE256_ENCODATION]++;
+      }
+      if (charsProcessed >= 4) {
+        ZXingArrays.ZXingArrays.fill(mins, 0);
+        ZXingArrays.ZXingArrays.fill(intCharCounts, 0);
+        this.findMinimums(charCounts, intCharCounts, ZXingInteger.ZXingInteger.MAX_VALUE, mins);
+        if (intCharCounts[constants.ASCII_ENCODATION] < this.min(
+          intCharCounts[constants.BASE256_ENCODATION],
+          intCharCounts[constants.C40_ENCODATION],
+          intCharCounts[constants.TEXT_ENCODATION],
+          intCharCounts[constants.X12_ENCODATION],
+          intCharCounts[constants.EDIFACT_ENCODATION]
+        )) {
+          return constants.ASCII_ENCODATION;
+        }
+        if (intCharCounts[constants.BASE256_ENCODATION] < intCharCounts[constants.ASCII_ENCODATION] || intCharCounts[constants.BASE256_ENCODATION] + 1 < this.min(
+          intCharCounts[constants.C40_ENCODATION],
+          intCharCounts[constants.TEXT_ENCODATION],
+          intCharCounts[constants.X12_ENCODATION],
+          intCharCounts[constants.EDIFACT_ENCODATION]
+        )) {
+          return constants.BASE256_ENCODATION;
+        }
+        if (intCharCounts[constants.EDIFACT_ENCODATION] + 1 < this.min(
+          intCharCounts[constants.BASE256_ENCODATION],
+          intCharCounts[constants.C40_ENCODATION],
+          intCharCounts[constants.TEXT_ENCODATION],
+          intCharCounts[constants.X12_ENCODATION],
+          intCharCounts[constants.ASCII_ENCODATION]
+        )) {
+          return constants.EDIFACT_ENCODATION;
+        }
+        if (intCharCounts[constants.TEXT_ENCODATION] + 1 < this.min(
+          intCharCounts[constants.BASE256_ENCODATION],
+          intCharCounts[constants.C40_ENCODATION],
+          intCharCounts[constants.EDIFACT_ENCODATION],
+          intCharCounts[constants.X12_ENCODATION],
+          intCharCounts[constants.ASCII_ENCODATION]
+        )) {
+          return constants.TEXT_ENCODATION;
+        }
+        if (intCharCounts[constants.X12_ENCODATION] + 1 < this.min(
+          intCharCounts[constants.BASE256_ENCODATION],
+          intCharCounts[constants.C40_ENCODATION],
+          intCharCounts[constants.EDIFACT_ENCODATION],
+          intCharCounts[constants.TEXT_ENCODATION],
+          intCharCounts[constants.ASCII_ENCODATION]
+        )) {
+          return constants.X12_ENCODATION;
+        }
+        if (intCharCounts[constants.C40_ENCODATION] + 1 < this.min(
+          intCharCounts[constants.ASCII_ENCODATION],
+          intCharCounts[constants.BASE256_ENCODATION],
+          intCharCounts[constants.EDIFACT_ENCODATION],
+          intCharCounts[constants.TEXT_ENCODATION]
+        )) {
+          if (intCharCounts[constants.C40_ENCODATION] < intCharCounts[constants.X12_ENCODATION]) {
+            return constants.C40_ENCODATION;
+          }
+          if (intCharCounts[constants.C40_ENCODATION] === intCharCounts[constants.X12_ENCODATION]) {
+            let p = startpos + charsProcessed + 1;
+            while (p < msg.length) {
+              const tc = msg.charCodeAt(p);
+              if (this.isX12TermSep(tc)) {
+                return constants.X12_ENCODATION;
+              }
+              if (!this.isNativeX12(tc)) {
+                break;
+              }
+              p++;
+            }
+            return constants.C40_ENCODATION;
+          }
+        }
+      }
+    }
+  }
+  static min(f1, f2, f3, f4, f5) {
+    const val = Math.min(f1, Math.min(f2, Math.min(f3, f4)));
+    if (f5 === void 0) {
+      return val;
+    } else {
+      return Math.min(val, f5);
+    }
+  }
+  static findMinimums(charCounts, intCharCounts, min, mins) {
+    for (let i = 0; i < 6; i++) {
+      const current = intCharCounts[i] = Math.ceil(charCounts[i]);
+      if (min > current) {
+        min = current;
+        ZXingArrays.ZXingArrays.fill(mins, 0);
+      }
+      if (min === current) {
+        mins[i] = mins[i] + 1;
+      }
+    }
+    return min;
+  }
+  static getMinimumCount(mins) {
+    let minCount = 0;
+    for (let i = 0; i < 6; i++) {
+      minCount += mins[i];
+    }
+    return minCount || 0;
+  }
+  static isDigit(ch) {
+    return ch >= "0".charCodeAt(0) && ch <= "9".charCodeAt(0);
+  }
+  static isExtendedASCII(ch) {
+    return ch >= 128 && ch <= 255;
+  }
+  static isNativeC40(ch) {
+    return ch === " ".charCodeAt(0) || ch >= "0".charCodeAt(0) && ch <= "9".charCodeAt(0) || ch >= "A".charCodeAt(0) && ch <= "Z".charCodeAt(0);
+  }
+  static isNativeText(ch) {
+    return ch === " ".charCodeAt(0) || ch >= "0".charCodeAt(0) && ch <= "9".charCodeAt(0) || ch >= "a".charCodeAt(0) && ch <= "z".charCodeAt(0);
+  }
+  static isNativeX12(ch) {
+    return this.isX12TermSep(ch) || ch === " ".charCodeAt(0) || ch >= "0".charCodeAt(0) && ch <= "9".charCodeAt(0) || ch >= "A".charCodeAt(0) && ch <= "Z".charCodeAt(0);
+  }
+  static isX12TermSep(ch) {
+    return ch === 13 || // CR
+    ch === "*".charCodeAt(0) || ch === ">".charCodeAt(0);
+  }
+  static isNativeEDIFACT(ch) {
+    return ch >= " ".charCodeAt(0) && ch <= "^".charCodeAt(0);
+  }
+  static isSpecialB256(ch) {
+    return false;
+  }
+  /**
+   * Determines the number of consecutive characters that are encodable using numeric compaction.
+   *
+   * @param msg      the message
+   * @param startpos the start position within the message
+   * @return the requested character count
+   */
+  static determineConsecutiveDigitCount(msg, startpos = 0) {
+    const len = msg.length;
+    let idx = startpos;
+    while (idx < len && this.isDigit(msg.charCodeAt(idx))) {
+      idx++;
+    }
+    return idx - startpos;
+  }
+  static illegalCharacter(singleCharacter) {
+    let hex = ZXingInteger.ZXingInteger.toHexString(singleCharacter.charCodeAt(0));
+    hex = "0000".substring(0, 4 - hex.length) + hex;
+    throw new Error(
+      "Illegal character: " + singleCharacter + " (0x" + hex + ")"
+    );
+  }
+}
+
+exports.DataMatrixHighLevelEncoder = DataMatrixHighLevelEncoder;
+//# sourceMappingURL=DataMatrixHighLevelEncoder.cjs.map
+//# sourceMappingURL=DataMatrixHighLevelEncoder.cjs.map
