@@ -21,7 +21,7 @@
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-enum EncodeHintType {
+export enum EncodeHintType {
   /**
    * Specifies what degree of error correction to use, for example in QR Codes.
    * Type depends on the encoder. For example for QR codes it's type
@@ -130,4 +130,3 @@ enum EncodeHintType {
   FORCE_C40,
 }
 
-export default EncodeHintType;

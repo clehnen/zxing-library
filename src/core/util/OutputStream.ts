@@ -1,5 +1,5 @@
-import IndexOutOfBoundsException from '../IndexOutOfBoundsException';
-import NullPointerException from '../NullPointerException';
+import { IndexOutOfBoundsException } from '../IndexOutOfBoundsException';
+import { NullPointerException } from '../NullPointerException';
 
 /*
  * Copyright (c) 1994, 2004, Oracle and/or its affiliates. All rights reserved.
@@ -46,7 +46,7 @@ import NullPointerException from '../NullPointerException';
  * @see     java.io.OutputStream#write(int)
  * @since   JDK1.0
  */
-export default /*public*/ abstract class OutputStream /*implements Closeable, Flushable*/ {
+export /*public*/ abstract class OutputStream /*implements Closeable, Flushable*/ {
   /**
    * Writes the specified byte to this output stream. The general
    * contract for <code>write</code> is that one byte is written

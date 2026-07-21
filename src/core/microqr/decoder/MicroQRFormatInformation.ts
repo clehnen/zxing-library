@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import Integer from '../../util/Integer';
+import { ZXingInteger } from '../../util/ZXingInteger';
 
 /**
  * Micro QR Code format information decoder.
@@ -31,7 +31,7 @@ import Integer from '../../util/Integer';
  * versionIndicator mapping:
  *   0=M1(noEC), 1=M2-L, 2=M2-M, 3=M3-L, 4=M3-M, 5=M4-L, 6=M4-M, 7=M4-Q
  */
-export default class MicroQRFormatInformation {
+export class MicroQRFormatInformation {
 
     private static readonly FORMAT_INFO_MASK_MICRO_QR = 0x4445;
 
@@ -83,7 +83,7 @@ export default class MicroQRFormatInformation {
     }
 
     public static numBitsDiffering(a: number, b: number): number {
-        return Integer.bitCount(a ^ b);
+        return ZXingInteger.bitCount(a ^ b);
     }
 
     /**

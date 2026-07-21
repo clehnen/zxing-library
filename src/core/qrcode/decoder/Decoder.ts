@@ -16,16 +16,16 @@
 
 /*namespace com.google.zxing.qrcode.decoder {*/
 
-import ChecksumException from '../../ChecksumException';
-import BitMatrix from '../../common/BitMatrix';
-import DecoderResult from '../../common/DecoderResult';
-import GenericGF from '../../common/reedsolomon/GenericGF';
-import ReedSolomonDecoder from '../../common/reedsolomon/ReedSolomonDecoder';
-import DecodeHintType from '../../DecodeHintType';
-import BitMatrixParser from './BitMatrixParser';
-import DataBlock from './DataBlock';
-import DecodedBitStreamParser from './DecodedBitStreamParser';
-import QRCodeDecoderMetaData from './QRCodeDecoderMetaData';
+import { ChecksumException } from '../../ChecksumException';
+import { BitMatrix } from '../../common/BitMatrix';
+import { DecoderResult } from '../../common/DecoderResult';
+import { GenericGF } from '../../common/reedsolomon/GenericGF';
+import { ReedSolomonDecoder } from '../../common/reedsolomon/ReedSolomonDecoder';
+import { DecodeHintType } from '../../DecodeHintType';
+import { BitMatrixParser } from './BitMatrixParser';
+import { DataBlock } from './DataBlock';
+import { QRCodeDecodedBitStreamParser } from './QRCodeDecodedBitStreamParser';
+import { QRCodeDecoderMetaData } from './QRCodeDecoderMetaData';
 
 
 /*import java.util.Map;*/
@@ -36,7 +36,7 @@ import QRCodeDecoderMetaData from './QRCodeDecoderMetaData';
  *
  * @author Sean Owen
  */
-export default class Decoder {
+export class Decoder {
 
   private rsDecoder: ReedSolomonDecoder;
 
@@ -154,7 +154,7 @@ export default class Decoder {
     }
 
     // Decode the contents of that stream of bytes
-    return DecodedBitStreamParser.decode(resultBytes, version, ecLevel, hints);
+    return QRCodeDecodedBitStreamParser.decode(resultBytes, version, ecLevel, hints);
   }
 
   /**

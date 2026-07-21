@@ -16,7 +16,7 @@
 
 /*namespace com.google.zxing.qrcode.decoder {*/
 
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 
 /**
  * Meta-data container for QR Code decoding. Instances of this class may be used to convey information back to the
@@ -24,7 +24,7 @@ import ResultPoint from '../../ResultPoint';
  *
  * @see com.google.zxing.common.DecoderResult#getOther()
  */
-export default class QRCodeDecoderMetaData {
+export class QRCodeDecoderMetaData {
 
 
     public constructor(private mirrored: boolean) { }

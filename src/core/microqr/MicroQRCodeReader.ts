@@ -14,22 +14,22 @@
  * limitations under the License.
  */
 
-import Reader from '../Reader';
-import ResultPoint from '../ResultPoint';
-import Result from '../Result';
-import BarcodeFormat from '../BarcodeFormat';
-import BinaryBitmap from '../BinaryBitmap';
-import DecodeHintType from '../DecodeHintType';
-import ResultMetadataType from '../ResultMetadataType';
-import System from '../util/System';
+import { Reader } from '../Reader';
+import { ResultPoint } from '../ResultPoint';
+import { Result } from '../Result';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BinaryBitmap } from '../BinaryBitmap';
+import { DecodeHintType } from '../DecodeHintType';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ZXingSystem } from '../util/ZXingSystem';
 
-import MicroQRDecoder from './decoder/MicroQRDecoder';
-import MicroQRDetector from './detector/MicroQRDetector';
+import { MicroQRDecoder } from './decoder/MicroQRDecoder';
+import { MicroQRDetector } from './detector/MicroQRDetector';
 
 /**
  * Detects and decodes Micro QR Codes in images.
  */
-export default class MicroQRCodeReader implements Reader {
+export class MicroQRCodeReader implements Reader {
 
     private readonly decoder = new MicroQRDecoder();
 
@@ -55,7 +55,7 @@ export default class MicroQRCodeReader implements Reader {
             decoderResult.getNumBits(),
             points,
             BarcodeFormat.MICRO_QR_CODE,
-            System.currentTimeMillis()
+            ZXingSystem.currentTimeMillis()
         );
 
         const byteSegments = decoderResult.getByteSegments();

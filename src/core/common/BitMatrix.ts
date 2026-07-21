@@ -18,11 +18,11 @@
 
 /*import java.util.Arrays;*/
 
-import BitArray from './BitArray';
-import System from '../util/System';
-import Arrays from '../util/Arrays';
-import StringBuilder from '../util/StringBuilder';
-import IllegalArgumentException from '../IllegalArgumentException';
+import { BitArray } from './BitArray';
+import { ZXingSystem } from '../util/ZXingSystem';
+import { ZXingArrays } from '../util/ZXingArrays';
+import { ZXingStringBuilder } from '../util/StringBuilder';
+import { IllegalArgumentException } from '../IllegalArgumentException';
 
 import { int } from '../../customTypings';
 
@@ -41,7 +41,7 @@ import { int } from '../../customTypings';
  * @author Sean Owen
  * @author dswitkin@google.com (Daniel Switkin)
  */
-export default class BitMatrix /*implements Cloneable*/ {
+export class BitMatrix /*implements Cloneable*/ {
 
     /**
      * Creates an empty square {@link BitMatrix}.
@@ -299,7 +299,7 @@ export default class BitMatrix /*implements Cloneable*/ {
      * @param row {@link BitArray} to copy from
      */
     public setRow(y: number /*int*/, row: BitArray): void {
-        System.arraycopy(row.getBitArray(), 0, this.bits, y * this.rowSize, this.rowSize);
+        ZXingSystem.arraycopy(row.getBitArray(), 0, this.bits, y * this.rowSize, this.rowSize);
     }
 
     /**
@@ -456,7 +456,7 @@ export default class BitMatrix /*implements Cloneable*/ {
         }
         const other = <BitMatrix>o;
         return this.width === other.width && this.height === other.height && this.rowSize === other.rowSize &&
-            Arrays.equals(this.bits, other.bits);
+            ZXingArrays.equals(this.bits, other.bits);
     }
 
     /*@Override*/
@@ -465,7 +465,7 @@ export default class BitMatrix /*implements Cloneable*/ {
         hash = 31 * hash + this.width;
         hash = 31 * hash + this.height;
         hash = 31 * hash + this.rowSize;
-        hash = 31 * hash + Arrays.hashCode(this.bits);
+        hash = 31 * hash + ZXingArrays.hashCode(this.bits);
         return hash;
     }
 
@@ -499,7 +499,7 @@ export default class BitMatrix /*implements Cloneable*/ {
     }
 
     private buildToString(setString: string, unsetString: string, lineSeparator: string) {
-        let result = new StringBuilder();
+        let result = new ZXingStringBuilder();
         // result.append(lineSeparator);
         for (let y = 0, height = this.height; y < height; y++) {
             for (let x = 0, width = this.width; x < width; x++) {

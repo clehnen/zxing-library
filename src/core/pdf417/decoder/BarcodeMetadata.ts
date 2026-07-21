@@ -21,7 +21,7 @@ import { int } from '../../../customTypings';
 /**
  * @author Guenther Grau
  */
-export default /*final*/ class BarcodeMetadata {
+export /*final*/ class BarcodeMetadata {
 
   private /*final*/ columnCount: int;
   private /*final*/ errorCorrectionLevel: int;

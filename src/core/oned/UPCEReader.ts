@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import UPCEANReader from './UPCEANReader';
-import BitArray from '../common/BitArray';
-import StringBuilder from '../util/StringBuilder';
-import NotFoundException from '../NotFoundException';
-import BarcodeFormat from '../BarcodeFormat';
-import { int, char } from 'src/customTypings';
+import { UPCEANReader } from './UPCEANReader';
+import { BitArray } from '../common/BitArray';
+import { ZXingStringBuilder } from '../util/StringBuilder';
+import { NotFoundException } from '../NotFoundException';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { int, char } from '../../customTypings';
 
 // package com.google.zxing.oned;
 
@@ -39,7 +39,7 @@ import { int, char } from 'src/customTypings';
  *
  * @experimental
  */
-export default /* final */ class UPCEReader extends UPCEANReader {
+export /* final */ class UPCEReader extends UPCEANReader {
 
   /**
    * The pattern that marks the middle, and end, of a UPC-E pattern.
@@ -114,7 +114,7 @@ export default /* final */ class UPCEReader extends UPCEANReader {
       }
     }
 
-    UPCEReader.determineNumSysAndCheckDigit(new StringBuilder(result), lgPatternFound);
+    UPCEReader.determineNumSysAndCheckDigit(new ZXingStringBuilder(result), lgPatternFound);
 
     return rowOffset;
   }
@@ -138,7 +138,7 @@ export default /* final */ class UPCEReader extends UPCEANReader {
   /**
    * @throws NotFoundException
    */
-  private static determineNumSysAndCheckDigit(resultString: StringBuilder, lgPatternFound: int): void {
+  private static determineNumSysAndCheckDigit(resultString: ZXingStringBuilder, lgPatternFound: int): void {
 
     for (let numSys: int = 0; numSys <= 1; numSys++) {
       for (let d: int = 0; d < 10; d++) {
@@ -166,7 +166,7 @@ export default /* final */ class UPCEReader extends UPCEANReader {
   public static convertUPCEtoUPCA(upce: string): string {
     // the following line is equivalent to upce.getChars(1, 7, upceChars, 0);
     const upceChars = upce.slice(1, 7).split('').map(x => x.charCodeAt(0));
-    const result: StringBuilder = new StringBuilder(/*12*/);
+    const result: ZXingStringBuilder = new ZXingStringBuilder(/*12*/);
     result.append(upce.charAt(0));
     let lastChar: char = upceChars[5];
     switch (lastChar) {

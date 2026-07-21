@@ -16,20 +16,20 @@
 
 /*namespace com.google.zxing.qrcode.decoder {*/
 
-import BitMatrix from '../../common/BitMatrix';
-import Version from './Version';
-import FormatInformation from './FormatInformation';
+import { BitMatrix } from '../../common/BitMatrix';
+import { QRCodeVersion } from './QRCodeVersion';
+import { QRCodeDecoderFormatInformation } from './QRCodeDecoderFormatInformation';
 
-import DataMask from './DataMask';
-import FormatException from '../../FormatException';
+import { QRCodeDataMask } from './QRCodeDataMask';
+import { FormatException } from '../../FormatException';
 /**
  * @author Sean Owen
  */
-export default class BitMatrixParser {
+export class BitMatrixParser {
 
     private bitMatrix: BitMatrix;
-    private parsedVersion: Version;
-    private parsedFormatInfo: FormatInformation;
+    private parsedVersion: QRCodeVersion;
+    private parsedFormatInfo: QRCodeDecoderFormatInformation;
     private isMirror: boolean;
 
     /**
@@ -47,11 +47,11 @@ export default class BitMatrixParser {
     /**
      * <p>Reads format information from one of its two locations within the QR Code.</p>
      *
-     * @return {@link FormatInformation} encapsulating the QR Code's format info
+     * @return {@link QRCodeDecoderFormatInformation} encapsulating the QR Code's format info
      * @throws FormatException if both format information locations cannot be parsed as
      * the valid encoding of format information
      */
-    public readFormatInformation(): FormatInformation /*throws FormatException*/ {
+    public readFormatInformation(): QRCodeDecoderFormatInformation /*throws FormatException*/ {
 
         if (this.parsedFormatInfo !== null && this.parsedFormatInfo !== undefined) {
             return this.parsedFormatInfo;
@@ -82,7 +82,7 @@ export default class BitMatrixParser {
             formatInfoBits2 = this.copyBit(i, 8, formatInfoBits2);
         }
 
-        this.parsedFormatInfo = FormatInformation.decodeFormatInformation(formatInfoBits1, formatInfoBits2);
+        this.parsedFormatInfo = QRCodeDecoderFormatInformation.decodeFormatInformation(formatInfoBits1, formatInfoBits2);
         if (this.parsedFormatInfo !== null) {
             return this.parsedFormatInfo;
         }
@@ -92,11 +92,11 @@ export default class BitMatrixParser {
     /**
      * <p>Reads version information from one of its two locations within the QR Code.</p>
      *
-     * @return {@link Version} encapsulating the QR Code's version
+     * @return {@link QRCodeVersion} encapsulating the QR Code's version
      * @throws FormatException if both version information locations cannot be parsed as
      * the valid encoding of version information
      */
-    public readVersion(): Version /*throws FormatException*/ {
+    public readVersion(): QRCodeVersion /*throws FormatException*/ {
 
         if (this.parsedVersion !== null && this.parsedVersion !== undefined) {
             return this.parsedVersion;
@@ -106,7 +106,7 @@ export default class BitMatrixParser {
 
         const provisionalVersion = Math.floor((dimension - 17) / 4);
         if (provisionalVersion <= 6) {
-            return Version.getVersionForNumber(provisionalVersion);
+            return QRCodeVersion.getVersionForNumber(provisionalVersion);
         }
 
         // Read top-right version info: 3 wide by 6 tall
@@ -118,7 +118,7 @@ export default class BitMatrixParser {
             }
         }
 
-        let theParsedVersion = Version.decodeVersionInformation(versionBits);
+        let theParsedVersion = QRCodeVersion.decodeVersionInformation(versionBits);
         if (theParsedVersion !== null && theParsedVersion.getDimensionForVersion() === dimension) {
             this.parsedVersion = theParsedVersion;
             return theParsedVersion;
@@ -132,7 +132,7 @@ export default class BitMatrixParser {
             }
         }
 
-        theParsedVersion = Version.decodeVersionInformation(versionBits);
+        theParsedVersion = QRCodeVersion.decodeVersionInformation(versionBits);
         if (theParsedVersion !== null && theParsedVersion.getDimensionForVersion() === dimension) {
             this.parsedVersion = theParsedVersion;
             return theParsedVersion;
@@ -160,7 +160,7 @@ export default class BitMatrixParser {
 
         // Get the data mask for the format used in this QR Code. This will exclude
         // some bits from reading as we wind through the bit matrix.
-        const dataMask = DataMask.values.get(formatInfo.getDataMask());
+        const dataMask = QRCodeDataMask.values.get(formatInfo.getDataMask());
         const dimension = this.bitMatrix.getHeight();
         dataMask.unmaskBitMatrix(this.bitMatrix, dimension);
 
@@ -214,7 +214,7 @@ export default class BitMatrixParser {
         if (this.parsedFormatInfo === null) {
             return; // We have no format information, and have no data mask
         }
-        const dataMask = DataMask.values.get(this.parsedFormatInfo.getDataMask());
+        const dataMask = QRCodeDataMask.values.get(this.parsedFormatInfo.getDataMask());
         const dimension = this.bitMatrix.getHeight();
         dataMask.unmaskBitMatrix(this.bitMatrix, dimension);
     }

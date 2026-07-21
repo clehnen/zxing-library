@@ -1,8 +1,8 @@
 import { BrowserCodeReader } from './BrowserCodeReader';
-import MultiFormatReader from '../core/MultiFormatReader';
-import BinaryBitmap from '../core/BinaryBitmap';
-import Result from '../core/Result';
-import DecodeHintType from '../core/DecodeHintType';
+import { MultiFormatReader } from '../core/MultiFormatReader';
+import { BinaryBitmap } from '../core/BinaryBitmap';
+import { Result } from '../core/Result';
+import { DecodeHintType } from '../core/DecodeHintType';
 
 export class BrowserMultiFormatReader extends BrowserCodeReader {
 

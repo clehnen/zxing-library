@@ -1,20 +1,20 @@
-import BarcodeFormat from '../../../BarcodeFormat';
-// import ResultPoint from '../../../ResultPoint';
-import BitArray from '../../../common/BitArray';
-import MathUtils from '../../../common/detector/MathUtils';
-import DecodeHintType from '../../../DecodeHintType';
-// import FormatException from '../../../FormatException';
-import NotFoundException from '../../../NotFoundException';
-import Result from '../../../Result';
-import System from '../../../util/System';
-import AbstractRSSReader from '../../rss/AbstractRSSReader';
-import DataCharacter from '../../rss/DataCharacter';
-import FinderPattern from '../../rss/FinderPattern';
-import RSSUtils from '../../rss/RSSUtils';
-import BitArrayBuilder from './BitArrayBuilder';
-import { createDecoder } from './decoders/AbstractExpandedDecoderComplement';
-import ExpandedPair from './ExpandedPair';
-import ExpandedRow from './ExpandedRow';
+import { BarcodeFormat } from '../../../BarcodeFormat';
+// import { ResultPoint } from '../../../ResultPoint';
+import { BitArray } from '../../../common/BitArray';
+import { MathUtils } from '../../../common/detector/MathUtils';
+import { DecodeHintType } from '../../../DecodeHintType';
+// import { FormatException } from '../../../FormatException';
+import { NotFoundException } from '../../../NotFoundException';
+import { Result } from '../../../Result';
+import { ZXingSystem } from '../../../util/ZXingSystem';
+import { AbstractRSSReader } from '../../rss/AbstractRSSReader';
+import { DataCharacter } from '../../rss/DataCharacter';
+import { FinderPattern } from '../../rss/FinderPattern';
+import { RSSUtils } from '../../rss/RSSUtils';
+import { BitArrayBuilder } from './BitArrayBuilder';
+import { createAbstractExpandedDecoder } from './decoders/AbstractExpandedDecoderComplement';
+import { ExpandedPair } from './ExpandedPair';
+import { ExpandedRow } from './ExpandedRow';
 
 // import java.util.ArrayList;
 // import java.util.Iterator;
@@ -23,7 +23,7 @@ import ExpandedRow from './ExpandedRow';
 // import java.util.Collections;
 
 /** @experimental */
-export default class RSSExpandedReader extends AbstractRSSReader {
+export class RSSExpandedReader extends AbstractRSSReader {
   private static readonly SYMBOL_WIDEST = [7, 5, 4, 3, 1];
   private static readonly EVEN_TOTAL_SUBSET = [4, 20, 52, 104, 204];
   private static readonly GSUM = [0, 348, 1388, 2948, 3988];
@@ -460,7 +460,7 @@ export default class RSSExpandedReader extends AbstractRSSReader {
   static constructResult(pairs: Array<ExpandedPair>) {
     const binary = BitArrayBuilder.buildBitArray(pairs);
 
-    const decoder = createDecoder(binary);
+    const decoder = createAbstractExpandedDecoder(binary);
     const resultingString = decoder.parseInformation();
 
     const firstPoints = pairs[0].getFinderPattern().getResultPoints();
@@ -694,7 +694,7 @@ export default class RSSExpandedReader extends AbstractRSSReader {
 
     // Make 'counters' hold 1-4
     const counters = this.getDecodeFinderCounters();
-    System.arraycopy(counters, 0, counters, 1, counters.length - 1);
+    ZXingSystem.arraycopy(counters, 0, counters, 1, counters.length - 1);
 
     counters[0] = firstCounter;
     let value = 0;

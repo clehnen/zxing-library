@@ -17,37 +17,37 @@
 // package com.google.zxing.pdf417.decoder;
 
 // import com.google.zxing.ChecksumException;
-import ChecksumException from '../../ChecksumException';
+import { ChecksumException } from '../../ChecksumException';
 // import com.google.zxing.FormatException;
-import FormatException from '../../FormatException';
+import { FormatException } from '../../FormatException';
 // import com.google.zxing.NotFoundException;
-import NotFoundException from '../../NotFoundException';
+import { NotFoundException } from '../../NotFoundException';
 // import com.google.zxing.ResultPoint;
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 // import com.google.zxing.common.BitMatrix;
-import BitMatrix from '../../common/BitMatrix';
+import { BitMatrix } from '../../common/BitMatrix';
 // import com.google.zxing.common.DecoderResult;
-import DecoderResult from '../../common/DecoderResult';
+import { DecoderResult } from '../../common/DecoderResult';
 // import com.google.zxing.common.detector.MathUtils;
-import MathUtils from '../../common/detector/MathUtils';
+import { MathUtils } from '../../common/detector/MathUtils';
 // import com.google.zxing.pdf417.PDF417Common;
-import PDF417Common from '../PDF417Common';
+import { PDF417Common } from '../PDF417Common';
 // import com.google.zxing.pdf417.decoder.ec.ErrorCorrection;
-import ErrorCorrection from './ec/ErrorCorrection';
+import { PDF417DecoderErrorCorrection } from './ec/PDF417DecoderErrorCorrection';
 
 // local
-import BoundingBox from './BoundingBox';
-import DetectionResultRowIndicatorColumn from './DetectionResultRowIndicatorColumn';
-import DetectionResult from './DetectionResult';
-import DetectionResultColumn from './DetectionResultColumn';
-import Codeword from './Codeword';
-import BarcodeMetadata from './BarcodeMetadata';
-import BarcodeValue from './BarcodeValue';
-import PDF417CodewordDecoder from './PDF417CodewordDecoder';
-import DecodedBitStreamParser from './DecodedBitStreamParser';
+import { BoundingBox } from './BoundingBox';
+import { DetectionResultRowIndicatorColumn } from './DetectionResultRowIndicatorColumn';
+import { DetectionResult } from './DetectionResult';
+import { DetectionResultColumn } from './DetectionResultColumn';
+import { Codeword } from './Codeword';
+import { BarcodeMetadata } from './BarcodeMetadata';
+import { BarcodeValue } from './BarcodeValue';
+import { PDF417CodewordDecoder } from './PDF417CodewordDecoder';
+import { PDF417DecodedBitStreamParser } from './PDF417DecodedBitStreamParser';
 
 // utils
-import Formatter from '../../util/Formatter';
+import { Formatter } from '../../util/Formatter';
 import { int, List, Collection } from '../../../customTypings';
 
 // import java.util.ArrayList;
@@ -58,13 +58,13 @@ import { int, List, Collection } from '../../../customTypings';
 /**
  * @author Guenther Grau
  */
-export default /*public final*/ class PDF417ScanningDecoder {
+export /*public final*/ class PDF417ScanningDecoder {
 
   /*final*/ static CODEWORD_SKEW_SIZE: int = 2;
 
   /*final*/ static MAX_ERRORS: int = 3;
   /*final*/ static MAX_EC_CODEWORDS: int = 512;
-  /*final*/ static errorCorrection: ErrorCorrection = new ErrorCorrection();
+  /*final*/ static errorCorrection: PDF417DecoderErrorCorrection = new PDF417DecoderErrorCorrection();
 
   private constructor() {}
 
@@ -613,7 +613,7 @@ export default /*public final*/ class PDF417ScanningDecoder {
     PDF417ScanningDecoder.verifyCodewordCount(codewords, numECCodewords);
 
     // Decode the codewords
-    let decoderResult: DecoderResult = DecodedBitStreamParser.decode(codewords, '' + ecLevel);
+    let decoderResult: DecoderResult = PDF417DecodedBitStreamParser.decode(codewords, '' + ecLevel);
     decoderResult.setErrorsCorrected(correctedErrorsCount);
     decoderResult.setErasures(erasures.length);
     return decoderResult;

@@ -16,12 +16,11 @@
 
 /*namespace com.google.zxing {*/
 
-import './InvertedLuminanceSource'; // required because of circular dependencies between LuminanceSource and InvertedLuminanceSource
-import InvertedLuminanceSource from './InvertedLuminanceSource';
-import LuminanceSource from './LuminanceSource';
+import { InvertedLuminanceSource } from './InvertedLuminanceSource';
+import { LuminanceSource } from './LuminanceSource';
 
-import System from './util/System';
-import IllegalArgumentException from './IllegalArgumentException';
+import { ZXingSystem } from './util/ZXingSystem';
+import { IllegalArgumentException } from './IllegalArgumentException';
 
 /**
  * This class is used to help decode images from files which arrive as RGB data from
@@ -30,7 +29,7 @@ import IllegalArgumentException from './IllegalArgumentException';
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Betaminos
  */
-export default class RGBLuminanceSource extends LuminanceSource {
+export class RGBLuminanceSource extends LuminanceSource {
 
     // public constructor(width: number /*int*/, height: number /*int*/, const pixels: Int32Array) {
     //   super(width, height)
@@ -110,7 +109,7 @@ export default class RGBLuminanceSource extends LuminanceSource {
             row = new Uint8ClampedArray(width);
         }
         const offset = (y + this.top) * this.dataWidth + this.left;
-        System.arraycopy(this.luminances, offset, row, 0, width);
+        ZXingSystem.arraycopy(this.luminances, offset, row, 0, width);
         return row;
     }
 
@@ -132,14 +131,14 @@ export default class RGBLuminanceSource extends LuminanceSource {
 
         // If the width matches the full width of the underlying data, perform a single copy.
         if (width === this.dataWidth) {
-            System.arraycopy(this.luminances, inputOffset, matrix, 0, area);
+            ZXingSystem.arraycopy(this.luminances, inputOffset, matrix, 0, area);
             return matrix;
         }
 
         // Otherwise copy one cropped row at a time.
         for (let y = 0; y < height; y++) {
             const outputOffset = y * width;
-            System.arraycopy(this.luminances, inputOffset, matrix, outputOffset, width);
+            ZXingSystem.arraycopy(this.luminances, inputOffset, matrix, outputOffset, width);
             inputOffset += this.dataWidth;
         }
         return matrix;

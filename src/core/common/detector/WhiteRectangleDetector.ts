@@ -16,11 +16,11 @@
 
 /*namespace com.google.zxing.common.detector {*/
 
-import ResultPoint from '../../ResultPoint';
-import BitMatrix from '../BitMatrix';
+import { ResultPoint } from '../../ResultPoint';
+import { BitMatrix } from '../BitMatrix';
 
-import MathUtils from './MathUtils';
-import NotFoundException from '../../NotFoundException';
+import { MathUtils } from './MathUtils';
+import { NotFoundException } from '../../NotFoundException';
 
 /**
  * <p>
@@ -32,7 +32,7 @@ import NotFoundException from '../../NotFoundException';
  *
  * @author David Olivier
  */
-export default class WhiteRectangleDetector {
+export class WhiteRectangleDetector {
 
     private static INIT_SIZE = 10;
     private static CORR = 1;

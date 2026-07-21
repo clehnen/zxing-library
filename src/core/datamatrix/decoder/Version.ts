@@ -1,5 +1,5 @@
 
-import FormatException from '../../FormatException';
+import { FormatException } from '../../FormatException';
 
 /*
  * Copyright 2007 ZXing authors
@@ -72,7 +72,7 @@ export class ECB {
  *
  * @author bbrown@google.com (Brian Brown)
  */
-export default class Version {
+export class Version {
 
   private static VERSIONS: Version[] = Version.buildVersions();
 

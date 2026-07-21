@@ -16,8 +16,8 @@
 
 /*namespace com.google.zxing.common.reedsolomon {*/
 
-// import GenericGF from './GenericGF';
-import AbstractGenericGF from './AbstractGenericGF';
+// import { GenericGF } from './GenericGF';
+import { AbstractGenericGF } from './AbstractGenericGF';
 
 /**
  * <p>Represents a polynomial whose coefficients are elements of a GF.
@@ -28,7 +28,7 @@ import AbstractGenericGF from './AbstractGenericGF';
  *
  * @author Sean Owen
  */
-export default abstract class AbstractGenericGFPoly {
+export abstract class AbstractGenericGFPoly {
 
     protected field: AbstractGenericGF;
     protected coefficients: Int32Array;

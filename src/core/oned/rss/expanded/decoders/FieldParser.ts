@@ -1,8 +1,8 @@
-import NotFoundException from '../../../../NotFoundException';
+import { NotFoundException } from '../../../../NotFoundException';
 
 type DataLengthProcessor = (rawInformation: string) => string;
 
-export default class FieldParser {
+export class FieldParser {
 
   private static fixed(aiSize: number, fieldSize: number): DataLengthProcessor {
     return (rawInformation) => FieldParser.processFixedAI(aiSize, fieldSize, rawInformation);

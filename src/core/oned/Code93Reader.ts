@@ -16,16 +16,16 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
-import ChecksumException from '../ChecksumException';
-import DecodeHintType from '../DecodeHintType';
-import FormatException from '../FormatException';
-import NotFoundException from '../NotFoundException';
-import OneDReader from './OneDReader';
-import Result from '../Result';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
+import { ChecksumException } from '../ChecksumException';
+import { DecodeHintType } from '../DecodeHintType';
+import { FormatException } from '../FormatException';
+import { NotFoundException } from '../NotFoundException';
+import { OneDReader } from './OneDReader';
+import { Result } from '../Result';
 //import com.google.zxing.ResultMetadataType;
-import ResultPoint from '../ResultPoint';
+import { ResultPoint } from '../ResultPoint';
 
 
 /**
@@ -34,7 +34,7 @@ import ResultPoint from '../ResultPoint';
  * @author Sean Owen
  * @see Code39Reader
  */
- export default class Code93Reader extends OneDReader {
+ export class Code93Reader extends OneDReader {
 
   // Note that 'abcd' are dummy characters in place of control characters.
   private static readonly ALPHABET_STRING = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%abcd*";

@@ -16,18 +16,18 @@
 
 /*namespace com.google.zxing.common {*/
 
-import GridSampler from './GridSampler';
-import BitMatrix from './BitMatrix';
-import PerspectiveTransform from './PerspectiveTransform';
+import { GridSampler } from './GridSampler';
+import { BitMatrix } from './BitMatrix';
+import { PerspectiveTransform } from './PerspectiveTransform';
 
-import NotFoundException from '../NotFoundException';
+import { NotFoundException } from '../NotFoundException';
 
 import { float } from '../../customTypings';
 
 /**
  * @author Sean Owen
  */
-export default class DefaultGridSampler extends GridSampler {
+export class DefaultGridSampler extends GridSampler {
 
     /*@Override*/
     public sampleGrid(image: BitMatrix,

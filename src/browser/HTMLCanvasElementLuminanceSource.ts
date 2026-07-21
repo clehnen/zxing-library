@@ -1,6 +1,6 @@
-﻿import InvertedLuminanceSource from '../core/InvertedLuminanceSource';
-import LuminanceSource from '../core/LuminanceSource';
-import IllegalArgumentException from '../core/IllegalArgumentException';
+﻿import { InvertedLuminanceSource } from '../core/InvertedLuminanceSource';
+import { LuminanceSource } from '../core/LuminanceSource';
+import { IllegalArgumentException } from '../core/IllegalArgumentException';
 
 /**
  * @deprecated Moving to @zxing/browser

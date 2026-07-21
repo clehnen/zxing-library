@@ -17,17 +17,17 @@
 // package com.google.zxing.pdf417.decoder;
 
 // import com.google.zxing.NotFoundException;
-import NotFoundException from '../../NotFoundException';
+import { NotFoundException } from '../../NotFoundException';
 // import com.google.zxing.ResultPoint;
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 // import com.google.zxing.common.BitMatrix;
-import BitMatrix from '../../common/BitMatrix';
+import { BitMatrix } from '../../common/BitMatrix';
 import { int } from '../../../customTypings';
 
 /**
  * @author Guenther Grau
  */
-export default /*final*/ class BoundingBox {
+export /*final*/ class BoundingBox {
 
   private /*final*/ image: BitMatrix;
   private /*final*/ topLeft: ResultPoint;

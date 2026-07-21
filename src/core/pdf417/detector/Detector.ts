@@ -17,17 +17,17 @@
 // package com.google.zxing.pdf417.detector;
 
 // import com.google.zxing.BinaryBitmap;
-import BinaryBitmap from '../../BinaryBitmap';
+import { BinaryBitmap } from '../../BinaryBitmap';
 // import com.google.zxing.DecodeHintType;
-import DecodeHintType from '../../DecodeHintType';
+import { DecodeHintType } from '../../DecodeHintType';
 // import com.google.zxing.NotFoundException;
 // import com.google.zxing.ResultPoint;
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 // import com.google.zxing.common.BitMatrix;
-import BitMatrix from '../../common/BitMatrix';
-import System from '../../util/System';
-import Arrays from '../../util/Arrays';
-import PDF417DetectorResult from './PDF417DetectorResult';
+import { BitMatrix } from '../../common/BitMatrix';
+import { ZXingSystem } from '../../util/ZXingSystem';
+import { ZXingArrays } from '../../util/ZXingArrays';
+import { PDF417DetectorResult } from './PDF417DetectorResult';
 
 import { float, int } from '../../../customTypings';
 
@@ -44,7 +44,7 @@ import { float, int } from '../../../customTypings';
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Guenther Grau
  */
-export default /*public*/ /*final*/ class Detector {
+export /*public*/ /*final*/ class Detector {
 
   private static /*final*/ INDEXES_START_PATTERN = Int32Array.from([0, 4, 1, 5]);
   private static /*final*/ INDEXES_STOP_PATTERN = Int32Array.from([6, 2, 7, 3]);
@@ -241,7 +241,7 @@ export default /*public*/ /*final*/ class Detector {
       result[3] = new ResultPoint(previousRowLoc[1], stopRow);
     }
     if (stopRow - startRow < Detector.BARCODE_MIN_HEIGHT) {
-      Arrays.fill(result, null);
+      ZXingArrays.fill(result, null);
     }
     return result;
   }
@@ -263,7 +263,7 @@ export default /*public*/ /*final*/ class Detector {
                                          whiteFirst: boolean,
                                          pattern: Int32Array,
                                          counters: Int32Array): Int32Array {
-    Arrays.fillWithin(counters, 0, counters.length, 0);
+    ZXingArrays.fillWithin(counters, 0, counters.length, 0);
     let patternStart = column;
     let pixelDrift = 0;
 
@@ -284,7 +284,7 @@ export default /*public*/ /*final*/ class Detector {
             return new Int32Array([patternStart, x]);
           }
           patternStart += counters[0] + counters[1];
-          System.arraycopy(counters, 2, counters, 0, counterPosition - 1);
+          ZXingSystem.arraycopy(counters, 2, counters, 0, counterPosition - 1);
           counters[counterPosition - 1] = 0;
           counters[counterPosition] = 0;
           counterPosition--;

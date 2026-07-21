@@ -16,8 +16,8 @@
 
 /*namespace com.google.zxing.common {*/
 
-import ResultPoint from '../ResultPoint';
-import BitMatrix from './BitMatrix';
+import { ResultPoint } from '../ResultPoint';
+import { BitMatrix } from './BitMatrix';
 
 /**
  * <p>Encapsulates the result of detecting a barcode in an image. This includes the raw
@@ -26,7 +26,7 @@ import BitMatrix from './BitMatrix';
  *
  * @author Sean Owen
  */
-export default class DetectorResult {
+export class DetectorResult {
 
     private bits: BitMatrix;
     private points: Array<ResultPoint>;

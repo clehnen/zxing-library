@@ -1,4 +1,4 @@
-export default abstract class DecodedObject {
+export abstract class DecodedObject {
 
   private readonly newPosition: number;
 

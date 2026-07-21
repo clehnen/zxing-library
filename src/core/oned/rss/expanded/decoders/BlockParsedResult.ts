@@ -1,6 +1,6 @@
-import DecodedInformation from './DecodedInformation';
+import { DecodedInformation } from './DecodedInformation';
 
-export default class BlockParsedResult {
+export class BlockParsedResult {
 
   private readonly decodedInformation: DecodedInformation | null;
   private readonly finished: boolean;

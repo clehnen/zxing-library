@@ -16,11 +16,11 @@
 // package com.google.zxing.pdf417;
 
 // import java.util.Arrays;
-import Arrays from '../util/Arrays';
+import { ZXingArrays } from '../util/ZXingArrays';
 // import java.util.Collection;
 
 // import com.google.zxing.common.detector.MathUtils;
-import MathUtils from '../common/detector/MathUtils';
+import { MathUtils } from '../common/detector/MathUtils';
 
 import { int } from '../../customTypings';
 
@@ -28,7 +28,7 @@ import { int } from '../../customTypings';
  * @author SITA Lab (kevin.osullivan@sita.aero)
  * @author Guenther Grau
  */
-export default /*public final*/ class PDF417Common {
+export /*public final*/ class PDF417Common {
 
     public static /*final int*/ NUMBER_OF_CODEWORDS = 929;
     // Maximum Codewords (Data + Error).
@@ -73,7 +73,7 @@ export default /*public final*/ class PDF417Common {
      * @return the codeword corresponding to the symbol.
      */
     public static getCodeword(symbol: number/*int*/): number/*int*/ {
-        const i = Arrays.binarySearch(PDF417Common.SYMBOL_TABLE, symbol & 0x3FFFF);
+        const i = ZXingArrays.binarySearch(PDF417Common.SYMBOL_TABLE, symbol & 0x3FFFF);
         if (i < 0) {
             return -1;
         }

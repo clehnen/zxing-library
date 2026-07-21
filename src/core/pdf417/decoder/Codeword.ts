@@ -21,7 +21,7 @@ import { int } from '../../../customTypings';
 /**
  * @author Guenther Grau
  */
-export default /*final*/ class Codeword {
+export /*final*/ class Codeword {
 
   private static /*final*/ BARCODE_ROW_UNKNOWN: int = -1;
 

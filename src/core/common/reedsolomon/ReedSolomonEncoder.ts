@@ -19,11 +19,11 @@
 /*import java.util.ArrayList;*/
 /*import java.util.List;*/
 
-import GenericGF from './GenericGF';
-import GenericGFPoly from './GenericGFPoly';
+import { GenericGF } from './GenericGF';
+import { GenericGFPoly } from './GenericGFPoly';
 
-import System from '../../util/System';
-import IllegalArgumentException from '../../IllegalArgumentException';
+import { ZXingSystem } from '../../util/ZXingSystem';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
 
 /**
  * <p>Implements Reed-Solomon encoding, as the name implies.</p>
@@ -31,7 +31,7 @@ import IllegalArgumentException from '../../IllegalArgumentException';
  * @author Sean Owen
  * @author William Rucklidge
  */
-export default class ReedSolomonEncoder {
+export class ReedSolomonEncoder {
 
     private field: GenericGF;
     private cachedGenerators: GenericGFPoly[];
@@ -94,7 +94,7 @@ export default class ReedSolomonEncoder {
         }
         const generator = this.buildGenerator(ecBytes);
         const infoCoefficients: Int32Array = new Int32Array(dataBytes);
-        System.arraycopy(toEncode, 0, infoCoefficients, 0, dataBytes);
+        ZXingSystem.arraycopy(toEncode, 0, infoCoefficients, 0, dataBytes);
         let info = new GenericGFPoly(this.field, infoCoefficients);
         info = info.multiplyByMonomial(ecBytes, 1);
         const remainder = info.divide(generator)[1];
@@ -103,7 +103,7 @@ export default class ReedSolomonEncoder {
         for (let i = 0; i < numZeroCoefficients; i++) {
             toEncode[dataBytes + i] = 0;
         }
-        System.arraycopy(coefficients, 0, toEncode, dataBytes + numZeroCoefficients, coefficients.length);
+        ZXingSystem.arraycopy(coefficients, 0, toEncode, dataBytes + numZeroCoefficients, coefficients.length);
     }
 
 }

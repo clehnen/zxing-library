@@ -1,5 +1,5 @@
 import { BrowserCodeReader } from './BrowserCodeReader';
-import DataMatrixReader from '../core/datamatrix/DataMatrixReader';
+import { DataMatrixReader } from '../core/datamatrix/DataMatrixReader';
 
 /**
  * @deprecated Moving to @zxing/browser

@@ -1,9 +1,9 @@
-import Arrays from '../../util/Arrays';
+import { ZXingArrays } from '../../util/ZXingArrays';
 import * as C from './EncoderConstants';
 
 export function static_SHIFT_TABLE(SHIFT_TABLE: Int32Array[]): Int32Array[] {
   for (let table /*Int32Array*/ of SHIFT_TABLE) {
-    Arrays.fill(table, -1);
+    ZXingArrays.fill(table, -1);
   }
   SHIFT_TABLE[C.MODE_UPPER][C.MODE_PUNCT] = 0;
   SHIFT_TABLE[C.MODE_LOWER][C.MODE_PUNCT] = 0;
@@ -14,4 +14,8 @@ export function static_SHIFT_TABLE(SHIFT_TABLE: Int32Array[]): Int32Array[] {
   return SHIFT_TABLE;
 }
 
-export const /*final*/ SHIFT_TABLE: Int32Array[] = static_SHIFT_TABLE(Arrays.createInt32Array(6, 6)); // mode shift codes, per table
+export const /*final*/ SHIFT_TABLE: Int32Array[] = static_SHIFT_TABLE(ZXingArrays.createInt32Array(6, 6)); // mode shift codes, per table
+
+export default {
+  SHIFT_TABLE
+}

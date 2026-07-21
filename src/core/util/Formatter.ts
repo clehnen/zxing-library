@@ -1,7 +1,7 @@
 /**
  * Java Formatter class polyfill that works in the JS way.
  */
-export default class Formatter {
+export class Formatter {
 
   /**
    * The internal formatted value.

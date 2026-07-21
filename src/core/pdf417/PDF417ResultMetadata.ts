@@ -19,7 +19,7 @@
 /**
  * @author Guenther Grau
  */
-export default /*public final*/ class PDF417ResultMetadata {
+export /*public final*/ class PDF417ResultMetadata {
 
     private segmentIndex: /*int*/ number;
     private fileId: string;

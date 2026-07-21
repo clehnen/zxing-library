@@ -1,14 +1,14 @@
-import BitArray from '../../../../common/BitArray';
-import StringBuilder from '../../../../util/StringBuilder';
-import AI01decoder from './AI01decoder';
+import { BitArray } from '../../../../common/BitArray';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
+import { AI01decoder } from './AI01decoder';
 
-export default abstract class AI01weightDecoder extends AI01decoder {
+export abstract class AI01weightDecoder extends AI01decoder {
 
   constructor(information: BitArray) {
     super(information);
   }
 
-  encodeCompressedWeight(buf: StringBuilder, currentPos: number, weightSize: number): void {
+  encodeCompressedWeight(buf: ZXingStringBuilder, currentPos: number, weightSize: number): void {
     let originalWeightNumeric = this.getGeneralDecoder().extractNumericValueFromBitArray(currentPos, weightSize);
     this.addWeightCode(buf, originalWeightNumeric);
 
@@ -25,7 +25,7 @@ export default abstract class AI01weightDecoder extends AI01decoder {
     buf.append('' + weightNumeric);
   }
 
-  protected abstract addWeightCode(buf: StringBuilder, weight: number): void;
+  protected abstract addWeightCode(buf: ZXingStringBuilder, weight: number): void;
 
   protected abstract checkWeight(weight: number): number;
 }

@@ -1,7 +1,7 @@
-import GridSampler from './GridSampler';
-import DefaultGridSampler from './DefaultGridSampler';
+import { GridSampler } from './GridSampler';
+import { DefaultGridSampler } from './DefaultGridSampler';
 
-export default class GridSamplerInstance {
+export class GridSamplerInstance {
 
     private static gridSampler: GridSampler = new DefaultGridSampler();
 

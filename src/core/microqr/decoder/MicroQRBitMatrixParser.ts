@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import BitMatrix from '../../common/BitMatrix';
-import FormatException from '../../FormatException';
-import MicroQRFormatInformation from './MicroQRFormatInformation';
-import MicroQRVersion from './MicroQRVersion';
-import MicroQRDataMask from './MicroQRDataMask';
+import { BitMatrix } from '../../common/BitMatrix';
+import { FormatException } from '../../FormatException';
+import { MicroQRFormatInformation } from './MicroQRFormatInformation';
+import { MicroQRVersion } from './MicroQRVersion';
+import { MicroQRDataMask } from './MicroQRDataMask';
 
 /**
  * Reads format information and codewords from a sampled Micro QR Code BitMatrix.
  */
-export default class MicroQRBitMatrixParser {
+export class MicroQRBitMatrixParser {
 
     private parsedFormatInfo: MicroQRFormatInformation | null = null;
     private parsedVersion: MicroQRVersion | null = null;

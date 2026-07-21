@@ -19,12 +19,12 @@
 // package com.google.zxing.pdf417.decoder.ec;
 
 // import com.google.zxing.pdf417.PDF417Common;
-import PDF417Common from '../../PDF417Common';
+import { PDF417Common } from '../../PDF417Common';
 
-import ModulusPoly from './ModulusPoly';
+import { ModulusPoly } from './ModulusPoly';
 
-import IllegalArgumentException from '../../../IllegalArgumentException';
-import ModulusBase from './ModulusBase';
+import { IllegalArgumentException } from '../../../IllegalArgumentException';
+import { ModulusBase } from './ModulusBase';
 
 
 /**
@@ -33,7 +33,7 @@ import ModulusBase from './ModulusBase';
  * @author Sean Owen
  * @see com.google.zxing.common.reedsolomon.GenericGF
  */
-export default /*public final*/ class ModulusGF extends ModulusBase {
+export /*public final*/ class ModulusGF extends ModulusBase {
 
   public static /*final*/ PDF417_GF: ModulusGF = new ModulusGF(PDF417Common.NUMBER_OF_CODEWORDS, 3);
 

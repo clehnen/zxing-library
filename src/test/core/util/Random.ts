@@ -1,4 +1,4 @@
-import seedrandom = require('seedrandom');
+import seedrandom from 'seedrandom';
 
 import { int } from '../../../customTypings';
 

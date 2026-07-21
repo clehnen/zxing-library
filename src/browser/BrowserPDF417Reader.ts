@@ -1,5 +1,5 @@
 import { BrowserCodeReader } from './BrowserCodeReader';
-import PDF417Reader from '../core/pdf417/PDF417Reader';
+import { PDF417Reader } from '../core/pdf417/PDF417Reader';
 
 /**
  * @deprecated Moving to @zxing/browser

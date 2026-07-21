@@ -1,6 +1,6 @@
-import Token from './Token';
-import SimpleToken from './SimpleToken';
-import BinaryShiftToken from './BinaryShiftToken';
+import { Token } from './Token';
+import { SimpleToken } from './SimpleToken';
+import { BinaryShiftToken } from './BinaryShiftToken';
 
 export function addBinaryShift(
   token: Token,

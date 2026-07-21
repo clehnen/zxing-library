@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
-    "ignoreDeprecations": "6.0",
-    "baseUrl": "./",
-    "module": "commonjs",
-    "target": "es5",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "rootDir": "./src",
     "lib": [
       "es2020",
       "dom"
@@ -13,11 +12,9 @@
     "noImplicitAny": false,
     "strictNullChecks": false,
     "useUnknownInCatchVariables": false,
-    "rootDir": "./src",
     "sourceMap": true,
     "declaration": true,
     "preserveConstEnums": true,
-    "downlevelIteration": true,
     "paths": {
       "@zxing/library": [
         "./dist"

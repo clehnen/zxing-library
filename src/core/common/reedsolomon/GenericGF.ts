@@ -16,12 +16,12 @@
 
 /*namespace com.google.zxing.common.reedsolomon {*/
 
-import GenericGFPoly from './GenericGFPoly';
-import AbstractGenericGF from './AbstractGenericGF';
+import { GenericGFPoly } from './GenericGFPoly';
+import { AbstractGenericGF } from './AbstractGenericGF';
 
-import Integer from '../../util/Integer';
-import IllegalArgumentException from '../../IllegalArgumentException';
-import ArithmeticException from '../../ArithmeticException';
+import { ZXingInteger } from '../../util/ZXingInteger';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
+import { ArithmeticException } from '../../ArithmeticException';
 
 /**
  * <p>This class contains utility methods for performing mathematical operations over
@@ -34,7 +34,7 @@ import ArithmeticException from '../../ArithmeticException';
  * @author Sean Owen
  * @author David Olivier
  */
-export default class GenericGF extends AbstractGenericGF {
+export class GenericGF extends AbstractGenericGF {
   public static AZTEC_DATA_12 = new GenericGF(0x1069, 4096, 1); // x^12 + x^6 + x^5 + x^3 + 1
   public static AZTEC_DATA_10 = new GenericGF(0x409, 1024, 1); // x^10 + x^3 + 1
   public static AZTEC_DATA_6 = new GenericGF(0x43, 64, 1); // x^6 + x + 1
@@ -146,7 +146,7 @@ export default class GenericGF extends AbstractGenericGF {
   /*@Override*/
   public toString(): string {
     return (
-      'GF(0x' + Integer.toHexString(this.primitive) + ',' + this.size + ')'
+      'GF(0x' + ZXingInteger.toHexString(this.primitive) + ',' + this.size + ')'
     );
   }
 

@@ -17,14 +17,14 @@
 // package com.google.zxing.aztec.encoder;
 
 // import com.google.zxing.common.BitArray;
-import BitArray from '../../common/BitArray';
+import { BitArray } from '../../common/BitArray';
 
-import Token from './Token';
-import Integer from '../../util/Integer';
+import { Token } from './Token';
+import { ZXingInteger } from '../../util/ZXingInteger';
 
 import { short, int } from '../../../customTypings';
 
-export default /*final*/ class SimpleToken extends Token {
+export /*final*/ class SimpleToken extends Token {
 
   // For normal words, indicates value and bitCount
   private /*final*/ value: short;
@@ -59,7 +59,7 @@ export default /*final*/ class SimpleToken extends Token {
   public toString(): String {
     let value: int = this.value & ((1 << this.bitCount) - 1);
     value |= 1 << this.bitCount;
-    return '<' + Integer.toBinaryString(value | (1 << this.bitCount)).substring(1) + '>';
+    return '<' + ZXingInteger.toBinaryString(value | (1 << this.bitCount)).substring(1) + '>';
   }
 
 }

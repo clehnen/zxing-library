@@ -1,17 +1,17 @@
-import ArgumentException from '../core/ArgumentException';
-import BinaryBitmap from '../core/BinaryBitmap';
-import ChecksumException from '../core/ChecksumException';
-import GlobalHistogramBinarizer from '../core/common/GlobalHistogramBinarizer';
-import HybridBinarizer from '../core/common/HybridBinarizer';
-import DecodeHintType from '../core/DecodeHintType';
-import FormatException from '../core/FormatException';
-import NotFoundException from '../core/NotFoundException';
-import Reader from '../core/Reader';
-import Result from '../core/Result';
-import { DecodeContinuouslyCallback } from './DecodeContinuouslyCallback';
-import { HTMLCanvasElementLuminanceSource } from './HTMLCanvasElementLuminanceSource';
-import { HTMLVisualMediaElement } from './HTMLVisualMediaElement';
-import { VideoInputDevice } from './VideoInputDevice';
+import {ArgumentException} from '../core/ArgumentException';
+import {BinaryBitmap} from '../core/BinaryBitmap';
+import {ChecksumException} from '../core/ChecksumException';
+import {GlobalHistogramBinarizer} from '../core/common/GlobalHistogramBinarizer';
+import {HybridBinarizer} from '../core/common/HybridBinarizer';
+import {DecodeHintType} from '../core/DecodeHintType';
+import {FormatException} from '../core/FormatException';
+import {NotFoundException} from '../core/NotFoundException';
+import {Reader} from '../core/Reader';
+import {Result} from '../core/Result';
+import {DecodeContinuouslyCallback} from './DecodeContinuouslyCallback';
+import {HTMLCanvasElementLuminanceSource} from './HTMLCanvasElementLuminanceSource';
+import {HTMLVisualMediaElement} from './HTMLVisualMediaElement';
+import {VideoInputDevice} from './VideoInputDevice';
 
 /**
  * @deprecated Moving to @zxing/browser
@@ -38,7 +38,7 @@ export class BrowserCodeReader {
    */
   public get canEnumerateDevices() {
     return !!(
-      this.isMediaDevicesSuported && navigator.mediaDevices.enumerateDevices
+        this.isMediaDevicesSuported && navigator.mediaDevices.enumerateDevices
     );
   }
 
@@ -146,9 +146,9 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public constructor(
-    protected readonly reader: Reader,
-    protected timeBetweenScansMillis: number = 500,
-    protected _hints?: Map<DecodeHintType, any>
+      protected readonly reader: Reader,
+      protected timeBetweenScansMillis: number = 500,
+      protected _hints?: Map<DecodeHintType, any>,
   ) {}
 
   /**
@@ -156,11 +156,11 @@ export class BrowserCodeReader {
    */
   public async listVideoInputDevices(): Promise<MediaDeviceInfo[]> {
     if (!this.hasNavigator) {
-      throw new Error("Can't enumerate devices, navigator is not present.");
+      throw new Error('Can\'t enumerate devices, navigator is not present.');
     }
 
     if (!this.canEnumerateDevices) {
-      throw new Error("Can't enumerate devices, method not supported.");
+      throw new Error('Can\'t enumerate devices, method not supported.');
     }
 
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -178,7 +178,7 @@ export class BrowserCodeReader {
       const label = device.label || `Video device ${videoDevices.length + 1}`;
       const groupId = device.groupId;
 
-      const videoDevice = <MediaDeviceInfo>{ deviceId, label, kind, groupId };
+      const videoDevice = <MediaDeviceInfo>{deviceId, label, kind, groupId};
 
       videoDevices.push(videoDevice);
     }
@@ -226,8 +226,8 @@ export class BrowserCodeReader {
    * @deprecated Use `decodeOnceFromVideoDevice` instead.
    */
   public async decodeFromInputVideoDevice(
-    deviceId?: string,
-    videoSource?: string | HTMLVideoElement
+      deviceId?: string,
+      videoSource?: string | HTMLVideoElement,
   ): Promise<Result> {
     return await this.decodeOnceFromVideoDevice(deviceId, videoSource);
   }
@@ -242,20 +242,20 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public async decodeOnceFromVideoDevice(
-    deviceId?: string,
-    videoSource?: string | HTMLVideoElement
+      deviceId?: string,
+      videoSource?: string | HTMLVideoElement,
   ): Promise<Result> {
     this.reset();
 
     let videoConstraints: MediaTrackConstraints;
 
     if (!deviceId) {
-      videoConstraints = { facingMode: 'environment' };
+      videoConstraints = {facingMode: 'environment'};
     } else {
-      videoConstraints = { deviceId: { exact: deviceId } };
+      videoConstraints = {deviceId: {exact: deviceId}};
     }
 
-    const constraints: MediaStreamConstraints = { video: videoConstraints };
+    const constraints: MediaStreamConstraints = {video: videoConstraints};
 
     return await this.decodeOnceFromConstraints(constraints, videoSource);
   }
@@ -270,8 +270,8 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public async decodeOnceFromConstraints(
-    constraints: MediaStreamConstraints,
-    videoSource?: string | HTMLVideoElement
+      constraints: MediaStreamConstraints,
+      videoSource?: string | HTMLVideoElement,
   ): Promise<Result> {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
@@ -288,8 +288,8 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public async decodeOnceFromStream(
-    stream: MediaStream,
-    videoSource?: string | HTMLVideoElement
+      stream: MediaStream,
+      videoSource?: string | HTMLVideoElement,
   ): Promise<Result> {
     this.reset();
 
@@ -311,9 +311,9 @@ export class BrowserCodeReader {
    * @deprecated Use `decodeFromVideoDevice` instead.
    */
   public async decodeFromInputVideoDeviceContinuously(
-    deviceId: string | null,
-    videoSource: string | HTMLVideoElement | null,
-    callbackFn: DecodeContinuouslyCallback
+      deviceId: string | null,
+      videoSource: string | HTMLVideoElement | null,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     return await this.decodeFromVideoDevice(deviceId, videoSource, callbackFn);
   }
@@ -328,24 +328,24 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public async decodeFromVideoDevice(
-    deviceId: string | null,
-    videoSource: string | HTMLVideoElement | null,
-    callbackFn: DecodeContinuouslyCallback
+      deviceId: string | null,
+      videoSource: string | HTMLVideoElement | null,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     let videoConstraints: MediaTrackConstraints;
 
     if (!deviceId) {
-      videoConstraints = { facingMode: 'environment' };
+      videoConstraints = {facingMode: 'environment'};
     } else {
-      videoConstraints = { deviceId: { exact: deviceId } };
+      videoConstraints = {deviceId: {exact: deviceId}};
     }
 
-    const constraints: MediaStreamConstraints = { video: videoConstraints };
+    const constraints: MediaStreamConstraints = {video: videoConstraints};
 
     return await this.decodeFromConstraints(
-      constraints,
-      videoSource,
-      callbackFn
+        constraints,
+        videoSource,
+        callbackFn,
     );
   }
 
@@ -359,9 +359,9 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public async decodeFromConstraints(
-    constraints: MediaStreamConstraints,
-    videoSource: string | HTMLVideoElement,
-    callbackFn: DecodeContinuouslyCallback
+      constraints: MediaStreamConstraints,
+      videoSource: string | HTMLVideoElement,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
@@ -378,9 +378,9 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public async decodeFromStream(
-    stream: MediaStream,
-    videoSource: string | HTMLVideoElement,
-    callbackFn: DecodeContinuouslyCallback
+      stream: MediaStream,
+      videoSource: string | HTMLVideoElement,
+      callbackFn: DecodeContinuouslyCallback,
   ) {
     this.reset();
 
@@ -410,8 +410,8 @@ export class BrowserCodeReader {
    * @param decodeFn A callback for the decode method.
    */
   protected async attachStreamToVideo(
-    stream: MediaStream,
-    videoSource: string | HTMLVideoElement
+      stream: MediaStream,
+      videoSource: string | HTMLVideoElement,
   ): Promise<HTMLVideoElement> {
     const videoElement = this.prepareVideoElement(videoSource);
 
@@ -430,10 +430,10 @@ export class BrowserCodeReader {
    * @param videoElement
    */
   protected playVideoOnLoadAsync(
-    videoElement: HTMLVideoElement
+      videoElement: HTMLVideoElement,
   ): Promise<void> {
     return new Promise((resolve, reject) =>
-      this.playVideoOnLoad(videoElement, () => resolve())
+        this.playVideoOnLoad(videoElement, () => resolve()),
     );
   }
 
@@ -444,8 +444,8 @@ export class BrowserCodeReader {
    * @param callbackFn
    */
   protected playVideoOnLoad(
-    element: HTMLVideoElement,
-    callbackFn: EventListener
+      element: HTMLVideoElement,
+      callbackFn: EventListener,
   ): void {
     this.videoEndedListener = () => this.stopStreams();
     this.videoCanPlayListener = () => this.tryPlayVideo(element);
@@ -463,10 +463,10 @@ export class BrowserCodeReader {
    */
   isVideoPlaying(video: HTMLVideoElement): boolean {
     return (
-      video.currentTime > 0 &&
-      !video.paused &&
-      !video.ended &&
-      video.readyState > 2
+        video.currentTime > 0 &&
+        !video.paused &&
+        !video.ended &&
+        video.readyState > 2
     );
   }
 
@@ -491,20 +491,20 @@ export class BrowserCodeReader {
    * Searches and validates a media element.
    */
   public getMediaElement(
-    mediaElementId: string,
-    type: string
+      mediaElementId: string,
+      type: string,
   ): HTMLVisualMediaElement {
     const mediaElement = document.getElementById(mediaElementId);
 
     if (!mediaElement) {
       throw new ArgumentException(
-        `element with id '${mediaElementId}' not found`
+          `element with id '${mediaElementId}' not found`,
       );
     }
 
     if (mediaElement.nodeName.toLowerCase() !== type.toLowerCase()) {
       throw new ArgumentException(
-        `element with id '${mediaElementId}' must be an ${type} element`
+          `element with id '${mediaElementId}' must be an ${type} element`,
       );
     }
 
@@ -521,12 +521,12 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public decodeFromImage(
-    source?: string | HTMLImageElement,
-    url?: string
+      source?: string | HTMLImageElement,
+      url?: string,
   ): Promise<Result> {
     if (!source && !url) {
       throw new ArgumentException(
-        'either imageElement with a src set or an url must be provided'
+          'either imageElement with a src set or an url must be provided',
       );
     }
 
@@ -547,12 +547,12 @@ export class BrowserCodeReader {
    * @memberOf BrowserCodeReader
    */
   public decodeFromVideo(
-    source?: string | HTMLVideoElement,
-    url?: string
+      source?: string | HTMLVideoElement,
+      url?: string,
   ): Promise<Result> {
     if (!source && !url) {
       throw new ArgumentException(
-        'Either an element with a src set or an URL must be provided'
+          'Either an element with a src set or an URL must be provided',
       );
     }
 
@@ -575,13 +575,13 @@ export class BrowserCodeReader {
    * @experimental
    */
   public decodeFromVideoContinuously(
-    source: string | HTMLVideoElement | null,
-    url: string | null,
-    callbackFn: DecodeContinuouslyCallback
+      source: string | HTMLVideoElement | null,
+      url: string | null,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     if (undefined === source && undefined === url) {
       throw new ArgumentException(
-        'Either an element with a src set or an URL must be provided'
+          'Either an element with a src set or an URL must be provided',
       );
     }
 
@@ -596,7 +596,7 @@ export class BrowserCodeReader {
    * Decodes something from an image HTML element.
    */
   public decodeFromImageElement(
-    source: string | HTMLImageElement
+      source: string | HTMLImageElement,
   ): Promise<Result> {
     if (!source) {
       throw new ArgumentException('An image element must be provided.');
@@ -623,7 +623,7 @@ export class BrowserCodeReader {
    * Decodes something from an image HTML element.
    */
   public decodeFromVideoElement(
-    source: string | HTMLVideoElement
+      source: string | HTMLVideoElement,
   ): Promise<Result> {
     const element = this._decodeFromVideoElementSetup(source);
 
@@ -634,8 +634,8 @@ export class BrowserCodeReader {
    * Decodes something from an image HTML element.
    */
   public decodeFromVideoElementContinuously(
-    source: string | HTMLVideoElement,
-    callbackFn: DecodeContinuouslyCallback
+      source: string | HTMLVideoElement,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     const element = this._decodeFromVideoElementSetup(source);
 
@@ -709,8 +709,8 @@ export class BrowserCodeReader {
    * @experimental
    */
   public decodeFromVideoUrlContinuously(
-    url: string,
-    callbackFn: DecodeContinuouslyCallback
+      url: string,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     if (!url) {
       throw new ArgumentException('An URL must be provided.');
@@ -722,8 +722,8 @@ export class BrowserCodeReader {
     const element = this.prepareVideoElement();
 
     const decodeTask = this.decodeFromVideoElementContinuously(
-      element,
-      callbackFn
+        element,
+        callbackFn,
     );
 
     element.src = url;
@@ -734,13 +734,13 @@ export class BrowserCodeReader {
   private _decodeOnLoadImage(element: HTMLImageElement): Promise<Result> {
     return new Promise((resolve, reject) => {
       this.imageLoadedListener = () =>
-        this.decodeOnce(element, false, true).then(resolve, reject);
+          this.decodeOnce(element, false, true).then(resolve, reject);
       element.addEventListener('load', this.imageLoadedListener);
     });
   }
 
   private async _decodeOnLoadVideo(
-    videoElement: HTMLVideoElement
+      videoElement: HTMLVideoElement,
   ): Promise<Result> {
     // plays the video
     await this.playVideoOnLoadAsync(videoElement);
@@ -749,8 +749,8 @@ export class BrowserCodeReader {
   }
 
   private async _decodeOnLoadVideoContinuously(
-    videoElement: HTMLVideoElement,
-    callbackFn: DecodeContinuouslyCallback
+      videoElement: HTMLVideoElement,
+      callbackFn: DecodeContinuouslyCallback,
   ): Promise<void> {
     // plays the video
     await this.playVideoOnLoadAsync(videoElement);
@@ -779,7 +779,7 @@ export class BrowserCodeReader {
   }
 
   public prepareImageElement(
-    imageSource?: HTMLImageElement | string
+      imageSource?: HTMLImageElement | string,
   ): HTMLImageElement {
     let imageElement: HTMLImageElement;
 
@@ -806,7 +806,7 @@ export class BrowserCodeReader {
    * @param videoSource The HTMLVideoElement to be set.
    */
   public prepareVideoElement(
-    videoSource?: HTMLVideoElement | string
+      videoSource?: HTMLVideoElement | string,
   ): HTMLVideoElement {
     let videoElement: HTMLVideoElement;
 
@@ -818,7 +818,7 @@ export class BrowserCodeReader {
 
     if (typeof videoSource === 'string') {
       videoElement = <HTMLVideoElement>(
-        this.getMediaElement(videoSource, 'video')
+          this.getMediaElement(videoSource, 'video')
       );
     }
 
@@ -838,21 +838,21 @@ export class BrowserCodeReader {
    * Tries to decode from the video input until it finds some value.
    */
   public decodeOnce(
-    element: HTMLVisualMediaElement,
-    retryIfNotFound = true,
-    retryIfChecksumOrFormatError = true
+      element: HTMLVisualMediaElement,
+      retryIfNotFound = true,
+      retryIfChecksumOrFormatError = true,
   ): Promise<Result> {
     this._stopAsyncDecode = false;
 
     const loop = (
-      resolve: (value?: Result | PromiseLike<Result>) => void,
-      reject: (reason?: any) => void
+        resolve: (value?: Result | PromiseLike<Result>) => void,
+        reject: (reason?: any) => void,
     ) => {
       if (this._stopAsyncDecode) {
         reject(
-          new NotFoundException(
-            'Video stream has ended before any code could be detected.'
-          )
+            new NotFoundException(
+                'Video stream has ended before any code could be detected.',
+            ),
         );
         this._stopAsyncDecode = undefined;
         return;
@@ -864,17 +864,17 @@ export class BrowserCodeReader {
       } catch (e) {
         const ifNotFound = retryIfNotFound && e instanceof NotFoundException;
         const isChecksumOrFormatError =
-          e instanceof ChecksumException || e instanceof FormatException;
+            e instanceof ChecksumException || e instanceof FormatException;
         const ifChecksumOrFormat =
-          isChecksumOrFormatError && retryIfChecksumOrFormatError;
+            isChecksumOrFormatError && retryIfChecksumOrFormatError;
 
         if (ifNotFound || ifChecksumOrFormat) {
           // trying again
           return setTimeout(
-            loop,
-            this._timeBetweenDecodingAttempts,
-            resolve,
-            reject
+              loop,
+              this._timeBetweenDecodingAttempts,
+              resolve,
+              reject,
           );
         }
 
@@ -889,8 +889,8 @@ export class BrowserCodeReader {
    * Continuously decodes from video input.
    */
   public decodeContinuously(
-    element: HTMLVideoElement,
-    callbackFn: DecodeContinuouslyCallback
+      element: HTMLVideoElement,
+      callbackFn: DecodeContinuouslyCallback,
   ): void {
     this._stopContinuousDecode = false;
 
@@ -908,14 +908,16 @@ export class BrowserCodeReader {
         callbackFn(null, e);
 
         const isChecksumOrFormatError =
-          e instanceof ChecksumException || e instanceof FormatException;
+            e instanceof ChecksumException || e instanceof FormatException;
         const isNotFound = e instanceof NotFoundException;
 
         if (isChecksumOrFormatError || isNotFound) {
           // trying again
           setTimeout(loop, this._timeBetweenDecodingAttempts);
         } else {
-          console.error('BrowserCodeReader: unexpected error during decode, stopping scan loop:', e);
+          console.error(
+              'BrowserCodeReader: unexpected error during decode, stopping scan loop:',
+              e);
         }
       }
     };
@@ -937,7 +939,8 @@ export class BrowserCodeReader {
         // Retry with GlobalHistogramBinarizer as fallback for images where
         // local thresholding fails but a global threshold works better
         const canvas = this.getCaptureCanvas(element);
-        const luminanceSource = new HTMLCanvasElementLuminanceSource(canvas, false);
+        const luminanceSource = new HTMLCanvasElementLuminanceSource(canvas,
+            false);
         const globalBinarizer = new GlobalHistogramBinarizer(luminanceSource);
         const fallbackBitmap = new BinaryBitmap(globalBinarizer);
         return this.decodeBitmap(fallbackBitmap);
@@ -952,7 +955,7 @@ export class BrowserCodeReader {
    * @param mediaElement HTML element containing drawable image source.
    */
   public createBinaryBitmap(
-    mediaElement: HTMLVisualMediaElement
+      mediaElement: HTMLVisualMediaElement,
   ): BinaryBitmap {
     const ctx = this.getCaptureCanvasContext(mediaElement);
     // doing a scan with inverted colors on the second scan should only happen for video elements
@@ -965,7 +968,8 @@ export class BrowserCodeReader {
     }
     const canvas = this.getCaptureCanvas(mediaElement);
 
-    const luminanceSource = new HTMLCanvasElementLuminanceSource(canvas, doAutoInvert, this._grayscaleBuffer);
+    const luminanceSource = new HTMLCanvasElementLuminanceSource(canvas,
+        doAutoInvert, this._grayscaleBuffer);
     this._grayscaleBuffer = luminanceSource.getMatrix();
     const hybridBinarizer = new HybridBinarizer(luminanceSource);
 
@@ -980,7 +984,8 @@ export class BrowserCodeReader {
       const elem = this.getCaptureCanvas(mediaElement);
       let ctx;
       try {
-        ctx = elem.getContext('2d', {willReadFrequently: true}) as CanvasRenderingContext2D;
+        ctx = elem.getContext('2d',
+            {willReadFrequently: true}) as CanvasRenderingContext2D;
       } catch (e) {
         ctx = elem.getContext('2d');
       }
@@ -994,7 +999,7 @@ export class BrowserCodeReader {
    *
    */
   protected getCaptureCanvas(
-    mediaElement?: HTMLVisualMediaElement
+      mediaElement?: HTMLVisualMediaElement,
   ): HTMLCanvasElement {
     if (!this.captureCanvas) {
       const elem = this.createCaptureCanvas(mediaElement);
@@ -1008,29 +1013,29 @@ export class BrowserCodeReader {
    * Overwriting this allows you to manipulate the next frame in anyway you want before decode.
    */
   public drawFrameOnCanvas(
-    srcElement: HTMLVideoElement,
-    dimensions = {
-      sx: 0,
-      sy: 0,
-      sWidth: srcElement.videoWidth,
-      sHeight: srcElement.videoHeight,
-      dx: 0,
-      dy: 0,
-      dWidth: srcElement.videoWidth,
-      dHeight: srcElement.videoHeight,
-    },
-    canvasElementContext = this.captureCanvasContext
+      srcElement: HTMLVideoElement,
+      dimensions = {
+        sx: 0,
+        sy: 0,
+        sWidth: srcElement.videoWidth,
+        sHeight: srcElement.videoHeight,
+        dx: 0,
+        dy: 0,
+        dWidth: srcElement.videoWidth,
+        dHeight: srcElement.videoHeight,
+      },
+      canvasElementContext = this.captureCanvasContext,
   ) {
     canvasElementContext.drawImage(
-      srcElement,
-      dimensions.sx,
-      dimensions.sy,
-      dimensions.sWidth,
-      dimensions.sHeight,
-      dimensions.dx,
-      dimensions.dy,
-      dimensions.dWidth,
-      dimensions.dHeight
+        srcElement,
+        dimensions.sx,
+        dimensions.sy,
+        dimensions.sWidth,
+        dimensions.sHeight,
+        dimensions.dx,
+        dimensions.dy,
+        dimensions.dWidth,
+        dimensions.dHeight,
     );
   }
 
@@ -1038,29 +1043,29 @@ export class BrowserCodeReader {
    * Ovewriting this allows you to manipulate the snapshot image in anyway you want before decode.
    */
   public drawImageOnCanvas(
-    srcElement: HTMLImageElement,
-    dimensions = {
-      sx: 0,
-      sy: 0,
-      sWidth: srcElement.naturalWidth,
-      sHeight: srcElement.naturalHeight,
-      dx: 0,
-      dy: 0,
-      dWidth: srcElement.naturalWidth,
-      dHeight: srcElement.naturalHeight,
-    },
-    canvasElementContext = this.captureCanvasContext
+      srcElement: HTMLImageElement,
+      dimensions = {
+        sx: 0,
+        sy: 0,
+        sWidth: srcElement.naturalWidth,
+        sHeight: srcElement.naturalHeight,
+        dx: 0,
+        dy: 0,
+        dWidth: srcElement.naturalWidth,
+        dHeight: srcElement.naturalHeight,
+      },
+      canvasElementContext = this.captureCanvasContext,
   ) {
     canvasElementContext.drawImage(
-      srcElement,
-      dimensions.sx,
-      dimensions.sy,
-      dimensions.sWidth,
-      dimensions.sHeight,
-      dimensions.dx,
-      dimensions.dy,
-      dimensions.dWidth,
-      dimensions.dHeight
+        srcElement,
+        dimensions.sx,
+        dimensions.sy,
+        dimensions.sWidth,
+        dimensions.sHeight,
+        dimensions.dx,
+        dimensions.dy,
+        dimensions.dWidth,
+        dimensions.dHeight,
     );
   }
 
@@ -1080,7 +1085,7 @@ export class BrowserCodeReader {
    * 🖌 Prepares the canvas for capture and scan frames.
    */
   public createCaptureCanvas(
-    mediaElement?: HTMLVisualMediaElement
+      mediaElement?: HTMLVisualMediaElement,
   ): HTMLCanvasElement {
     if (typeof document === 'undefined') {
       this._destroyCaptureCanvas();
@@ -1156,15 +1161,15 @@ export class BrowserCodeReader {
 
     if (typeof this.videoPlayingEventListener !== 'undefined') {
       this.videoElement.removeEventListener(
-        'playing',
-        this.videoPlayingEventListener
+          'playing',
+          this.videoPlayingEventListener,
       );
     }
 
     if (typeof this.videoCanPlayListener !== 'undefined') {
       this.videoElement.removeEventListener(
-        'loadedmetadata',
-        this.videoCanPlayListener
+          'loadedmetadata',
+          this.videoCanPlayListener,
       );
     }
 
@@ -1210,8 +1215,8 @@ export class BrowserCodeReader {
    * @param stream
    */
   public addVideoSource(
-    videoElement: HTMLVideoElement,
-    stream: MediaStream
+      videoElement: HTMLVideoElement,
+      stream: MediaStream,
   ): void {
     // Older browsers may not have `srcObject`
     try {

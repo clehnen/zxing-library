@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
 
-import UPCEANReader from './UPCEANReader';
+import { UPCEANReader } from './UPCEANReader';
 
 /**
  * <p>Implements decoding of the EAN-8 format.</p>
  *
  * @author Sean Owen
  */
-export default class EAN8Reader extends UPCEANReader {
+export class EAN8Reader extends UPCEANReader {
     private decodeMiddleCounters: Int32Array;
 
     public constructor() {

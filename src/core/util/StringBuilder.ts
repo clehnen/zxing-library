@@ -1,18 +1,18 @@
-import CharacterSetECI from '../common/CharacterSetECI';
+import { CharacterSetECI } from '../common/CharacterSetECI';
 import { int, char } from '../../customTypings';
-import StringUtils from '../common/StringUtils';
+import { StringUtils } from '../common/StringUtils';
 
-export default class StringBuilder {
+export class ZXingStringBuilder {
   private encoding: CharacterSetECI;
 
   public constructor(private value: string = '') {}
 
-  public enableDecoding(encoding: CharacterSetECI): StringBuilder {
+  public enableDecoding(encoding: CharacterSetECI): ZXingStringBuilder {
     this.encoding = encoding;
     return this;
   }
 
-  public append(s: string | number): StringBuilder {
+  public append(s: string | number): ZXingStringBuilder {
     if (typeof s === 'string') {
       this.value += s.toString();
     } else if (this.encoding) {
@@ -29,7 +29,7 @@ export default class StringBuilder {
     str: char[] | string[],
     offset: int,
     len: int
-  ): StringBuilder {
+  ): ZXingStringBuilder {
     for (let i = offset; offset < offset + len; i++) {
       this.append(str[i]);
     }

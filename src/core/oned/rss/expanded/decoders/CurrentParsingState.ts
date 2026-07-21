@@ -4,7 +4,7 @@ enum State {
   ISO_IEC_646
 }
 
-export default class CurrentParsingState {
+export class CurrentParsingState {
   private position: number;
   private encoding: State;
 

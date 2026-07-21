@@ -1,7 +1,7 @@
 
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 
-export default class FinderPattern {
+export class FinderPattern {
 
     private value: number;
     private startEnd: number[];

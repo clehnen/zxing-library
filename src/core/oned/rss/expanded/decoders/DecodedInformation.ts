@@ -1,6 +1,6 @@
-import DecodedObject from './DecodedObject';
+import { DecodedObject } from './DecodedObject';
 
-export default class DecodedInformation extends DecodedObject {
+export class DecodedInformation extends DecodedObject {
 
   private readonly newString: string;
   private readonly remainingValue: number;

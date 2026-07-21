@@ -1,4 +1,4 @@
-import ECB from './ECB';
+import { ECB } from './ECB';
 
 /**
  * <p>Encapsulates a set of error-correction blocks in one symbol version. Most versions will
@@ -6,7 +6,7 @@ import ECB from './ECB';
  * each set of blocks. It also holds the number of error-correction codewords per block since it
  * will be the same across all blocks within one version.</p>
  */
-export default class ECBlocks {
+export class ECBlocks {
     private ecBlocks: ECB[];
 
     public constructor(private ecCodewordsPerBlock: number /*int*/, ...ecBlocks: ECB[]) {

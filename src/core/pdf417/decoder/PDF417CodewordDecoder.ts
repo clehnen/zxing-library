@@ -17,18 +17,18 @@
 // package com.google.zxing.pdf417.decoder;
 
 // import com.google.zxing.common.detector.MathUtils;
-import MathUtils from '../../common/detector/MathUtils';
+import { MathUtils } from '../../common/detector/MathUtils';
 // import com.google.zxing.pdf417.PDF417Common;
-import PDF417Common from '../PDF417Common';
+import { PDF417Common } from '../PDF417Common';
 
-import Float from '../../util/Float';
+import { Float } from '../../util/Float';
 import { int, float } from '../../../customTypings';
 
 /**
  * @author Guenther Grau
  * @author creatale GmbH (christoph.schulz@creatale.de)
  */
-export default /*final*/ class PDF417CodewordDecoder {
+export /*final*/ class PDF417CodewordDecoder {
 
   // flag that the table is ready for use
   private static bSymbolTableReady: boolean = false;

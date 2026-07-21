@@ -1,9 +1,9 @@
-import StringUtils from '../../common/StringUtils';
+import { StringUtils } from '../../common/StringUtils';
 import { char } from '../../../customTypings';
-import StringBuilder from '../../util/StringBuilder';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
 import { C40Encoder } from './C40Encoder';
 import { EncoderContext } from './EncoderContext';
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 import { X12_ENCODATION, ASCII_ENCODATION, X12_UNLATCH } from './constants';
 
 export class X12Encoder extends C40Encoder {
@@ -13,7 +13,7 @@ export class X12Encoder extends C40Encoder {
 
   public encode(context: EncoderContext) {
     // step C
-    const buffer = new StringBuilder();
+    const buffer = new ZXingStringBuilder();
     while (context.hasMoreCharacters()) {
       const c = context.getCurrentChar();
       context.pos++;
@@ -24,7 +24,7 @@ export class X12Encoder extends C40Encoder {
       if (count % 3 === 0) {
         this.writeNextTriplet(context, buffer);
 
-        const newMode = HighLevelEncoder.lookAheadTest(
+        const newMode = DataMatrixHighLevelEncoder.lookAheadTest(
           context.getMessage(),
           context.pos,
           this.getEncodingMode()
@@ -39,7 +39,7 @@ export class X12Encoder extends C40Encoder {
     this.handleEOD(context, buffer);
   }
 
-  encodeChar(c: char, sb: StringBuilder): number {
+  encodeChar(c: char, sb: ZXingStringBuilder): number {
     switch (c) {
       case 13: // CR (Carriage return)
         sb.append(0o0);
@@ -59,14 +59,14 @@ export class X12Encoder extends C40Encoder {
         } else if (c >= 'A'.charCodeAt(0) && c <= 'Z'.charCodeAt(0)) {
           sb.append(c - 65 + 14);
         } else {
-          HighLevelEncoder.illegalCharacter(StringUtils.getCharAt(c));
+          DataMatrixHighLevelEncoder.illegalCharacter(StringUtils.getCharAt(c));
         }
         break;
     }
     return 1;
   }
 
-  handleEOD(context: EncoderContext, buffer: StringBuilder) {
+  handleEOD(context: EncoderContext, buffer: ZXingStringBuilder) {
     context.updateSymbolInfo();
     const available =
       context.getSymbolInfo().getDataCapacity() - context.getCodewordCount();

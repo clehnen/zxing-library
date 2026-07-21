@@ -26,14 +26,14 @@
 // package java.io;
 
 // import java.util.Arrays;
-import Arrays from './Arrays';
+import { ZXingArrays } from './ZXingArrays';
 
-import OutputStream from './OutputStream';
-import Integer from './Integer';
-import IllegalArgumentException from '../IllegalArgumentException';
-import OutOfMemoryError from '../OutOfMemoryError';
-import System from './System';
-import IndexOutOfBoundsException from '../IndexOutOfBoundsException';
+import { OutputStream } from './OutputStream';
+import { ZXingInteger } from './ZXingInteger';
+import { IllegalArgumentException } from '../IllegalArgumentException';
+import { OutOfMemoryError } from '../OutOfMemoryError';
+import { ZXingSystem } from './ZXingSystem';
+import { IndexOutOfBoundsException } from '../IndexOutOfBoundsException';
 
 import { int } from '../../customTypings';
 
@@ -53,7 +53,7 @@ import { int } from '../../customTypings';
  * @since   JDK1.0
  */
 
-export default /*public*/ class ByteArrayOutputStream extends OutputStream {
+export /*public*/ class ByteArrayOutputStream extends OutputStream {
 
   /**
    * The buffer where data is stored.
@@ -120,9 +120,9 @@ export default /*public*/ class ByteArrayOutputStream extends OutputStream {
     if (newCapacity < 0) {
       if (minCapacity < 0) // overflow
         throw new OutOfMemoryError();
-      newCapacity = Integer.MAX_VALUE;
+      newCapacity = ZXingInteger.MAX_VALUE;
     }
-    this.buf = Arrays.copyOfUint8Array(this.buf, newCapacity);
+    this.buf = ZXingArrays.copyOfUint8Array(this.buf, newCapacity);
   }
 
   /**
@@ -150,7 +150,7 @@ export default /*public*/ class ByteArrayOutputStream extends OutputStream {
       throw new IndexOutOfBoundsException();
     }
     this.ensureCapacity(this.count + len);
-    System.arraycopy(b, off, this.buf, this.count, len);
+    ZXingSystem.arraycopy(b, off, this.buf, this.count, len);
     this.count += len;
   }
 
@@ -187,7 +187,7 @@ export default /*public*/ class ByteArrayOutputStream extends OutputStream {
    * @see     java.io.ByteArrayOutputStream#size()
    */
   public /*synchronized*/  toByteArray(): Uint8Array {
-    return Arrays.copyOfUint8Array(this.buf, this.count);
+    return ZXingArrays.copyOfUint8Array(this.buf, this.count);
   }
 
   /**

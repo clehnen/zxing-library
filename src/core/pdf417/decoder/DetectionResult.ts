@@ -17,23 +17,23 @@
 // package com.google.zxing.pdf417.decoder;
 
 // import com.google.zxing.pdf417.PDF417Common;
-import PDF417Common from '../PDF417Common';
+import { PDF417Common } from '../PDF417Common';
 
 // import java.util.Formatter;
 
-import BoundingBox from './BoundingBox';
-import BarcodeMetadata from './BarcodeMetadata';
-import DetectionResultColumn from './DetectionResultColumn';
-import Codeword from './Codeword';
-import DetectionResultRowIndicatorColumn from './DetectionResultRowIndicatorColumn';
-import Formatter from '../../util/Formatter';
+import { BoundingBox } from './BoundingBox';
+import { BarcodeMetadata } from './BarcodeMetadata';
+import { DetectionResultColumn } from './DetectionResultColumn';
+import { Codeword } from './Codeword';
+import { DetectionResultRowIndicatorColumn } from './DetectionResultRowIndicatorColumn';
+import { Formatter } from '../../util/Formatter';
 
 import { int } from '../../../customTypings';
 
 /**
  * @author Guenther Grau
  */
-export default /*final*/ class DetectionResult {
+export /*final*/ class DetectionResult {
 
   /*final*/ ADJUST_ROW_NUMBER_SKIP: int = 2;
 

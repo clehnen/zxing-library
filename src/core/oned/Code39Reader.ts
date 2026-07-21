@@ -16,15 +16,15 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
-import ChecksumException from '../ChecksumException';
-import DecodeHintType from '../DecodeHintType';
-import FormatException from '../FormatException';
-import NotFoundException from '../NotFoundException';
-import OneDReader from './OneDReader';
-import Result from '../Result';
-import ResultPoint from '../ResultPoint';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
+import { ChecksumException } from '../ChecksumException';
+import { DecodeHintType } from '../DecodeHintType';
+import { FormatException } from '../FormatException';
+import { NotFoundException } from '../NotFoundException';
+import { OneDReader } from './OneDReader';
+import { Result } from '../Result';
+import { ResultPoint } from '../ResultPoint';
 
 /**
  * <p>Decodes Code 39 barcodes. Supports "Full ASCII Code 39" if USE_CODE_39_EXTENDED_MODE is set.</p>
@@ -32,7 +32,7 @@ import ResultPoint from '../ResultPoint';
  * @author Sean Owen
  * @see Code93Reader
  */
-export default class Code39Reader extends OneDReader {
+export class Code39Reader extends OneDReader {
 
   private static readonly ALPHABET_STRING = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%';
 

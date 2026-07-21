@@ -1,7 +1,7 @@
 /**
  * Ponyfill for Java's Float class.
  */
-export default class Float {
+export class Float {
 
   /**
    * The float max value in JS is the number max value.

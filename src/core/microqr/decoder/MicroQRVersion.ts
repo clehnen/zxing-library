@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import BitMatrix from '../../common/BitMatrix';
-import ECBlocks from '../../qrcode/decoder/ECBlocks';
-import ECB from '../../qrcode/decoder/ECB';
-import FormatException from '../../FormatException';
+import { BitMatrix } from '../../common/BitMatrix';
+import { ECBlocks } from '../../qrcode/decoder/ECBlocks';
+import { ECB } from '../../qrcode/decoder/ECB';
+import { FormatException } from '../../FormatException';
 
 /**
  * Micro QR Code version data.
@@ -35,7 +35,7 @@ import FormatException from '../../FormatException';
  *   6 → M4-M
  *   7 → M4-Q
  */
-export default class MicroQRVersion {
+export class MicroQRVersion {
 
     /** Maps versionIndicator (0-7) to [versionNumber, ecLevelLabel] */
     private static readonly VERSION_INFO: ReadonlyArray<[number, string | null]> = [

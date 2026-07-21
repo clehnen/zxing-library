@@ -1,6 +1,6 @@
 import { Collection, int } from '../../customTypings';
 
-export default class Collections {
+export class Collections {
 
   /**
    * The singletonList(T) method is used to return an immutable list containing only the specified object.

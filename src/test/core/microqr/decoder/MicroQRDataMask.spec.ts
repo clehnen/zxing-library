@@ -1,5 +1,5 @@
-import MicroQRDataMask from '../../../../core/microqr/decoder/MicroQRDataMask';
-import BitMatrix from '../../../../core/common/BitMatrix';
+import {MicroQRDataMask} from '../../../../core/microqr/decoder/MicroQRDataMask';
+import {BitMatrix} from '../../../../core/common/BitMatrix';
 
 describe('MicroQRDataMask', () => {
 

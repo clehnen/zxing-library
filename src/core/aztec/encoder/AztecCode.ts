@@ -17,7 +17,7 @@
 // package com.google.zxing.aztec.encoder;
 
 // import com.google.zxing.common.BitMatrix;
-import BitMatrix from '../../common/BitMatrix';
+import { BitMatrix } from '../../common/BitMatrix';
 
 import { int } from '../../../customTypings';
 
@@ -26,7 +26,7 @@ import { int } from '../../../customTypings';
  *
  * @author Rustam Abdullaev
  */
-export default /*public final*/ class AztecCode {
+export /*public final*/ class AztecCode {
 
   private compact: boolean;
   private size: int;

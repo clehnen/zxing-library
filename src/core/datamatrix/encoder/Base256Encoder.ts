@@ -1,9 +1,9 @@
-import StringUtils from '../../common/StringUtils';
-import StringBuilder from '../../util/StringBuilder';
+import { StringUtils } from '../../common/StringUtils';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
 import { char } from '../../../customTypings';
 import { Encoder } from './Encoder';
 import { EncoderContext } from './EncoderContext';
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 import { BASE256_ENCODATION, ASCII_ENCODATION } from './constants';
 
 export class Base256Encoder implements Encoder {
@@ -12,7 +12,7 @@ export class Base256Encoder implements Encoder {
   }
 
   public encode(context: EncoderContext) {
-    const buffer = new StringBuilder();
+    const buffer = new ZXingStringBuilder();
     buffer.append(0o0); // Initialize length field
     while (context.hasMoreCharacters()) {
       const c = context.getCurrentChar();
@@ -20,7 +20,7 @@ export class Base256Encoder implements Encoder {
 
       context.pos++;
 
-      const newMode = HighLevelEncoder.lookAheadTest(
+      const newMode = DataMatrixHighLevelEncoder.lookAheadTest(
         context.getMessage(),
         context.pos,
         this.getEncodingMode()

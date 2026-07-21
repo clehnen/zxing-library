@@ -18,17 +18,17 @@
 
 /*import java.util.EnumMap;*/
 /*import java.util.Map;*/
-import ResultPoint from './ResultPoint';
-import BarcodeFormat from './BarcodeFormat';
-import System from './util/System';
-import ResultMetadataType from './ResultMetadataType';
+import { ResultPoint } from './ResultPoint';
+import { BarcodeFormat } from './BarcodeFormat';
+import { ZXingSystem } from './util/ZXingSystem';
+import { ResultMetadataType } from './ResultMetadataType';
 
 /**
  * <p>Encapsulates the result of decoding a barcode within an image.</p>
  *
  * @author Sean Owen
  */
-export default class Result {
+export class Result {
 
     private resultMetadata: Map<ResultMetadataType, Object>;
 
@@ -53,7 +53,7 @@ export default class Result {
       private numBits: number /*int*/ = rawBytes == null ? 0 : 8 * rawBytes.length,
       private resultPoints: ResultPoint[],
       private format: BarcodeFormat,
-      private timestamp: number /*long*/ = System.currentTimeMillis()) {
+      private timestamp: number /*long*/ = ZXingSystem.currentTimeMillis()) {
         this.text = text;
         this.rawBytes = rawBytes;
         if (undefined === numBits || null === numBits) {
@@ -65,7 +65,7 @@ export default class Result {
         this.format = format;
         this.resultMetadata = null;
         if (undefined === timestamp || null === timestamp) {
-            this.timestamp = System.currentTimeMillis();
+            this.timestamp = ZXingSystem.currentTimeMillis();
         } else {
             this.timestamp = timestamp;
         }
@@ -141,8 +141,8 @@ export default class Result {
             this.resultPoints = newPoints;
         } else if (newPoints !== null && newPoints.length > 0) {
             const allPoints = new Array<ResultPoint>(oldPoints.length + newPoints.length);
-            System.arraycopy(oldPoints, 0, allPoints, 0, oldPoints.length);
-            System.arraycopy(newPoints, 0, allPoints, oldPoints.length, newPoints.length);
+            ZXingSystem.arraycopy(oldPoints, 0, allPoints, 0, oldPoints.length);
+            ZXingSystem.arraycopy(newPoints, 0, allPoints, oldPoints.length, newPoints.length);
             this.resultPoints = allPoints;
         }
     }

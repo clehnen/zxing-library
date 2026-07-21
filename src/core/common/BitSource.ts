@@ -17,7 +17,7 @@
 /*namespace com.google.zxing.common {*/
 
 
-import IllegalArgumentException from '../IllegalArgumentException';
+import { IllegalArgumentException } from '../IllegalArgumentException';
 
 /**
  * <p>This provides an easy abstraction to read bits at a time from a sequence of bytes, where the
@@ -28,7 +28,7 @@ import IllegalArgumentException from '../IllegalArgumentException';
  *
  * @author Sean Owen
  */
-export default class BitSource {
+export class BitSource {
 
     private byteOffset: number; /*int*/
     private bitOffset: number; /*int*/

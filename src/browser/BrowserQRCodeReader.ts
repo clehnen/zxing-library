@@ -1,5 +1,5 @@
 import { BrowserCodeReader } from './BrowserCodeReader';
-import QRCodeReader from '../core/qrcode/QRCodeReader';
+import { QRCodeReader } from '../core/qrcode/QRCodeReader';
 
 /**
  * @deprecated Moving to @zxing/browser

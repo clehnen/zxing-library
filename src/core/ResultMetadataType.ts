@@ -22,7 +22,7 @@
  *
  * @author Sean Owen
  */
-enum ResultMetadataType {
+export enum ResultMetadataType {
 
     /**
      * Unspecified, application-specific metadata. Maps to an unspecified {@link Object}.
@@ -102,4 +102,3 @@ enum ResultMetadataType {
 
 }
 
-export default ResultMetadataType;

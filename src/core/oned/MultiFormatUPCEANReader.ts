@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
 
-import Result from '../Result';
-import OneDReader from './OneDReader';
-import UPCEANReader from './UPCEANReader';
-import EAN13Reader from './EAN13Reader';
-import EAN8Reader from './EAN8Reader';
-import UPCAReader from './UPCAReader';
-import NotFoundException from '../NotFoundException';
-import UPCEReader from './UPCEReader';
-import { Collection } from 'src/customTypings';
+import { Result } from '../Result';
+import { OneDReader } from './OneDReader';
+import { UPCEANReader } from './UPCEANReader';
+import { EAN13Reader } from './EAN13Reader';
+import { EAN8Reader } from './EAN8Reader';
+import { UPCAReader } from './UPCAReader';
+import { NotFoundException } from '../NotFoundException';
+import { UPCEReader } from './UPCEReader';
+import { Collection } from '../../customTypings';
 
 /**
  * <p>A reader that can read all available UPC/EAN formats. If a caller wants to try to
@@ -35,7 +35,7 @@ import { Collection } from 'src/customTypings';
  *
  * @author Sean Owen
  */
-export default class MultiFormatUPCEANReader extends OneDReader {
+export class MultiFormatUPCEANReader extends OneDReader {
   private readers: UPCEANReader[];
 
   public constructor(hints?: Map<DecodeHintType, any>) {

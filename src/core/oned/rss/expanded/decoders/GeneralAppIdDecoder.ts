@@ -1,25 +1,25 @@
-import BitArray from '../../../../common/BitArray';
-import FormatException from '../../../../FormatException';
-import IllegalStateException from '../../../../IllegalStateException';
-import StringBuilder from '../../../../util/StringBuilder';
-import BlockParsedResult from './BlockParsedResult';
-import CurrentParsingState from './CurrentParsingState';
-import DecodedChar from './DecodedChar';
-import DecodedInformation from './DecodedInformation';
-import DecodedNumeric from './DecodedNumeric';
-import FieldParser from './FieldParser';
+import { BitArray } from '../../../../common/BitArray';
+import { FormatException } from '../../../../FormatException';
+import { IllegalStateException } from '../../../../IllegalStateException';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
+import { BlockParsedResult } from './BlockParsedResult';
+import { CurrentParsingState } from './CurrentParsingState';
+import { DecodedChar } from './DecodedChar';
+import { DecodedInformation } from './DecodedInformation';
+import { DecodedNumeric } from './DecodedNumeric';
+import { FieldParser } from './FieldParser';
 
-export default class GeneralAppIdDecoder {
+export class GeneralAppIdDecoder {
 
   private readonly information: BitArray;
   private readonly current = new CurrentParsingState();
-  private readonly buffer = new StringBuilder();
+  private readonly buffer = new ZXingStringBuilder();
 
   constructor(information: BitArray) {
     this.information = information;
   }
 
-  decodeAllCodes(buff: StringBuilder, initialPosition: number): string {
+  decodeAllCodes(buff: ZXingStringBuilder, initialPosition: number): string {
     let currentPosition = initialPosition;
     let remaining: string | null = null;
     do {

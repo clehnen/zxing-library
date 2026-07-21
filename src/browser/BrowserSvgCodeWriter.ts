@@ -1,9 +1,9 @@
-import EncodeHintType from '../core/EncodeHintType';
-import Encoder from '../core/qrcode/encoder/Encoder';
-import QRCode from '../core/qrcode/encoder/QRCode';
-import ErrorCorrectionLevel from '../core/qrcode/decoder/ErrorCorrectionLevel';
-import IllegalArgumentException from '../core/IllegalArgumentException';
-import IllegalStateException from '../core/IllegalStateException';
+import { EncodeHintType } from '../core/EncodeHintType';
+import { QRCodeEncoder } from '../core/qrcode/encoder/QRCodeEncoder';
+import { QRCodeEncoderQRCode } from '../core/qrcode/encoder/QRCodeEncoderQRCode';
+import { QRCodeDecoderErrorCorrectionLevel } from '../core/qrcode/decoder/QRCodeDecoderErrorCorrectionLevel';
+import { IllegalArgumentException } from '../core/IllegalArgumentException';
+import { IllegalStateException } from '../core/IllegalStateException';
 
 /**
  * @deprecated Moving to @zxing/browser
@@ -66,15 +66,15 @@ abstract class BrowserSvgCodeWriter {
     /**
      * Encodes the content to a Barcode type.
      */
-    private encode(hints: Map<EncodeHintType, any>, contents: string): QRCode {
+    private encode(hints: Map<EncodeHintType, any>, contents: string): QRCodeEncoderQRCode {
 
-        let errorCorrectionLevel = ErrorCorrectionLevel.L;
+        let errorCorrectionLevel = QRCodeDecoderErrorCorrectionLevel.L;
 
         if (hints && hints.get(EncodeHintType.ERROR_CORRECTION) !== undefined) {
-            errorCorrectionLevel = ErrorCorrectionLevel.fromString(hints.get(EncodeHintType.ERROR_CORRECTION).toString());
+            errorCorrectionLevel = QRCodeDecoderErrorCorrectionLevel.fromString(hints.get(EncodeHintType.ERROR_CORRECTION).toString());
         }
 
-        const code = Encoder.encode(contents, errorCorrectionLevel, hints);
+        const code = QRCodeEncoder.encode(contents, errorCorrectionLevel, hints);
 
         return code;
     }
@@ -84,7 +84,7 @@ abstract class BrowserSvgCodeWriter {
      *
      * @note the input matrix uses 0 == white, 1 == black. The output matrix uses 0 == black, 255 == white (i.e. an 8 bit greyscale bitmap).
      */
-    private renderResult(code: QRCode, width: number /*int*/, height: number /*int*/, quietZone: number /*int*/): SVGSVGElement {
+    private renderResult(code: QRCodeEncoderQRCode, width: number /*int*/, height: number /*int*/, quietZone: number /*int*/): SVGSVGElement {
 
         // if (this.format && format != this.format) {
         //   throw new IllegalArgumentException("Can only encode QR_CODE, but got " + format)

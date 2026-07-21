@@ -16,15 +16,15 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BinaryBitmap from '../BinaryBitmap';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
+import { BinaryBitmap } from '../BinaryBitmap';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
 
-import Reader from '../Reader';
-import Result from '../Result';
-import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-import NotFoundException from '../NotFoundException';
+import { Reader } from '../Reader';
+import { Result } from '../Result';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+import { NotFoundException } from '../NotFoundException';
 
 /**
  * Encapsulates functionality and implementation that is common to all families
@@ -33,7 +33,7 @@ import NotFoundException from '../NotFoundException';
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-export default abstract class OneDReader implements Reader {
+export abstract class OneDReader implements Reader {
 
     /*
     @Override

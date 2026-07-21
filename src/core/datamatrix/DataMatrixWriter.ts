@@ -1,20 +1,20 @@
-import BarcodeFormat from '../BarcodeFormat';
-import BitMatrix from '../common/BitMatrix';
-import Dimension from '../Dimension';
-import EncodeHintType from '../EncodeHintType';
-import ByteMatrix from '../qrcode/encoder/ByteMatrix';
-import Charset from '../util/Charset';
-import Writer from '../Writer';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitMatrix } from '../common/BitMatrix';
+import { Dimension } from '../Dimension';
+import { EncodeHintType } from '../EncodeHintType';
+import { QRCodeByteMatrix } from '../qrcode/encoder/QRCodeByteMatrix';
+import { ZXingCharset } from '../util/ZXingCharset';
+import { Writer } from '../Writer';
 import {
-  DefaultPlacement,
-  ErrorCorrection,
-  HighLevelEncoder,
+  DataMatrixDefaultPlacement,
+  DataMatrixErrorCorrection,
+  DataMatrixHighLevelEncoder,
   MinimalEncoder,
-  SymbolInfo,
+  DataMatrixSymbolInfo,
 } from './encoder';
 import { SymbolShapeHint } from './encoder/constants';
 
-export default class DataMatrixWriter implements Writer {
+export class DataMatrixWriter implements Writer {
   public encode(
     contents: string,
     format: BarcodeFormat,
@@ -71,10 +71,10 @@ export default class DataMatrixWriter implements Writer {
         hints.has(EncodeHintType.GS1_FORMAT) &&
         Boolean(hints.get(EncodeHintType.GS1_FORMAT).toString());
 
-      let charset: Charset = null;
+      let charset: ZXingCharset = null;
       const hasEncodingHint = hints.has(EncodeHintType.CHARACTER_SET);
       if (hasEncodingHint) {
-        charset = Charset.forName(
+        charset = ZXingCharset.forName(
           hints.get(EncodeHintType.CHARACTER_SET).toString()
         );
       }
@@ -89,7 +89,7 @@ export default class DataMatrixWriter implements Writer {
         hints != null &&
         hints.has(EncodeHintType.FORCE_C40) &&
         Boolean(hints.get(EncodeHintType.FORCE_C40).toString());
-      encoded = HighLevelEncoder.encodeHighLevel(
+      encoded = DataMatrixHighLevelEncoder.encodeHighLevel(
         contents,
         shape,
         minSize,
@@ -98,7 +98,7 @@ export default class DataMatrixWriter implements Writer {
       );
     }
 
-    const symbolInfo = SymbolInfo.lookup(
+    const symbolInfo = DataMatrixSymbolInfo.lookup(
       encoded.length,
       shape,
       minSize,
@@ -107,10 +107,10 @@ export default class DataMatrixWriter implements Writer {
     );
 
     // 2. step: ECC generation
-    const codewords = ErrorCorrection.encodeECC200(encoded, symbolInfo);
+    const codewords = DataMatrixErrorCorrection.encodeECC200(encoded, symbolInfo);
 
     // 3. step: Module placement in Matrix
-    const placement = new DefaultPlacement(
+    const placement = new DataMatrixDefaultPlacement(
       codewords,
       symbolInfo.getSymbolDataWidth(),
       symbolInfo.getSymbolDataHeight()
@@ -129,15 +129,15 @@ export default class DataMatrixWriter implements Writer {
    * @return The bit matrix generated.
    */
   private encodeLowLevel(
-    placement: DefaultPlacement,
-    symbolInfo: SymbolInfo,
+    placement: DataMatrixDefaultPlacement,
+    symbolInfo: DataMatrixSymbolInfo,
     width: number,
     height: number
   ): BitMatrix {
     const symbolWidth = symbolInfo.getSymbolDataWidth();
     const symbolHeight = symbolInfo.getSymbolDataHeight();
 
-    const matrix = new ByteMatrix(
+    const matrix = new QRCodeByteMatrix(
       symbolInfo.getSymbolWidth(),
       symbolInfo.getSymbolHeight()
     );
@@ -194,7 +194,7 @@ export default class DataMatrixWriter implements Writer {
    * @return The output matrix.
    */
   private convertByteMatrixToBitMatrix(
-    matrix: ByteMatrix,
+    matrix: QRCodeByteMatrix,
     reqWidth: number,
     reqHeight: number
   ): BitMatrix {

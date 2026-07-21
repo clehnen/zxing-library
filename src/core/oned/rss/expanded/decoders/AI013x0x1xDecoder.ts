@@ -1,9 +1,9 @@
-import AI01weightDecoder from './AI01weightDecoder';
-import BitArray from '../../../../common/BitArray';
-import NotFoundException from '../../../../NotFoundException';
-import StringBuilder from '../../../../util/StringBuilder';
+import { AI01weightDecoder } from './AI01weightDecoder';
+import { BitArray } from '../../../../common/BitArray';
+import { NotFoundException } from '../../../../NotFoundException';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
 
-export default class AI013x0x1xDecoder extends AI01weightDecoder {
+export class AI013x0x1xDecoder extends AI01weightDecoder {
   private static readonly HEADER_SIZE = 7 + 1;
   private static readonly WEIGHT_SIZE = 20;
   private static readonly DATE_SIZE = 16;
@@ -28,7 +28,7 @@ export default class AI013x0x1xDecoder extends AI01weightDecoder {
       throw new NotFoundException();
     }
 
-    const buf = new StringBuilder();
+    const buf = new ZXingStringBuilder();
 
     this.encodeCompressedGtin(buf, AI013x0x1xDecoder.HEADER_SIZE);
     this.encodeCompressedWeight(
@@ -46,7 +46,7 @@ export default class AI013x0x1xDecoder extends AI01weightDecoder {
     return buf.toString();
   }
 
-  private encodeCompressedDate(buf: StringBuilder, currentPos: number): void {
+  private encodeCompressedDate(buf: ZXingStringBuilder, currentPos: number): void {
     let numericDate = this.getGeneralDecoder().extractNumericValueFromBitArray(
       currentPos,
       AI013x0x1xDecoder.DATE_SIZE
@@ -81,7 +81,7 @@ export default class AI013x0x1xDecoder extends AI01weightDecoder {
     buf.append('' + day);
   }
 
-  protected addWeightCode(buf: StringBuilder, weight: number /* int */): void {
+  protected addWeightCode(buf: ZXingStringBuilder, weight: number /* int */): void {
     buf.append('(');
     buf.append(this.firstAIdigits);
     buf.append('' + Math.trunc(weight / 100000));

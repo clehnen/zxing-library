@@ -1,8 +1,8 @@
-import StringBuilder from '../../util/StringBuilder';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
 import { char } from '../../../customTypings';
 import { Encoder } from './Encoder';
 import { EncoderContext } from './EncoderContext';
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 import {
   C40_ENCODATION,
   LATCH_TO_C40,
@@ -16,7 +16,7 @@ export class C40Encoder implements Encoder {
   }
 
   encodeMaximal(context: EncoderContext): void {
-    const buffer = new StringBuilder();
+    const buffer = new ZXingStringBuilder();
     let lastCharSize = 0;
     let backtrackStartPosition = context.pos;
     let backtrackBufferLength = 0;
@@ -56,7 +56,7 @@ export class C40Encoder implements Encoder {
 
   public encode(context: EncoderContext): void {
     // step C
-    const buffer = new StringBuilder();
+    const buffer = new ZXingStringBuilder();
     while (context.hasMoreCharacters()) {
       const c = context.getCurrentChar();
       context.pos++;
@@ -72,7 +72,7 @@ export class C40Encoder implements Encoder {
 
       if (!context.hasMoreCharacters()) {
         // Avoid having a single C40 value in the last triplet
-        const removed = new StringBuilder();
+        const removed = new ZXingStringBuilder();
         if (buffer.length() % 3 === 2 && available !== 2) {
           lastCharSize = this.backtrackOneCharacter(
             context,
@@ -97,7 +97,7 @@ export class C40Encoder implements Encoder {
 
       const count = buffer.length();
       if (count % 3 === 0) {
-        const newMode = HighLevelEncoder.lookAheadTest(
+        const newMode = DataMatrixHighLevelEncoder.lookAheadTest(
           context.getMessage(),
           context.pos,
           this.getEncodingMode()
@@ -114,8 +114,8 @@ export class C40Encoder implements Encoder {
 
   backtrackOneCharacter(
     context: EncoderContext,
-    buffer: StringBuilder,
-    removed: StringBuilder,
+    buffer: ZXingStringBuilder,
+    removed: ZXingStringBuilder,
     lastCharSize: number
   ): number {
     const count = buffer.length();
@@ -136,7 +136,7 @@ export class C40Encoder implements Encoder {
     return lastCharSize;
   }
 
-  writeNextTriplet(context: EncoderContext, buffer: StringBuilder) {
+  writeNextTriplet(context: EncoderContext, buffer: ZXingStringBuilder) {
     context.writeCodewords(this.encodeToCodewords(buffer.toString()));
 
     const test = buffer.toString().substring(3);
@@ -155,7 +155,7 @@ export class C40Encoder implements Encoder {
    * @param context the encoder context
    * @param buffer  the buffer with the remaining encoded characters
    */
-  handleEOD(context: EncoderContext, buffer: StringBuilder): void {
+  handleEOD(context: EncoderContext, buffer: ZXingStringBuilder): void {
     const unwritten = Math.floor((buffer.length() / 3) * 2);
     const rest = buffer.length() % 3;
 
@@ -195,7 +195,7 @@ export class C40Encoder implements Encoder {
     context.signalEncoderChange(ASCII_ENCODATION);
   }
 
-  encodeChar(c: char, sb: StringBuilder): number {
+  encodeChar(c: char, sb: ZXingStringBuilder): number {
     if (c === ' '.charCodeAt(0)) {
       sb.append(0o3);
       return 1;
@@ -245,7 +245,7 @@ export class C40Encoder implements Encoder {
     const cw1 = v / 256;
     const cw2 = v % 256;
 
-    const result = new StringBuilder();
+    const result = new ZXingStringBuilder();
     result.append(cw1);
     result.append(cw2);
 

@@ -1,5 +1,5 @@
-import MicroQRDecodedBitStreamParser from '../../../../core/microqr/decoder/MicroQRDecodedBitStreamParser';
-import MicroQRVersion from '../../../../core/microqr/decoder/MicroQRVersion';
+import {MicroQRDecodedBitStreamParser} from '../../../../core/microqr/decoder/MicroQRDecodedBitStreamParser';
+import {MicroQRVersion} from '../../../../core/microqr/decoder/MicroQRVersion';
 
 describe('MicroQRDecodedBitStreamParser', () => {
 

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
 
-import UPCEANReader from './UPCEANReader';
-import NotFoundException from '../NotFoundException';
+import { UPCEANReader } from './UPCEANReader';
+import { NotFoundException } from '../NotFoundException';
 
 /**
  * <p>Implements decoding of the EAN-13 format.</p>
@@ -27,7 +27,7 @@ import NotFoundException from '../NotFoundException';
  * @author Sean Owen
  * @author alasdair@google.com (Alasdair Mackintosh)
  */
-export default class EAN13Reader extends UPCEANReader {
+export class EAN13Reader extends UPCEANReader {
     private static FIRST_DIGIT_ENCODINGS: number[] = [0x00, 0x0B, 0x0D, 0xE, 0x13, 0x19, 0x1C, 0x15, 0x16, 0x1A];
 
   private decodeMiddleCounters: Int32Array;

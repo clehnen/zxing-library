@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
 
-import Result from '../Result';
-import OneDReader from './OneDReader';
-import NotFoundException from '../NotFoundException';
-import FormatException from '../FormatException';
+import { Result } from '../Result';
+import { OneDReader } from './OneDReader';
+import { NotFoundException } from '../NotFoundException';
+import { FormatException } from '../FormatException';
 import { int } from '../../customTypings';
 
 /**
@@ -31,7 +31,7 @@ import { int } from '../../customTypings';
  * @author Sean Owen
  * @author alasdair@google.com (Alasdair Mackintosh)
  */
-export default abstract class AbstractUPCEANReader extends OneDReader {
+export abstract class AbstractUPCEANReader extends OneDReader {
     // These two values are critical for determining how permissive the decoding will be.
     // We've arrived at these values through a lot of trial and error. Setting them any higher
     // lets false positives creep in quickly.

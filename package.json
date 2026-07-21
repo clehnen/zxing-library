@@ -32,6 +32,8 @@
   "engines": {
     "node": ">= 24.0.0"
   },
+  "sideEffects": false,
+  "type": "module",
   "license": "Apache-2.0",
   "bugs": "https://github.com/zxing-js/library/issues/new",
   "repository": {
@@ -41,7 +43,7 @@
   "homepage": "https://zxing-js.github.io/library/",
   "private": false,
   "main": "./cjs/index.js",
-  "module": "./esm/index.js",
+  "module": "./esm/index.mjs",
   "typings": "./esm/index.d.ts",
   "esnext": "./es2015/index.js",
   "unpkg": "./umd/index.min.js",
@@ -50,7 +52,9 @@
     "clean": "shx rm -rf dist output",
     "test": "jest",
     "cover": "jest --coverage",
-    "build": "npm run clean && npm run build:es2015 && npm run build:esm && npm run build:esnext && npm run build:cjs && npm run build:umd && npm run build:umd:min && npm run build:copy",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build",
     "build:es2015": "tsc --build tsconfig.lib-es2015.json",
     "build:esm": "tsc --build tsconfig.lib-esm.json",
     "build:esnext": "tsc --build tsconfig.lib-esnext.json",
@@ -59,6 +63,16 @@
     "build:umd:min": "cd dist/umd && terser --compress --mangle --source-map --comments -o index.min.js -- index.js && gzip index.min.js -c > index.min.js.gz",
     "build:copy": "cp README.md dist && cp package.json dist && cp LICENSE dist",
     "tsc": "./node_modules/.bin/tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
   "dependencies": {
     "ts-custom-error": "^3.3.1"
@@ -82,6 +96,7 @@
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.0"
   },

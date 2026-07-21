@@ -1,21 +1,21 @@
-import AbstractRSSReader from './AbstractRSSReader';
-import Pair from './Pair';
-import Result from '../../Result';
-import BitArray from '../../common/BitArray';
-import DecodeHintType from '../../DecodeHintType';
-import NotFoundException from '../../NotFoundException';
-import StringBuilder from '../../util/StringBuilder';
-import BarcodeFormat from '../../BarcodeFormat';
-import ResultPointCallback from '../../ResultPointCallback';
-import ResultPoint from '../../ResultPoint';
-import FinderPattern from './FinderPattern';
-import DataCharacter from './DataCharacter';
-import MathUtils from '../../common/detector/MathUtils';
-import RSSUtils from './RSSUtils';
-import System from '../../util/System';
-import OneDReader from '../OneDReader';
+import { AbstractRSSReader } from './AbstractRSSReader';
+import { Pair } from './Pair';
+import { Result } from '../../Result';
+import { BitArray } from '../../common/BitArray';
+import { DecodeHintType } from '../../DecodeHintType';
+import { NotFoundException } from '../../NotFoundException';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
+import { BarcodeFormat } from '../../BarcodeFormat';
+import { ResultPointCallback } from '../../ResultPointCallback';
+import { ResultPoint } from '../../ResultPoint';
+import { FinderPattern } from './FinderPattern';
+import { DataCharacter } from './DataCharacter';
+import { MathUtils } from '../../common/detector/MathUtils';
+import { RSSUtils } from './RSSUtils';
+import { ZXingSystem } from '../../util/ZXingSystem';
+import { OneDReader } from '../OneDReader';
 
-export default class RSS14Reader extends AbstractRSSReader {
+export class RSS14Reader extends AbstractRSSReader {
 
     private static readonly OUTSIDE_EVEN_TOTAL_SUBSET: number[] = [1, 10, 34, 70, 126];
     private static readonly INSIDE_ODD_TOTAL_SUBSET: number[] = [4, 20, 48, 81];
@@ -84,7 +84,7 @@ export default class RSS14Reader extends AbstractRSSReader {
         const symbolValue = 4537077 * leftPair.getValue() + rightPair.getValue();
         const text = String(symbolValue);
 
-        const buffer = new StringBuilder();
+        const buffer = new ZXingStringBuilder();
         for (let i = 13 - text.length; i > 0; i--) {
             buffer.append('0');
         }
@@ -300,7 +300,7 @@ export default class RSS14Reader extends AbstractRSSReader {
         // Make 'counters' hold 1-4
         const counters = this.getDecodeFinderCounters();
         const copy = new Int32Array(counters.length);
-        System.arraycopy(counters, 0, copy, 1, counters.length - 1);
+        ZXingSystem.arraycopy(counters, 0, copy, 1, counters.length - 1);
         copy[0] = firstCounter;
         const value = this.parseFinderValue(copy, RSS14Reader.FINDER_PATTERNS);
         let start = firstElementStart;

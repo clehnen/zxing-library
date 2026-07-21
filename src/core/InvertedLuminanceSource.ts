@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import LuminanceSource from './LuminanceSource';
+import { LuminanceSource } from './LuminanceSource';
 
 /*namespace com.google.zxing {*/
 
@@ -24,7 +24,7 @@ import LuminanceSource from './LuminanceSource';
  *
  * @author Sean Owen
  */
-export default class InvertedLuminanceSource extends LuminanceSource {
+export class InvertedLuminanceSource extends LuminanceSource {
 
     public constructor(private delegate: LuminanceSource) {
         super(delegate.getWidth(), delegate.getHeight());

@@ -16,7 +16,7 @@
 
 /*namespace com.google.zxing.qrcode.detector {*/
 
-import FinderPattern from './FinderPattern';
+import { FinderPattern } from './FinderPattern';
 
 /**
  * <p>Encapsulates information about finder patterns in an image, including the location of
@@ -24,7 +24,7 @@ import FinderPattern from './FinderPattern';
  *
  * @author Sean Owen
  */
-export default class FinderPatternInfo {
+export class FinderPatternInfo {
 
     private bottomLeft: FinderPattern;
     private topLeft: FinderPattern;

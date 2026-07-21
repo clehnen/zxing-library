@@ -16,11 +16,11 @@
 
 /*namespace com.google.zxing.qrcode.detector {*/
 
-import ResultPointCallback from '../../ResultPointCallback';
-import BitMatrix from '../../common/BitMatrix';
-import AlignmentPattern from './AlignmentPattern';
+import { ResultPointCallback } from '../../ResultPointCallback';
+import { BitMatrix } from '../../common/BitMatrix';
+import { AlignmentPattern } from './AlignmentPattern';
 
-import NotFoundException from '../../NotFoundException';
+import { NotFoundException } from '../../NotFoundException';
 
 /*import java.util.ArrayList;*/
 /*import java.util.List;*/
@@ -39,7 +39,7 @@ import NotFoundException from '../../NotFoundException';
  *
  * @author Sean Owen
  */
-export default class AlignmentPatternFinder {
+export class AlignmentPatternFinder {
 
     private possibleCenters: AlignmentPattern[];
     private crossCheckStateCount: Int32Array;

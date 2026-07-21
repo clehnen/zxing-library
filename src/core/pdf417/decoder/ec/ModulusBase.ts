@@ -1,7 +1,7 @@
-import IllegalArgumentException from '../../../IllegalArgumentException';
-import ArithmeticException from '../../../ArithmeticException';
+import { IllegalArgumentException } from '../../../IllegalArgumentException';
+import { ArithmeticException } from '../../../ArithmeticException';
 
-export default class ModulusBase {
+export class ModulusBase {
 
   protected /*final*/ logTable: Int32Array;
   protected /*final*/ expTable: Int32Array;

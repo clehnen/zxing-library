@@ -16,16 +16,16 @@
 
 /*namespace com.google.zxing.qrcode {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import EncodeHintType from '../EncodeHintType';
-import Writer from '../Writer';
-import BitMatrix from '../common/BitMatrix';
-import ErrorCorrectionLevel from './decoder/ErrorCorrectionLevel';
-import Encoder from './encoder/Encoder';
-import QRCode from './encoder/QRCode';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { EncodeHintType } from '../EncodeHintType';
+import { Writer } from '../Writer';
+import { BitMatrix } from '../common/BitMatrix';
+import { QRCodeDecoderErrorCorrectionLevel } from './decoder/QRCodeDecoderErrorCorrectionLevel';
+import { QRCodeEncoder } from './encoder/QRCodeEncoder';
+import { QRCodeEncoderQRCode } from './encoder/QRCodeEncoderQRCode';
 
-import IllegalArgumentException from '../IllegalArgumentException';
-import IllegalStateException from '../IllegalStateException';
+import { IllegalArgumentException } from '../IllegalArgumentException';
+import { IllegalStateException } from '../IllegalStateException';
 
 /*import java.util.Map;*/
 
@@ -34,7 +34,7 @@ import IllegalStateException from '../IllegalStateException';
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-export default class QRCodeWriter implements Writer {
+export class QRCodeWriter implements Writer {
 
     private static QUIET_ZONE_SIZE = 4;
 
@@ -64,24 +64,24 @@ export default class QRCodeWriter implements Writer {
             throw new IllegalArgumentException(`Requested dimensions are too small: ${width}x${height}`);
         }
 
-        let errorCorrectionLevel = ErrorCorrectionLevel.L;
+        let errorCorrectionLevel = QRCodeDecoderErrorCorrectionLevel.L;
         let quietZone = QRCodeWriter.QUIET_ZONE_SIZE;
         if (hints !== null) {
             if (undefined !== hints.get(EncodeHintType.ERROR_CORRECTION)) {
-                errorCorrectionLevel = ErrorCorrectionLevel.fromString(hints.get(EncodeHintType.ERROR_CORRECTION).toString());
+                errorCorrectionLevel = QRCodeDecoderErrorCorrectionLevel.fromString(hints.get(EncodeHintType.ERROR_CORRECTION).toString());
             }
             if (undefined !== hints.get(EncodeHintType.MARGIN)) {
                 quietZone = Number.parseInt(hints.get(EncodeHintType.MARGIN).toString(), 10);
             }
         }
 
-        const code: QRCode = Encoder.encode(contents, errorCorrectionLevel, hints);
+        const code: QRCodeEncoderQRCode = QRCodeEncoder.encode(contents, errorCorrectionLevel, hints);
         return QRCodeWriter.renderResult(code, width, height, quietZone);
     }
 
     // Note that the input matrix uses 0 == white, 1 == black, while the output matrix uses
     // 0 == black, 255 == white (i.e. an 8 bit greyscale bitmap).
-    private static renderResult(code: QRCode, width: number /*int*/, height: number /*int*/, quietZone: number /*int*/): BitMatrix {
+    private static renderResult(code: QRCodeEncoderQRCode, width: number /*int*/, height: number /*int*/, quietZone: number /*int*/): BitMatrix {
         const input = code.getMatrix();
         if (input === null) {
             throw new IllegalStateException();

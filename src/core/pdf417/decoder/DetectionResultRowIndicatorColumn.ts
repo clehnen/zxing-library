@@ -17,22 +17,22 @@
 // package com.google.zxing.pdf417.decoder;
 
 // import com.google.zxing.ResultPoint;
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 // import com.google.zxing.pdf417.PDF417Common;
-import PDF417Common from '../PDF417Common';
+import { PDF417Common } from '../PDF417Common';
 
-import BarcodeMetadata from './BarcodeMetadata';
-import BoundingBox from './BoundingBox';
-import DetectionResultColumn from './DetectionResultColumn';
-import Codeword from './Codeword';
-import BarcodeValue from './BarcodeValue';
+import { BarcodeMetadata } from './BarcodeMetadata';
+import { BoundingBox } from './BoundingBox';
+import { DetectionResultColumn } from './DetectionResultColumn';
+import { Codeword } from './Codeword';
+import { BarcodeValue } from './BarcodeValue';
 
 import { int } from '../../../customTypings';
 
 /**
  * @author Guenther Grau
  */
-export default /*final*/ class DetectionResultRowIndicatorColumn extends DetectionResultColumn {
+export /*final*/ class DetectionResultRowIndicatorColumn extends DetectionResultColumn {
 
   private /*final*/ _isLeft: boolean;
 

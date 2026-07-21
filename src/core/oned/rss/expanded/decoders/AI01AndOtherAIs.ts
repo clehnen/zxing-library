@@ -1,8 +1,8 @@
-import AI01decoder from './AI01decoder';
-import BitArray from '../../../../common/BitArray';
-import StringBuilder from '../../../../util/StringBuilder';
+import { AI01decoder } from './AI01decoder';
+import { BitArray } from '../../../../common/BitArray';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
 
-export default class AI01AndOtherAIs extends AI01decoder {
+export class AI01AndOtherAIs extends AI01decoder {
 
   private static readonly HEADER_SIZE = 1 + 1 + 2; // first bit encodes the linkage flag,
   // the second one is the encodation method, and the other two are for the variable length
@@ -12,7 +12,7 @@ export default class AI01AndOtherAIs extends AI01decoder {
   }
 
   public parseInformation(): string {
-    const buff = new StringBuilder();
+    const buff = new ZXingStringBuilder();
 
     buff.append('(01)');
     const initialGtinPosition = buff.length();

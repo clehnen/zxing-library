@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
 
-import Result from '../Result';
-import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-import UPCEANExtensionSupport from './UPCEANExtensionSupport';
-import AbstractUPCEANReader from './AbstractUPCEANReader';
-import NotFoundException from '../NotFoundException';
-import FormatException from '../FormatException';
-import ChecksumException from '../ChecksumException';
+import { Result } from '../Result';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+import { UPCEANExtensionSupport } from './UPCEANExtensionSupport';
+import { AbstractUPCEANReader } from './AbstractUPCEANReader';
+import { NotFoundException } from '../NotFoundException';
+import { FormatException } from '../FormatException';
+import { ChecksumException } from '../ChecksumException';
 
 /**
  * <p>Encapsulates functionality and implementation that is common to UPC and EAN families
@@ -35,7 +35,7 @@ import ChecksumException from '../ChecksumException';
  * @author Sean Owen
  * @author alasdair@google.com (Alasdair Mackintosh)
  */
-export default abstract class UPCEANReader extends AbstractUPCEANReader {
+export abstract class UPCEANReader extends AbstractUPCEANReader {
 
     public constructor() {
         super();

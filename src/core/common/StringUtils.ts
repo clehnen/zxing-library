@@ -19,11 +19,11 @@
 /*import java.nio.charset.Charset;*/
 /*import java.util.Map;*/
 
-import DecodeHintType from '../DecodeHintType';
-import CharacterSetECI from './CharacterSetECI';
-import StringEncoding from '../util/StringEncoding';
+import { DecodeHintType } from '../DecodeHintType';
+import { CharacterSetECI } from './CharacterSetECI';
+import { ZXingStringEncoding } from '../util/ZXingStringEncoding';
 import { int } from '../../customTypings';
-import Charset from '../util/Charset';
+import { ZXingCharset } from '../util/ZXingCharset';
 
 /**
  * Common string-related functions.
@@ -31,7 +31,7 @@ import Charset from '../util/Charset';
  * @author Sean Owen
  * @author Alex Dupre
  */
-export default class StringUtils {
+export class StringUtils {
 
   public static SHIFT_JIS = CharacterSetECI.SJIS.getName(); // "SJIS"
   public static GB2312 = 'GB2312';
@@ -43,12 +43,12 @@ export default class StringUtils {
   // SHIFT_JIS.equalsIgnoreCase(PLATFORM_DEFAULT_ENCODING) ||
   // EUC_JP.equalsIgnoreCase(PLATFORM_DEFAULT_ENCODING);
 
-  static castAsNonUtf8Char(code: number, encoding: Charset = null) {
+  static castAsNonUtf8Char(code: number, encoding: ZXingCharset = null) {
     // ISO 8859-1 is the Java default as UTF-8 is JavaScripts
     // you can see this method as a Java version of String.fromCharCode
     const e = encoding ? encoding.getName() : this.ISO88591;
     // use passed format (fromCharCode will return UTF8 encoding)
-    return StringEncoding.decode(new Uint8Array([code]), e);
+    return ZXingStringEncoding.decode(new Uint8Array([code]), e);
   }
 
   /**
@@ -267,7 +267,7 @@ export default class StringUtils {
    *
    */
   public static getBytes(str: string, encoding: CharacterSetECI): Uint8Array {
-    return StringEncoding.encode(str, encoding);
+    return ZXingStringEncoding.encode(str, encoding);
   }
 
   /**

@@ -15,8 +15,8 @@
  */
 
 
-import StringBuilder from './util/StringBuilder';
-import UnsupportedOperationException from './UnsupportedOperationException';
+import { ZXingStringBuilder } from './util/StringBuilder';
+import { UnsupportedOperationException } from './UnsupportedOperationException';
 
 /*namespace com.google.zxing {*/
 
@@ -29,7 +29,7 @@ import UnsupportedOperationException from './UnsupportedOperationException';
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-abstract class LuminanceSource {
+export abstract class LuminanceSource {
 
   protected constructor(private width: number /*int*/, private height: number /*int*/) { }
 
@@ -128,7 +128,7 @@ abstract class LuminanceSource {
   /*@Override*/
   public toString(): string {
     const row = new Uint8ClampedArray(this.width);
-    let result = new StringBuilder();
+    let result = new ZXingStringBuilder();
     for (let y = 0; y < this.height; y++) {
       const sourceRow = this.getRow(y, row);
       for (let x = 0; x < this.width; x++) {
@@ -152,4 +152,3 @@ abstract class LuminanceSource {
 
 }
 
-export default LuminanceSource;

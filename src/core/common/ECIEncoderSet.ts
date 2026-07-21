@@ -14,21 +14,21 @@
  */
 
 import { char } from '../../customTypings';
-import Charset from '../util/Charset';
-import StandardCharsets from '../util/StandardCharsets';
-import StringEncoding from '../util/StringEncoding';
-import StringUtils from './StringUtils';
+import { ZXingCharset } from '../util/ZXingCharset';
+import { ZXingStandardCharsets } from '../util/ZXingStandardCharsets';
+import { ZXingStringEncoding } from '../util/ZXingStringEncoding';
+import { StringUtils } from './StringUtils';
 
 class CharsetEncoder {
   public name: string;
 
-  constructor(public readonly charset: Charset) {
+  constructor(public readonly charset: ZXingCharset) {
     this.name = charset.name;
   }
 
   public canEncode(c: string): boolean {
     try {
-      return StringEncoding.encode(c, this.charset) != null;
+      return ZXingStringEncoding.encode(c, this.charset) != null;
     } catch (ex) {
       return false;
     }
@@ -57,7 +57,7 @@ export class ECIEncoderSet {
     'windows-1252',
     'windows-1256',
     'Shift_JIS',
-  ].map(name => new CharsetEncoder(Charset.forName(name)));
+  ].map(name => new CharsetEncoder(ZXingCharset.forName(name)));
   private encoders: CharsetEncoder[] = [];
   private priorityEncoderIndex: number;
 
@@ -65,15 +65,15 @@ export class ECIEncoderSet {
    * Constructs an encoder set
    *
    * @param stringToEncode the string that needs to be encoded
-   * @param priorityCharset The preferred {@link Charset} or null.
+   * @param priorityCharset The preferred {@link ZXingCharset} or null.
    * @param fnc1 fnc1 denotes the character in the input that represents the FNC1 character or -1 for a non-GS1 bar
    * code. When specified, it is considered an error to pass it as argument to the methods canEncode() or encode().
    */
-  constructor(stringToEncode: string, priorityCharset: Charset, fnc1: number) {
+  constructor(stringToEncode: string, priorityCharset: ZXingCharset, fnc1: number) {
     const neededEncoders: CharsetEncoder[] = [];
 
     // we always need the ISO-8859-1 encoder. It is the default encoding
-    neededEncoders.push(new CharsetEncoder(StandardCharsets.ISO_8859_1));
+    neededEncoders.push(new CharsetEncoder(ZXingStandardCharsets.ISO_8859_1));
     let needUnicodeEncoder =
       priorityCharset != null && priorityCharset.name.startsWith('UTF');
 
@@ -158,7 +158,7 @@ export class ECIEncoderSet {
     return this.encoders[index].name;
   }
 
-  public getCharset(index: number): Charset {
+  public getCharset(index: number): ZXingCharset {
     if (!(index < this.length())) {
       throw new Error('index must be less than length');
     }
@@ -188,7 +188,7 @@ export class ECIEncoderSet {
       throw new Error('index must be less than length');
     }
 
-    return StringEncoding.encode(
+    return ZXingStringEncoding.encode(
       StringUtils.getCharAt(c),
       this.encoders[encoderIndex].name
     );

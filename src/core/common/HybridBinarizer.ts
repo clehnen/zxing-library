@@ -16,10 +16,10 @@
 
 /*namespace com.google.zxing.common {*/
 
-import Binarizer from '../Binarizer';
-import LuminanceSource from '../LuminanceSource';
-import GlobalHistogramBinarizer from './GlobalHistogramBinarizer';
-import BitMatrix from './BitMatrix';
+import { Binarizer } from '../Binarizer';
+import { LuminanceSource } from '../LuminanceSource';
+import { GlobalHistogramBinarizer } from './GlobalHistogramBinarizer';
+import { BitMatrix } from './BitMatrix';
 
 /**
  * This class implements a local thresholding algorithm, which while slower than the
@@ -38,7 +38,7 @@ import BitMatrix from './BitMatrix';
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-export default class HybridBinarizer extends GlobalHistogramBinarizer {
+export class HybridBinarizer extends GlobalHistogramBinarizer {
 
     // This class uses 5x5 blocks to compute local luminance, where each block is 8x8 pixels.
     // So this is the smallest dimension in each axis we can accept.

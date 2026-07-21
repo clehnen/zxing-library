@@ -16,20 +16,20 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import BinaryBitmap from '../BinaryBitmap';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BinaryBitmap } from '../BinaryBitmap';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
 
-import Reader from '../Reader';
-import Result from '../Result';
-import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-import NotFoundException from '../NotFoundException';
+import { Reader } from '../Reader';
+import { Result } from '../Result';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+import { NotFoundException } from '../NotFoundException';
 
-import EAN13Reader from './EAN13Reader';
-import UPCEANReader from './UPCEANReader';
-import { int } from 'src/customTypings';
+import { EAN13Reader } from './EAN13Reader';
+import { UPCEANReader } from './UPCEANReader';
+import { int } from '../../customTypings';
 
 /**
  * Encapsulates functionality and implementation that is common to all families
@@ -43,7 +43,7 @@ import { int } from 'src/customTypings';
  *
  * @experimental
  */
-export default class UPCAReader extends UPCEANReader {
+export class UPCAReader extends UPCEANReader {
 
   private readonly ean13Reader = new EAN13Reader();
 

@@ -1,7 +1,7 @@
 /**
  * Ponyfill for Java's Long class.
  */
-export default class Long {
+export class Long {
 
   /**
    * Parses a string to a number, since JS has no really Int64.

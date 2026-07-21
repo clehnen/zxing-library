@@ -1,9 +1,9 @@
-import { CustomError } from 'ts-custom-error';
+import { CustomError } from  'ts-custom-error';
 
 /**
  * Custom Error class of type Exception.
  */
-export default class Exception extends CustomError {
+export class Exception extends CustomError {
 
   /**
    * It's typed as string so it can be extended and overriden.

@@ -1,4 +1,4 @@
-export default class DataCharacter {
+export class DataCharacter {
 
     private value: number;
     private checksumPortion: number;

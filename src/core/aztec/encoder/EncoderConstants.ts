@@ -1,5 +1,5 @@
-import Token from './Token';
-import SimpleToken from './SimpleToken';
+import { Token } from './Token';
+import { SimpleToken } from './SimpleToken';
 
 import { int } from '../../../customTypings';
 
@@ -18,3 +18,13 @@ export const /*final*/ MODE_MIXED: int = 3; // 5 bits
 export const /*final*/ MODE_PUNCT: int = 4; // 5 bits
 
 export const EMPTY_TOKEN: Token = new SimpleToken(null, 0, 0);
+
+export default {
+    MODE_NAMES,
+    MODE_UPPER,
+    MODE_LOWER,
+    MODE_DIGIT,
+    MODE_MIXED,
+    MODE_PUNCT,
+    EMPTY_TOKEN
+}

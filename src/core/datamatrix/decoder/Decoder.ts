@@ -1,11 +1,11 @@
-import ChecksumException from '../../ChecksumException';
-import BitMatrix from '../../common/BitMatrix';
-import DecoderResult from '../../common/DecoderResult';
-import GenericGF from '../../common/reedsolomon/GenericGF';
-import ReedSolomonDecoder from '../../common/reedsolomon/ReedSolomonDecoder';
-import BitMatrixParser from './BitMatrixParser';
-import DataBlock from './DataBlock';
-import DecodedBitStreamParser from './DecodedBitStreamParser';
+import { ChecksumException } from '../../ChecksumException';
+import { BitMatrix } from '../../common/BitMatrix';
+import { DecoderResult } from '../../common/DecoderResult';
+import { GenericGF } from '../../common/reedsolomon/GenericGF';
+import { ReedSolomonDecoder } from '../../common/reedsolomon/ReedSolomonDecoder';
+import { BitMatrixParser } from './BitMatrixParser';
+import { DataBlock } from './DataBlock';
+import { DataMatrixDecodedBitStreamParser } from './DataMatrixDecodedBitStreamParser';
 
 /*
  * Copyright 2007 ZXing authors
@@ -29,7 +29,7 @@ import DecodedBitStreamParser from './DecodedBitStreamParser';
  *
  * @author bbrown@google.com (Brian Brown)
  */
-export default class Decoder {
+export class Decoder {
 
   private rsDecoder: ReedSolomonDecoder;
 
@@ -77,7 +77,7 @@ export default class Decoder {
     }
 
     // Decode the contents of that stream of bytes
-    return DecodedBitStreamParser.decode(resultBytes);
+    return DataMatrixDecodedBitStreamParser.decode(resultBytes);
   }
 
   /**

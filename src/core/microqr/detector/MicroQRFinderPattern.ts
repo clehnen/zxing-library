@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 
 /**
  * Encapsulates a Micro QR Code finder pattern candidate.
  */
-export default class MicroQRFinderPattern extends ResultPoint {
+export class MicroQRFinderPattern extends ResultPoint {
 
     public constructor(
         posX: number,

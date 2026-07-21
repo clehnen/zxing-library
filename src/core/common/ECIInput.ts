@@ -1,4 +1,4 @@
-export default interface ECIInput {
+export interface ECIInput {
   /**
    * Returns the length of this input.  The length is the number
    * of {@code byte}s in or ECIs in the sequence.

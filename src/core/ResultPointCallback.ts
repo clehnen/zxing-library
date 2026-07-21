@@ -16,9 +16,8 @@
 
 /*namespace com.google.zxing {*/
 
-import ResultPoint from './ResultPoint';
+import { ResultPoint } from './ResultPoint';
 
-export default ResultPointCallback;
 
 /**
  * Callback which is invoked when a possible result point (significant
@@ -26,7 +25,7 @@ export default ResultPointCallback;
  *
  * @see DecodeHintType#NEED_RESULT_POINT_CALLBACK
  */
-interface ResultPointCallback {
+export interface ResultPointCallback {
 
     foundPossibleResultPoint(point: ResultPoint): void;
 

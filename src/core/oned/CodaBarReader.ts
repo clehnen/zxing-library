@@ -16,13 +16,13 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
-import NotFoundException from '../NotFoundException';
-import OneDReader from './OneDReader';
-import Result from '../Result';
-import ResultPoint from '../ResultPoint';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
+import { NotFoundException } from '../NotFoundException';
+import { OneDReader } from './OneDReader';
+import { Result } from '../Result';
+import { ResultPoint } from '../ResultPoint';
 
 /**
  * <p>Decodes CodaBar barcodes. </p>
@@ -30,7 +30,7 @@ import ResultPoint from '../ResultPoint';
  * @author Evan @dodobelieve
  * @see CodaBarReader
  */
-export default class CodaBarReader extends OneDReader {
+export class CodaBarReader extends OneDReader {
 
     private readonly CODA_BAR_CHAR_SET = {
         nnnnnww: '0',

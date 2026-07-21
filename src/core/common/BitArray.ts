@@ -18,10 +18,10 @@
 
 /*import java.util.Arrays;*/
 
-import IllegalArgumentException from '../IllegalArgumentException';
-import Arrays from '../util/Arrays';
-import Integer from '../util/Integer';
-import System from '../util/System';
+import { IllegalArgumentException } from '../IllegalArgumentException';
+import { ZXingArrays } from '../util/ZXingArrays';
+import { ZXingInteger } from '../util/ZXingInteger';
+import { ZXingSystem } from '../util/ZXingSystem';
 
 
 /**
@@ -29,7 +29,7 @@ import System from '../util/System';
  *
  * @author Sean Owen
  */
-export default class BitArray /*implements Cloneable*/ {
+export class BitArray /*implements Cloneable*/ {
 
   private size: number;
   private bits: Int32Array;
@@ -74,7 +74,7 @@ export default class BitArray /*implements Cloneable*/ {
   private ensureCapacity(size: number /*int*/): void {
     if (size > this.bits.length * 32) {
       const newBits = BitArray.makeArray(size);
-      System.arraycopy(this.bits, 0, newBits, 0, this.bits.length);
+      ZXingSystem.arraycopy(this.bits, 0, newBits, 0, this.bits.length);
       this.bits = newBits;
     }
   }
@@ -128,7 +128,7 @@ export default class BitArray /*implements Cloneable*/ {
       }
       currentBits = bits[bitsOffset];
     }
-    const result = (bitsOffset * 32) + Integer.numberOfTrailingZeros(currentBits);
+    const result = (bitsOffset * 32) + ZXingInteger.numberOfTrailingZeros(currentBits);
     return result > size ? size : result;
   }
 
@@ -154,7 +154,7 @@ export default class BitArray /*implements Cloneable*/ {
       }
       currentBits = ~bits[bitsOffset];
     }
-    const result = (bitsOffset * 32) + Integer.numberOfTrailingZeros(currentBits);
+    const result = (bitsOffset * 32) + ZXingInteger.numberOfTrailingZeros(currentBits);
     return result > size ? size : result;
   }
 
@@ -361,12 +361,12 @@ export default class BitArray /*implements Cloneable*/ {
       return false;
     }
     const other = <BitArray>o;
-    return this.size === other.size && Arrays.equals(this.bits, other.bits);
+    return this.size === other.size && ZXingArrays.equals(this.bits, other.bits);
   }
 
   /*@Override*/
   public hashCode(): number /*int*/ {
-    return 31 * this.size + Arrays.hashCode(this.bits);
+    return 31 * this.size + ZXingArrays.hashCode(this.bits);
   }
 
   /*@Override*/

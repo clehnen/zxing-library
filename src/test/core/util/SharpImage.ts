@@ -1,4 +1,4 @@
-import sharp = require('sharp');
+import sharp from 'sharp';
 
 import { BitMatrix } from '@zxing/library';
 

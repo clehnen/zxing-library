@@ -17,7 +17,7 @@
 /*namespace com.google.zxing.common {*/
 
 
-import FormatException from '../FormatException';
+import { FormatException } from '../FormatException';
 
 /*import java.util.HashMap;*/
 /*import java.util.Map;*/
@@ -59,7 +59,7 @@ export enum CharacterSetValueIdentifiers {
  * @author Sean Owen
  */
 
-export default class CharacterSetECI {
+export class CharacterSetECI {
 
     private static VALUE_IDENTIFIER_TO_ECI = new Map<number, CharacterSetECI>();
     private static VALUES_TO_ECI = new Map<number, CharacterSetECI>();

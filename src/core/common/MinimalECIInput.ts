@@ -1,9 +1,9 @@
-import { char } from 'src/customTypings';
+import { char } from '../../customTypings';
 import { ECIEncoderSet } from './ECIEncoderSet';
-import Charset from '../util/Charset';
-import Integer from '../util/Integer';
-import StringBuilder from '../util/StringBuilder';
-import ECIInput from './ECIInput';
+import { ZXingCharset } from '../util/ZXingCharset';
+import { ZXingInteger } from '../util/ZXingInteger';
+import { ZXingStringBuilder } from '../util/StringBuilder';
+import { ECIInput } from './ECIInput';
 
 const COST_PER_ECI = 3; // approximated (latch + 2 codewords)
 
@@ -15,14 +15,14 @@ export class MinimalECIInput implements ECIInput {
    * Constructs a minimal input
    *
    * @param stringToEncode the character string to encode
-   * @param priorityCharset The preferred {@link Charset}. When the value of the argument is null, the algorithm
+   * @param priorityCharset The preferred {@link ZXingCharset}. When the value of the argument is null, the algorithm
    *   chooses charsets that leads to a minimal representation. Otherwise the algorithm will use the priority
    *   charset to encode any character in the input that can be encoded by it if the charset is among the
    *   supported charsets.
    * @param fnc1 denotes the character in the input that represents the FNC1 character or -1 if this is not GS1
    *   input.
    */
-  constructor(stringToEncode: string, priorityCharset: Charset, fnc1: number) {
+  constructor(stringToEncode: string, priorityCharset: ZXingCharset, fnc1: number) {
     this.fnc1 = fnc1;
     const encoderSet = new ECIEncoderSet(stringToEncode, priorityCharset, fnc1);
 
@@ -113,7 +113,7 @@ export class MinimalECIInput implements ECIInput {
     if (start < 0 || start > end || end > this.length()) {
       throw new Error('' + start);
     }
-    const result = new StringBuilder();
+    const result = new ZXingStringBuilder();
     for (let i = start; i < end; i++) {
       if (this.isECI(i)) {
         throw new Error('value at ' + i + ' is not a character but an ECI');
@@ -258,7 +258,7 @@ export class MinimalECIInput implements ECIInput {
       }
     }
     let minimalJ = -1;
-    let minimalSize = Integer.MAX_VALUE;
+    let minimalSize = ZXingInteger.MAX_VALUE;
     for (let j = 0; j < encoderSet.length(); j++) {
       if (edges[inputLength][j] != null) {
         const edge = edges[inputLength][j];

@@ -17,16 +17,16 @@
 // package com.google.zxing.pdf417.detector;
 
 // import com.google.zxing.ResultPoint;
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 // import com.google.zxing.common.BitMatrix;
-import BitMatrix from '../../common/BitMatrix';
+import { BitMatrix } from '../../common/BitMatrix';
 
 // import java.util.List;
 
 /**
  * @author Guenther Grau
  */
-export default /*public final*/ class PDF417DetectorResult {
+export /*public final*/ class PDF417DetectorResult {
 
     private /*final*/ bits: BitMatrix;
     private /*final*/ points: ResultPoint[][];

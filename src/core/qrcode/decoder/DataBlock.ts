@@ -16,12 +16,12 @@
 
 /*namespace com.google.zxing.qrcode.decoder {*/
 
-import Version from './Version';
-import ECBlocks from './ECBlocks';
-import ECB from './ECB';
-import ErrorCorrectionLevel from './ErrorCorrectionLevel';
+import { QRCodeVersion } from './QRCodeVersion';
+import { ECBlocks } from './ECBlocks';
+import { ECB } from './ECB';
+import { QRCodeDecoderErrorCorrectionLevel } from './QRCodeDecoderErrorCorrectionLevel';
 
-import IllegalArgumentException from '../../IllegalArgumentException';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
 
 /**
  * <p>Encapsulates a block of data within a QR Code. QR Codes may split their data into
@@ -30,7 +30,7 @@ import IllegalArgumentException from '../../IllegalArgumentException';
  *
  * @author Sean Owen
  */
-export default class DataBlock {
+export class DataBlock {
 
     private constructor(private numDataCodewords: number /*int*/, private codewords: Uint8Array) { }
 
@@ -46,8 +46,8 @@ export default class DataBlock {
      *         QR Code
      */
     public static getDataBlocks(rawCodewords: Uint8Array,
-        version: Version,
-        ecLevel: ErrorCorrectionLevel): DataBlock[] {
+        version: QRCodeVersion,
+        ecLevel: QRCodeDecoderErrorCorrectionLevel): DataBlock[] {
 
         if (rawCodewords.length !== version.getTotalCodewords()) {
             throw new IllegalArgumentException();

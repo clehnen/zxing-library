@@ -23,7 +23,7 @@
  *
  * @author Sean Owen
  */
-export default class PerspectiveTransform {
+export class PerspectiveTransform {
 
     private constructor(private a11: number/*float*/, private a21: number/*float*/, private a31: number/*float*/,
         private a12: number/*float*/, private a22: number/*float*/, private a32: number/*float*/,

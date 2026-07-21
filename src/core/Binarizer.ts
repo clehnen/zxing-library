@@ -16,9 +16,9 @@
 
 /*namespace com.google.zxing {*/
 
-import LuminanceSource from './LuminanceSource';
-import BitArray from './common/BitArray';
-import BitMatrix from './common/BitMatrix';
+import { LuminanceSource } from './LuminanceSource';
+import { BitArray } from './common/BitArray';
+import { BitMatrix } from './common/BitMatrix';
 
 /**
  * This class hierarchy provides a set of methods to convert luminance data to 1 bit data.
@@ -28,7 +28,7 @@ import BitMatrix from './common/BitMatrix';
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-abstract class Binarizer {
+export abstract class Binarizer {
 
     protected constructor(private source: LuminanceSource) { }
 
@@ -81,5 +81,3 @@ abstract class Binarizer {
         return this.source.getHeight();
     }
 }
-
-export default Binarizer;

@@ -16,7 +16,7 @@
 
 /*namespace com.google.zxing.qrcode.encoder {*/
 
-export default class BlockPair {
+export class BlockPair {
 
     public constructor(private dataBytes: Uint8Array, private errorCorrectionBytes: Uint8Array) { }
 

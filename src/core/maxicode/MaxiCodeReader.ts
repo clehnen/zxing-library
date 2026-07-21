@@ -14,28 +14,28 @@
  * limitations under the License.
  */
 
-import BarcodeFormat from '../BarcodeFormat';
-import BinaryBitmap from '../BinaryBitmap';
-import BitMatrix from '../common/BitMatrix';
-import DecodeHintType from '../DecodeHintType';
-import NotFoundException from '../NotFoundException';
-import Reader from '../Reader';
-import Result from '../Result';
-import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-import System from '../util/System';
-import Decoder from './decoder/Decoder';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BinaryBitmap } from '../BinaryBitmap';
+import { BitMatrix } from '../common/BitMatrix';
+import { DecodeHintType } from '../DecodeHintType';
+import { NotFoundException } from '../NotFoundException';
+import { Reader } from '../Reader';
+import { Result } from '../Result';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+import { ZXingSystem } from '../util/ZXingSystem';
+import { MaxiCodeDecoder } from './decoder/MaxiCodeDecoder';
 
 /**
  * This implementation can detect and decode a MaxiCode in an image.
  */
-export default class MaxiCodeReader implements Reader {
+export class MaxiCodeReader implements Reader {
 
   private static readonly NO_POINTS: ResultPoint[] = [];
   private static readonly MATRIX_WIDTH = 30;
   private static readonly MATRIX_HEIGHT = 33;
 
-  private decoder: Decoder = new Decoder();
+  private decoder: MaxiCodeDecoder = new MaxiCodeDecoder();
 
   public decode(image: BinaryBitmap, hints: Map<DecodeHintType, any> | null = null): Result {
     // Note that MaxiCode reader effectively always assumes PURE_BARCODE mode
@@ -48,7 +48,7 @@ export default class MaxiCodeReader implements Reader {
       8 * decoderResult.getRawBytes().length,
       MaxiCodeReader.NO_POINTS,
       BarcodeFormat.MAXICODE,
-      System.currentTimeMillis()
+      ZXingSystem.currentTimeMillis()
     );
     result.putMetadata(ResultMetadataType.ERRORS_CORRECTED, decoderResult.getErrorsCorrected());
     const ecLevel = decoderResult.getECLevel();

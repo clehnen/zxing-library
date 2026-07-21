@@ -1,10 +1,10 @@
-import MathUtils from '../../common/detector/MathUtils';
-import NotFoundException from '../../NotFoundException';
-import OneDReader from '../OneDReader';
-// import Integer from '../../util/Integer';
-// import Float from '../../util/Float';
+import { MathUtils } from '../../common/detector/MathUtils';
+import { NotFoundException } from '../../NotFoundException';
+import { OneDReader } from '../OneDReader';
+// import { Integer } from '../../util/Integer';
+// import { Float } from '../../util/Float';
 
-export default abstract class AbstractRSSReader extends OneDReader {
+export abstract class AbstractRSSReader extends OneDReader {
 
   private static readonly MAX_AVG_VARIANCE: number = 0.2;
   private static readonly MAX_INDIVIDUAL_VARIANCE: number = 0.45;

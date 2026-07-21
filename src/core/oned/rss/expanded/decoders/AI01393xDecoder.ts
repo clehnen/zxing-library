@@ -1,9 +1,9 @@
-import AI01decoder from './AI01decoder';
-import BitArray from '../../../../common/BitArray';
-import NotFoundException from '../../../../NotFoundException';
-import StringBuilder from '../../../../util/StringBuilder';
+import { AI01decoder } from './AI01decoder';
+import { BitArray } from '../../../../common/BitArray';
+import { NotFoundException } from '../../../../NotFoundException';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
 
-export default class AI01393xDecoder extends AI01decoder {
+export class AI01393xDecoder extends AI01decoder {
   private static readonly HEADER_SIZE = 5 + 1 + 2;
   private static readonly LAST_DIGIT_SIZE = 2;
   private static readonly FIRST_THREE_DIGITS_SIZE = 10;
@@ -20,7 +20,7 @@ export default class AI01393xDecoder extends AI01decoder {
       throw new NotFoundException();
     }
 
-    const buf = new StringBuilder();
+    const buf = new ZXingStringBuilder();
 
     this.encodeCompressedGtin(buf, AI01393xDecoder.HEADER_SIZE);
 

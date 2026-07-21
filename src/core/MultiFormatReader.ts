@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-import DecodeHintType from './DecodeHintType';
-import Reader from './Reader';
-import Result from './Result';
-import BinaryBitmap from './BinaryBitmap';
-import BarcodeFormat from './BarcodeFormat';
-import QRCodeReader from './qrcode/QRCodeReader';
-import MicroQRCodeReader from './microqr/MicroQRCodeReader';
+import { DecodeHintType } from './DecodeHintType';
+import { Reader } from './Reader';
+import { Result } from './Result';
+import { BinaryBitmap } from './BinaryBitmap';
+import { BarcodeFormat } from './BarcodeFormat';
+import { QRCodeReader } from './qrcode/QRCodeReader';
+import { MicroQRCodeReader } from './microqr/MicroQRCodeReader';
 
-import AztecReader from './aztec/AztecReader';
-import MultiFormatOneDReader from './oned/MultiFormatOneDReader';
-import DataMatrixReader from './datamatrix/DataMatrixReader';
-import MaxiCodeReader from './maxicode/MaxiCodeReader';
-import NotFoundException from './NotFoundException';
-import PDF417Reader from './pdf417/PDF417Reader';
-import ReaderException from './ReaderException';
+import { AztecCodeReader } from './aztec/AztecCodeReader';
+import { MultiFormatOneDReader } from './oned/MultiFormatOneDReader';
+import { DataMatrixReader } from './datamatrix/DataMatrixReader';
+import { MaxiCodeReader } from './maxicode/MaxiCodeReader';
+import { NotFoundException } from './NotFoundException';
+import { PDF417Reader } from './pdf417/PDF417Reader';
+import { ReaderException } from './ReaderException';
 
 /*namespace com.google.zxing {*/
 
@@ -40,7 +40,7 @@ import ReaderException from './ReaderException';
  * @author Sean Owen
  * @author dswitkin@google.com (Daniel Switkin)
  */
-export default class MultiFormatReader implements Reader {
+export class MultiFormatReader implements Reader {
 
     private hints: Map<DecodeHintType, any> | null;
     private readers: Reader[];
@@ -140,7 +140,7 @@ export default class MultiFormatReader implements Reader {
               readers.push(new DataMatrixReader());
             }
             if (formats.includes(BarcodeFormat.AZTEC)) {
-              readers.push(new AztecReader());
+              readers.push(new AztecCodeReader());
             }
             if (formats.includes(BarcodeFormat.PDF_417)) {
                readers.push(new PDF417Reader());
@@ -161,7 +161,7 @@ export default class MultiFormatReader implements Reader {
             readers.push(new QRCodeReader());
             readers.push(new MicroQRCodeReader());
             readers.push(new DataMatrixReader());
-            readers.push(new AztecReader());
+            readers.push(new AztecCodeReader());
             readers.push(new PDF417Reader());
             readers.push(new MaxiCodeReader());
 

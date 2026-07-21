@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import IllegalArgumentException from './IllegalArgumentException';
+import { IllegalArgumentException } from './IllegalArgumentException';
 
 /*namespace com.google.zxing {*/
 
 /**
  * Simply encapsulates a width and height.
  */
-export default class Dimension {
+export class Dimension {
     public constructor(private width: number /*int*/, private height: number /*int*/) {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException();

@@ -1,7 +1,7 @@
-import FormatException from '../../../../FormatException';
-import DecodedObject from './DecodedObject';
+import { FormatException } from '../../../../FormatException';
+import { DecodedObject } from './DecodedObject';
 
-export default class DecodedNumeric extends DecodedObject {
+export class DecodedNumeric extends DecodedObject {
   private readonly firstDigit: number;
   private readonly secondDigit: number;
   static readonly FNC1: number = 10;

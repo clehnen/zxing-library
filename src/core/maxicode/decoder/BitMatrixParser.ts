@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import BitMatrix from '../../common/BitMatrix';
+import { BitMatrix } from '../../common/BitMatrix';
 
 /**
  * @author mike32767
  * @author Manuel Kasten
  */
-export default class BitMatrixParser {
+export class BitMatrixParser {
 
   /* tslint:disable:no-trailing-whitespace max-line-length */
   private static readonly BITNR: number[][] = [

@@ -23,13 +23,13 @@
 
 /*namespace com.google.zxing {*/
 
-import Binarizer from './Binarizer';
-import BitArray from './common/BitArray';
-import BitMatrix from './common/BitMatrix';
-import LuminanceSource from './LuminanceSource';
-import IllegalArgumentException from './IllegalArgumentException';
+import { Binarizer } from './Binarizer';
+import { BitArray } from './common/BitArray';
+import { BitMatrix } from './common/BitMatrix';
+import { LuminanceSource } from './LuminanceSource';
+import { IllegalArgumentException } from './IllegalArgumentException';
 
-export default class BinaryBitmap {
+export class BinaryBitmap {
     private matrix: BitMatrix;
 
     public constructor(private binarizer: Binarizer) {

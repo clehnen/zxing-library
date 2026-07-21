@@ -17,11 +17,11 @@
 // package com.google.zxing.aztec.encoder;
 
 // import com.google.zxing.common.BitArray;
-import BitArray from '../../common/BitArray';
+import { BitArray } from '../../common/BitArray';
 
 import { int } from '../../../customTypings';
 
-export default abstract class Token {
+export abstract class Token {
 
   private /*final*/ previous: Token;
 

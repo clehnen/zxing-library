@@ -1,22 +1,22 @@
-import StringBuilder from '../../util/StringBuilder';
-import Dimension from '../../Dimension';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
+import { Dimension } from '../../Dimension';
 import { SymbolShapeHint } from './constants';
-import SymbolInfo from './SymbolInfo';
+import { DataMatrixSymbolInfo } from './DataMatrixSymbolInfo';
 
 export class EncoderContext {
   private shape: SymbolShapeHint;
   private minSize: Dimension;
   private maxSize: Dimension;
-  private codewords: StringBuilder;
+  private codewords: ZXingStringBuilder;
   pos: number = 0;
   private newEncoding: number;
-  private symbolInfo: SymbolInfo;
+  private symbolInfo: DataMatrixSymbolInfo;
   private skipAtEnd: number = 0;
 
   constructor(private readonly msg: string) {
     // From this point on Strings are not Unicode anymore!
     const msgBinary = msg.split('').map(c => c.charCodeAt(0));
-    const sb = new StringBuilder();
+    const sb = new ZXingStringBuilder();
     for (let i = 0, c = msgBinary.length; i < c; i++) {
       const ch = String.fromCharCode(msgBinary[i] & 0xff);
       if (ch === '?' && msg.charAt(i) !== '?') {
@@ -28,7 +28,7 @@ export class EncoderContext {
     }
     this.msg = sb.toString(); // Not Unicode here!
     this.shape = SymbolShapeHint.FORCE_NONE;
-    this.codewords = new StringBuilder();
+    this.codewords = new ZXingStringBuilder();
     this.newEncoding = -1;
   }
 
@@ -103,7 +103,7 @@ export class EncoderContext {
 
   public updateSymbolInfo(len = this.getCodewordCount()) {
     if (this.symbolInfo == null || len > this.symbolInfo.getDataCapacity()) {
-      this.symbolInfo = SymbolInfo.lookup(
+      this.symbolInfo = DataMatrixSymbolInfo.lookup(
         len,
         this.shape,
         this.minSize,

@@ -37,7 +37,7 @@ number versus int is essential for bitwise operations), language style and older
 - Use TypedArray whenever possible (example `int[]` will become `Int32Array`) - see below for more info.
 - Use constructor property whenever possible.
 - Take care of array initialisation with capacity, especially when using length and push later on. Basically only use when setting with index accessor only .
-- Use utility classes to implement platform dependencies (like `System` or `Arrays`), avoid inline implementation for anything that is not trivial.
+- Use utility classes to implement platform dependencies (like `ZXingSystem` or `ZXingArrays`), avoid inline implementation for anything that is not trivial.
 - Use single class|enum|interface per module, export with default. Move internal classes to separate modules if used from other modules.
 - Package level visibility will transform to public to avoid module complexity.
 - Keep enum as similar with the original interface as possible (transform to class and use static fields for enum values).
@@ -77,7 +77,7 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects
 ## Encoding
 
 In Java `new String(<ByteArray>, encoding)`, a lot of encodings are supported
-See `StringEncoding.ts` for implementation in TypeScript for handling limited browser support.
+See `ZXingStringEncoding.ts` for implementation in TypeScript for handling limited browser support.
 Will became: `StringEncoding.decode(<ByteArray>, encoding)`.
 
 ## TODO

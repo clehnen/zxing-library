@@ -16,7 +16,7 @@
 
 /*namespace com.google.zxing.qrcode.detector {*/
 
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 
 /**
  * <p>Encapsulates a finder pattern, which are the three square patterns found in
@@ -25,7 +25,7 @@ import ResultPoint from '../../ResultPoint';
  *
  * @author Sean Owen
  */
-export default class FinderPattern extends ResultPoint {
+export class FinderPattern extends ResultPoint {
 
     // FinderPattern(posX: number/*float*/, posY: number/*float*/, estimatedModuleSize: number/*float*/) {
     //   this(posX, posY, estimatedModuleSize, 1)

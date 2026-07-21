@@ -16,12 +16,12 @@
 
 /*namespace com.google.zxing.common {*/
 
-import Binarizer from '../Binarizer';
-import LuminanceSource from '../LuminanceSource';
-import BitArray from './BitArray';
-import BitMatrix from './BitMatrix';
+import { Binarizer } from '../Binarizer';
+import { LuminanceSource } from '../LuminanceSource';
+import { BitArray } from './BitArray';
+import { BitMatrix } from './BitMatrix';
 
-import NotFoundException from '../NotFoundException';
+import { NotFoundException } from '../NotFoundException';
 
 /**
  * This Binarizer implementation uses the old ZXing global histogram approach. It is suitable
@@ -34,7 +34,7 @@ import NotFoundException from '../NotFoundException';
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Sean Owen
  */
-export default class GlobalHistogramBinarizer extends Binarizer {
+export class GlobalHistogramBinarizer extends Binarizer {
 
     private static LUMINANCE_BITS = 5;
     private static LUMINANCE_SHIFT = 8 - GlobalHistogramBinarizer.LUMINANCE_BITS;

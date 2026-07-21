@@ -16,20 +16,20 @@
 
 /*namespace com.google.zxing.qrcode {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import BinaryBitmap from '../BinaryBitmap';
-import BitMatrix from '../common/BitMatrix';
-import DecoderResult from '../common/DecoderResult';
-import DecodeHintType from '../DecodeHintType';
-import NotFoundException from '../NotFoundException';
-import Reader from '../Reader';
-import Result from '../Result';
-import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-// import DetectorResult from '../common/DetectorResult';
-import Decoder from './decoder/Decoder';
-import QRCodeDecoderMetaData from './decoder/QRCodeDecoderMetaData';
-import Detector from './detector/Detector';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BinaryBitmap } from '../BinaryBitmap';
+import { BitMatrix } from '../common/BitMatrix';
+import { DecoderResult } from '../common/DecoderResult';
+import { DecodeHintType } from '../DecodeHintType';
+import { NotFoundException } from '../NotFoundException';
+import { Reader } from '../Reader';
+import { Result } from '../Result';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+// import { DetectorResult } from '../common/DetectorResult';
+import { Decoder } from './decoder/Decoder';
+import { QRCodeDecoderMetaData } from './decoder/QRCodeDecoderMetaData';
+import { Detector } from './detector/Detector';
 
 
 /*import java.util.List;*/
@@ -40,7 +40,7 @@ import Detector from './detector/Detector';
  *
  * @author Sean Owen
  */
-export default class QRCodeReader implements Reader {
+export class QRCodeReader implements Reader {
 
   private static NO_POINTS = new Array<ResultPoint>();
 

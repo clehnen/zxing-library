@@ -1,4 +1,4 @@
-import Charset from '../../util/Charset';
+import { ZXingCharset } from '../../util/ZXingCharset';
 import { char } from '../../../customTypings';
 import {
   MACRO_05_HEADER,
@@ -7,9 +7,9 @@ import {
   SymbolShapeHint,
 } from './constants';
 
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 import { MinimalECIInput } from '../../common/MinimalECIInput';
-import Integer from '../../util/Integer';
+import { ZXingInteger } from '../../util/ZXingInteger';
 
 enum Mode {
   ASCII,
@@ -80,7 +80,7 @@ export class MinimalEncoder {
    * Performs message encoding of a DataMatrix message
    *
    * @param msg the message
-   * @param priorityCharset The preferred {@link Charset}. When the value of the argument is null, the algorithm
+   * @param priorityCharset The preferred {@link ZXingCharset}. When the value of the argument is null, the algorithm
    *   chooses charsets that leads to a minimal representation. Otherwise the algorithm will use the priority
    *   charset to encode any character in the input that can be encoded by it if the charset is among the
    *   supported charsets.
@@ -91,7 +91,7 @@ export class MinimalEncoder {
    */
   static encodeHighLevel(
     msg: string,
-    priorityCharset: Charset = null,
+    priorityCharset: ZXingCharset = null,
     fnc1 = -1,
     shape = SymbolShapeHint.FORCE_NONE
   ): string {
@@ -116,7 +116,7 @@ export class MinimalEncoder {
    * Encodes input minimally and returns an array of the codewords
    *
    * @param input The string to encode
-   * @param priorityCharset The preferred {@link Charset}. When the value of the argument is null, the algorithm
+   * @param priorityCharset The preferred {@link ZXingCharset}. When the value of the argument is null, the algorithm
    *   chooses charsets that leads to a minimal representation. Otherwise the algorithm will use the priority
    *   charset to encode any character in the input that can be encoded by it if the charset is among the
    *   supported charsets.
@@ -128,7 +128,7 @@ export class MinimalEncoder {
    */
   static encode(
     input: string,
-    priorityCharset: Charset,
+    priorityCharset: ZXingCharset,
     fnc1: number,
     shape: SymbolShapeHint,
     macroId: number
@@ -170,8 +170,8 @@ export class MinimalEncoder {
       }
       const ci = input.charAt(i);
       if (
-        (c40 && HighLevelEncoder.isNativeC40(ci)) ||
-        (!c40 && HighLevelEncoder.isNativeText(ci))
+        (c40 && DataMatrixHighLevelEncoder.isNativeC40(ci)) ||
+        (!c40 && DataMatrixHighLevelEncoder.isNativeText(ci))
       ) {
         thirdsCount++; // native
       } else if (
@@ -182,8 +182,8 @@ export class MinimalEncoder {
         const asciiValue = ci & 0xff;
         if (
           asciiValue >= 128 &&
-          ((c40 && HighLevelEncoder.isNativeC40(asciiValue - 128)) ||
-            (!c40 && HighLevelEncoder.isNativeText(asciiValue - 128)))
+          ((c40 && DataMatrixHighLevelEncoder.isNativeC40(asciiValue - 128)) ||
+            (!c40 && DataMatrixHighLevelEncoder.isNativeText(asciiValue - 128)))
         ) {
           thirdsCount += 3; // shift, Upper shift
         } else {
@@ -219,9 +219,9 @@ export class MinimalEncoder {
       // not possible to unlatch a full EDF edge to something
       // else
       if (
-        HighLevelEncoder.isDigit(ch) &&
+        DataMatrixHighLevelEncoder.isDigit(ch) &&
         input.haveNCharacters(from, 2) &&
-        HighLevelEncoder.isDigit(input.charAt(from + 1))
+        DataMatrixHighLevelEncoder.isDigit(input.charAt(from + 1))
       ) {
         // two digits ASCII encoded
         this.addEdge(edges, new Edge(input, Mode.ASCII, from, 2, previous));
@@ -250,9 +250,9 @@ export class MinimalEncoder {
 
       if (
         input.haveNCharacters(from, 3) &&
-        HighLevelEncoder.isNativeX12(input.charAt(from)) &&
-        HighLevelEncoder.isNativeX12(input.charAt(from + 1)) &&
-        HighLevelEncoder.isNativeX12(input.charAt(from + 2))
+        DataMatrixHighLevelEncoder.isNativeX12(input.charAt(from)) &&
+        DataMatrixHighLevelEncoder.isNativeX12(input.charAt(from + 1)) &&
+        DataMatrixHighLevelEncoder.isNativeX12(input.charAt(from + 2))
       ) {
         this.addEdge(edges, new Edge(input, Mode.X12, from, 3, previous));
       }
@@ -267,7 +267,7 @@ export class MinimalEncoder {
       const pos = from + i;
       if (
         input.haveNCharacters(pos, 1) &&
-        HighLevelEncoder.isNativeEDIFACT(input.charAt(pos))
+        DataMatrixHighLevelEncoder.isNativeEDIFACT(input.charAt(pos))
       ) {
         this.addEdge(edges, new Edge(input, Mode.EDF, from, i + 1, previous));
       } else {
@@ -277,7 +277,7 @@ export class MinimalEncoder {
     if (
       i === 3 &&
       input.haveNCharacters(from, 4) &&
-      HighLevelEncoder.isNativeEDIFACT(input.charAt(from + 3))
+      DataMatrixHighLevelEncoder.isNativeEDIFACT(input.charAt(from + 3))
     ) {
       this.addEdge(edges, new Edge(input, Mode.EDF, from, 4, previous));
     }
@@ -490,7 +490,7 @@ export class MinimalEncoder {
     }
 
     let minimalJ = -1;
-    let minimalSize = Integer.MAX_VALUE;
+    let minimalSize = ZXingInteger.MAX_VALUE;
     for (let j = 0; j < 6; j++) {
       if (edges[inputLength][j] !== null) {
         const edge: Edge = edges[inputLength][j];
@@ -843,8 +843,8 @@ class Edge {
         return 0;
       }
       if (
-        HighLevelEncoder.isDigit(this.input.charAt(from)) &&
-        HighLevelEncoder.isDigit(this.input.charAt(from + 1))
+        DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from)) &&
+        DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 1))
       ) {
         return 1;
       }
@@ -852,8 +852,8 @@ class Edge {
     }
     if (length - from === 3) {
       if (
-        HighLevelEncoder.isDigit(this.input.charAt(from)) &&
-        HighLevelEncoder.isDigit(this.input.charAt(from + 1)) &&
+        DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from)) &&
+        DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 1)) &&
         !MinimalEncoder.isExtendedASCII(
           this.input.charAt(from + 2),
           this.input.getFNC1Character()
@@ -862,8 +862,8 @@ class Edge {
         return 2;
       }
       if (
-        HighLevelEncoder.isDigit(this.input.charAt(from + 1)) &&
-        HighLevelEncoder.isDigit(this.input.charAt(from + 2)) &&
+        DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 1)) &&
+        DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 2)) &&
         !MinimalEncoder.isExtendedASCII(
           this.input.charAt(from),
           this.input.getFNC1Character()
@@ -874,10 +874,10 @@ class Edge {
       return 0;
     }
     if (
-      HighLevelEncoder.isDigit(this.input.charAt(from)) &&
-      HighLevelEncoder.isDigit(this.input.charAt(from + 1)) &&
-      HighLevelEncoder.isDigit(this.input.charAt(from + 2)) &&
-      HighLevelEncoder.isDigit(this.input.charAt(from + 3))
+      DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from)) &&
+      DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 1)) &&
+      DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 2)) &&
+      DataMatrixHighLevelEncoder.isDigit(this.input.charAt(from + 3))
     ) {
       return 2;
     }
@@ -1044,8 +1044,8 @@ class Edge {
     for (let i = 0; i < this.characterLength; i++) {
       const ci = this.input.charAt(this.fromPosition + i);
       if (
-        (c40 && HighLevelEncoder.isNativeC40(ci)) ||
-        (!c40 && HighLevelEncoder.isNativeText(ci))
+        (c40 && DataMatrixHighLevelEncoder.isNativeC40(ci)) ||
+        (!c40 && DataMatrixHighLevelEncoder.isNativeText(ci))
       ) {
         c40Values.push(this.getC40Value(c40, 0, ci, fnc1));
       } else if (!MinimalEncoder.isExtendedASCII(ci, fnc1)) {
@@ -1055,8 +1055,8 @@ class Edge {
       } else {
         const asciiValue = (ci & 0xff) - 128;
         if (
-          (c40 && HighLevelEncoder.isNativeC40(asciiValue)) ||
-          (!c40 && HighLevelEncoder.isNativeText(asciiValue))
+          (c40 && DataMatrixHighLevelEncoder.isNativeC40(asciiValue)) ||
+          (!c40 && DataMatrixHighLevelEncoder.isNativeText(asciiValue))
         ) {
           c40Values.push(1); // Shift 2
           c40Values.push(30); // Upper Shift
@@ -1217,7 +1217,7 @@ class Edge {
 class Input extends MinimalECIInput {
   constructor(
     stringToEncode: string,
-    priorityCharset: Charset,
+    priorityCharset: ZXingCharset,
     fnc1: number,
     private readonly shape: SymbolShapeHint,
     private readonly macroId: number

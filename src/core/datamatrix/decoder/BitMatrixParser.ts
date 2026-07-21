@@ -1,8 +1,8 @@
-import BitMatrix from '../../common/BitMatrix';
-import Version from './Version';
+import { BitMatrix } from '../../common/BitMatrix';
+import { Version } from './Version';
 
-import FormatException from '../../FormatException';
-import IllegalArgumentException from '../../IllegalArgumentException';
+import { FormatException } from '../../FormatException';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
 
 /*
  * Copyright 2007 ZXing authors
@@ -23,7 +23,7 @@ import IllegalArgumentException from '../../IllegalArgumentException';
 /**
  * @author bbrown@google.com (Brian Brown)
  */
-export default class BitMatrixParser {
+export class BitMatrixParser {
 
   private mappingBitMatrix: BitMatrix;
   private readMappingMatrix: BitMatrix;

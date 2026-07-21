@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import ChecksumException from '../../ChecksumException';
-import BitMatrix from '../../common/BitMatrix';
-import DecoderResult from '../../common/DecoderResult';
-import GenericGF from '../../common/reedsolomon/GenericGF';
-import ReedSolomonDecoder from '../../common/reedsolomon/ReedSolomonDecoder';
-import DecodeHintType from '../../DecodeHintType';
-import MicroQRBitMatrixParser from './MicroQRBitMatrixParser';
-import MicroQRDecodedBitStreamParser from './MicroQRDecodedBitStreamParser';
-import MicroQRVersion from './MicroQRVersion';
+import { ChecksumException } from '../../ChecksumException';
+import { BitMatrix } from '../../common/BitMatrix';
+import { DecoderResult } from '../../common/DecoderResult';
+import { GenericGF } from '../../common/reedsolomon/GenericGF';
+import { ReedSolomonDecoder } from '../../common/reedsolomon/ReedSolomonDecoder';
+import { DecodeHintType } from '../../DecodeHintType';
+import { MicroQRBitMatrixParser } from './MicroQRBitMatrixParser';
+import { MicroQRDecodedBitStreamParser } from './MicroQRDecodedBitStreamParser';
+import { MicroQRVersion } from './MicroQRVersion';
 
 /**
  * Orchestrates Micro QR Code decoding:
@@ -30,7 +30,7 @@ import MicroQRVersion from './MicroQRVersion';
  *   2. Reed-Solomon error correction (RS for M2-M4; skip for M1)
  *   3. Decode bit stream to text
  */
-export default class MicroQRDecoder {
+export class MicroQRDecoder {
 
     private readonly rsDecoder: ReedSolomonDecoder;
 

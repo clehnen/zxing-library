@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-import BitArray from '../common/BitArray';
-import AbstractUPCEANReader from './AbstractUPCEANReader';
-import UPCEANExtension5Support from './UPCEANExtension5Support';
-import UPCEANExtension2Support from './UPCEANExtension2Support';
-import Result from '../Result';
+import { BitArray } from '../common/BitArray';
+import { AbstractUPCEANReader } from './AbstractUPCEANReader';
+import { UPCEANExtension5Support } from './UPCEANExtension5Support';
+import { UPCEANExtension2Support } from './UPCEANExtension2Support';
+import { Result } from '../Result';
 
-export default class UPCEANExtensionSupport {
+export class UPCEANExtensionSupport {
     private static EXTENSION_START_PATTERN = Int32Array.from([1, 1, 2]);
 
     static decodeRow(rowNumber: number, row: BitArray, rowOffset: number): Result {

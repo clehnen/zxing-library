@@ -1,9 +1,9 @@
-import BitArray from '../../../../common/BitArray';
-import StringBuilder from '../../../../util/StringBuilder';
-import AbstractExpandedDecoder from './AbstractExpandedDecoder';
+import { BitArray } from '../../../../common/BitArray';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
+import { AbstractExpandedDecoder } from './AbstractExpandedDecoder';
 
 
-export default class AnyAIDecoder extends AbstractExpandedDecoder {
+export class AnyAIDecoder extends AbstractExpandedDecoder {
 
   private static readonly HEADER_SIZE: number = 2 + 1 + 2;
 
@@ -12,7 +12,7 @@ export default class AnyAIDecoder extends AbstractExpandedDecoder {
   }
 
   public parseInformation(): string {
-    let buf = new StringBuilder();
+    let buf = new ZXingStringBuilder();
     return this.getGeneralDecoder().decodeAllCodes(buf, AnyAIDecoder.HEADER_SIZE);
   }
 }

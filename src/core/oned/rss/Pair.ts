@@ -1,7 +1,7 @@
-import DataCharacter from './DataCharacter';
-import FinderPattern from './FinderPattern';
+import { DataCharacter } from './DataCharacter';
+import { FinderPattern } from './FinderPattern';
 
-export default class Pair extends DataCharacter {
+export class Pair extends DataCharacter {
 
     private finderPattern: FinderPattern;
     private count: number = 0;

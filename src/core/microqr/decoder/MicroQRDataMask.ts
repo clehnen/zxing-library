@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import BitMatrix from '../../common/BitMatrix';
+import { BitMatrix } from '../../common/BitMatrix';
 
 /**
  * Micro QR Code data mask patterns per ISO 18004:2015 Table 10.
@@ -28,7 +28,7 @@ import BitMatrix from '../../common/BitMatrix';
  *
  * Where i = row, j = column.
  */
-export default class MicroQRDataMask {
+export class MicroQRDataMask {
 
     private constructor(
         private readonly maskIndex: number,

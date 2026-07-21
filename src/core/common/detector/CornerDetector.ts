@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import ResultPoint from '../../ResultPoint';
-import BitMatrix from '../../common/BitMatrix';
-import NotFoundException from '../../NotFoundException';
+import { ResultPoint } from '../../ResultPoint';
+import { BitMatrix } from '../../common/BitMatrix';
+import { NotFoundException } from '../../NotFoundException';
 
 /**
  * @author Mariusz Dąbrowski
  */
-export default class CornerDetector {
+export class CornerDetector {
 
     private image: BitMatrix;
     private height: number;

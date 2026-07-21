@@ -1,7 +1,7 @@
-import BitArray from '../../../common/BitArray';
-import ExpandedPair from './ExpandedPair';
+import { BitArray } from '../../../common/BitArray';
+import { ExpandedPair } from './ExpandedPair';
 
-export default class BitArrayBuilder {
+export class BitArrayBuilder {
   static buildBitArray(pairs: Array<ExpandedPair>): BitArray {
     let charNumber: number = pairs.length * 2 - 1;
     if (pairs[pairs.length - 1].getRightChar() === null) {

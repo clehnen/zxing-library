@@ -16,24 +16,24 @@
 
 /*namespace com.google.zxing {*/
 
-import BitMatrix from './common/BitMatrix';
-// import DataMatrixWriter from './datamatrix/DataMatrixWriter'
-// import CodaBarWriter from './oned/CodaBarWriter'
-// import Code128Writer from './oned/Code128Writer'
-// import Code39Writer from './oned/Code39Writer'
-// import Code93Writer from './oned/Code93Writer'
-// import EAN13Writer from './oned/EAN13Writer'
-// import EAN8Writer from './oned/EAN8Writer'
-// import ITFWriter from './oned/ITFWriter'
-// import UPCAWriter from './oned/UPCAWriter'
-// import UPCEWriter from './oned/UPCEWriter'
-// import PDF417Writer from './pdf417/PDF417Writer'
-import QRCodeWriter from './qrcode/QRCodeWriter';
-import Writer from './Writer';
-import BarcodeFormat from './BarcodeFormat';
-import EncodeHintType from './EncodeHintType';
+import { BitMatrix } from './common/BitMatrix';
+// import { DataMatrixWriter } from './datamatrix/DataMatrixWriter'
+// import { CodaBarWriter } from './oned/CodaBarWriter'
+// import { Code128Writer } from './oned/Code128Writer'
+// import { Code39Writer } from './oned/Code39Writer'
+// import { Code93Writer } from './oned/Code93Writer'
+// import { EAN13Writer } from './oned/EAN13Writer'
+// import { EAN8Writer } from './oned/EAN8Writer'
+// import { ITFWriter } from './oned/ITFWriter'
+// import { UPCAWriter } from './oned/UPCAWriter'
+// import { UPCEWriter } from './oned/UPCEWriter'
+// import { PDF417Writer } from './pdf417/PDF417Writer'
+import { QRCodeWriter } from './qrcode/QRCodeWriter';
+import { Writer } from './Writer';
+import { BarcodeFormat } from './BarcodeFormat';
+import { EncodeHintType } from './EncodeHintType';
 
-import IllegalArgumentException from './IllegalArgumentException';
+import { IllegalArgumentException } from './IllegalArgumentException';
 
 /*import java.util.Map;*/
 
@@ -43,7 +43,7 @@ import IllegalArgumentException from './IllegalArgumentException';
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-export default class MultiFormatWriter implements Writer {
+export class MultiFormatWriter implements Writer {
 
     /*@Override*/
     // public encode(contents: string,

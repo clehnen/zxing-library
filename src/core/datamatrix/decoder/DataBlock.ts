@@ -1,6 +1,6 @@
-import Version from './Version';
+import { Version } from './Version';
 
-import IllegalArgumentException from '../../IllegalArgumentException';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
 
 /*
  * Copyright 2008 ZXing authors
@@ -25,7 +25,7 @@ import IllegalArgumentException from '../../IllegalArgumentException';
  *
  * @author bbrown@google.com (Brian Brown)
  */
-export default class DataBlock {
+export class DataBlock {
 
   private numDataCodewords: number;
   private codewords: Uint8Array;

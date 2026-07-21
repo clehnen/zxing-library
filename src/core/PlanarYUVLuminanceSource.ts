@@ -16,11 +16,11 @@
 
 /*namespace com.google.zxing {*/
 
-import System from './util/System';
+import { ZXingSystem } from './util/ZXingSystem';
 
-import LuminanceSource from './LuminanceSource';
-import InvertedLuminanceSource from './InvertedLuminanceSource';
-import IllegalArgumentException from './IllegalArgumentException';
+import { LuminanceSource } from './LuminanceSource';
+import { InvertedLuminanceSource } from './InvertedLuminanceSource';
+import { IllegalArgumentException } from './IllegalArgumentException';
 
 /**
  * This object extends LuminanceSource around an array of YUV data returned from the camera driver,
@@ -32,7 +32,7 @@ import IllegalArgumentException from './IllegalArgumentException';
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-export default class PlanarYUVLuminanceSource extends LuminanceSource {
+export class PlanarYUVLuminanceSource extends LuminanceSource {
 
     private static THUMBNAIL_SCALE_FACTOR: number /*int*/ = 2;
 
@@ -65,7 +65,7 @@ export default class PlanarYUVLuminanceSource extends LuminanceSource {
             row = new Uint8ClampedArray(width);
         }
         const offset = (y + this.top) * this.dataWidth + this.left;
-        System.arraycopy(this.yuvData, offset, row, 0, width);
+        ZXingSystem.arraycopy(this.yuvData, offset, row, 0, width);
         return row;
     }
 
@@ -86,14 +86,14 @@ export default class PlanarYUVLuminanceSource extends LuminanceSource {
 
         // If the width matches the full width of the underlying data, perform a single copy.
         if (width === this.dataWidth) {
-            System.arraycopy(this.yuvData, inputOffset, matrix, 0, area);
+            ZXingSystem.arraycopy(this.yuvData, inputOffset, matrix, 0, area);
             return matrix;
         }
 
         // Otherwise copy one cropped row at a time.
         for (let y = 0; y < height; y++) {
             const outputOffset = y * width;
-            System.arraycopy(this.yuvData, inputOffset, matrix, outputOffset, width);
+            ZXingSystem.arraycopy(this.yuvData, inputOffset, matrix, outputOffset, width);
             inputOffset += this.dataWidth;
         }
         return matrix;

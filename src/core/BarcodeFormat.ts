@@ -25,7 +25,7 @@
  *
  * @author Sean Owen
  */
-enum BarcodeFormat {
+export enum BarcodeFormat {
     /** Aztec 2D barcode format. */
     AZTEC,
 
@@ -81,4 +81,3 @@ enum BarcodeFormat {
     MICRO_QR_CODE
 }
 
-export default BarcodeFormat;

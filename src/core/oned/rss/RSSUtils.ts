@@ -1,7 +1,7 @@
 /**
  * RSS util functions.
  */
-export default class RSSUtils {
+export class RSSUtils {
 
   private constructor() { }
 

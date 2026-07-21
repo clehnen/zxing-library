@@ -1,5 +1,5 @@
 import { BitArray, IllegalStateException } from '@zxing/library';
-import StringBuilder from '../../../../../core/util/StringBuilder';
+import {ZXingStringBuilder} from '../../../../../core/util/StringBuilder';
 
 /*
  * Copyright (C) 2010 ZXing authors
@@ -72,7 +72,7 @@ export default class BinaryUtil {
   }
 
   public static buildBitArrayFromStringWithoutSpaces(data: string): BitArray {
-    let sb: StringBuilder = new StringBuilder();
+    let sb: ZXingStringBuilder = new ZXingStringBuilder();
     let dotsAndXs: string = data.replace(ONE, 'X').replace(ZERO, '.');
     let current: /*int*/ number = 0;
     while (current < dotsAndXs.length) {

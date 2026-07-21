@@ -16,10 +16,10 @@
 
 /*namespace com.google.zxing.common {*/
 
-import BitMatrix from './BitMatrix';
-import PerspectiveTransform from './PerspectiveTransform';
+import { BitMatrix } from './BitMatrix';
+import { PerspectiveTransform } from './PerspectiveTransform';
 
-import NotFoundException from '../NotFoundException';
+import { NotFoundException } from '../NotFoundException';
 
 /**
  * Implementations of this class can, given locations of finder patterns for a QR code in an
@@ -34,7 +34,7 @@ import NotFoundException from '../NotFoundException';
  *
  * @author Sean Owen
  */
-abstract class GridSampler {
+export abstract class GridSampler {
 
     /**
      * Samples an image for a rectangular matrix of bits of the given dimension. The sampling
@@ -176,4 +176,3 @@ abstract class GridSampler {
 
 }
 
-export default GridSampler;

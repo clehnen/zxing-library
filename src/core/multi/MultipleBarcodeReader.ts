@@ -17,12 +17,12 @@
 // package com.google.zxing.multi;
 
 // import com.google.zxing.BinaryBitmap;
-import BinaryBitmap from '../BinaryBitmap';
+import { BinaryBitmap } from '../BinaryBitmap';
 // import com.google.zxing.DecodeHintType;
-import DecodeHintType from '../DecodeHintType';
+import { DecodeHintType } from '../DecodeHintType';
 // import com.google.zxing.NotFoundException;
 // import com.google.zxing.Result;
-import Result from '../Result';
+import { Result } from '../Result';
 
 // import java.util.Map;
 
@@ -32,7 +32,7 @@ import Result from '../Result';
  * @see com.google.zxing.Reader
  * @author Sean Owen
  */
-export default /*public*/ interface MultipleBarcodeReader {
+export /*public*/ interface MultipleBarcodeReader {
 
   /**
    * @throws NotFoundException

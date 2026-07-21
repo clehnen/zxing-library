@@ -16,7 +16,7 @@ import { Encoder } from './Encoder';
 import { EncoderContext } from './EncoderContext';
 
 // tslint:disable-next-line:no-circular-imports
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 
 export class ASCIIEncoder implements Encoder {
   public getEncodingMode() {
@@ -25,7 +25,7 @@ export class ASCIIEncoder implements Encoder {
 
   public encode(context: EncoderContext) {
     // step B
-    const n = HighLevelEncoder.determineConsecutiveDigitCount(
+    const n = DataMatrixHighLevelEncoder.determineConsecutiveDigitCount(
       context.getMessage(),
       context.pos
     );
@@ -39,7 +39,7 @@ export class ASCIIEncoder implements Encoder {
       context.pos += 2;
     } else {
       const c = context.getCurrentChar();
-      const newMode = HighLevelEncoder.lookAheadTest(
+      const newMode = DataMatrixHighLevelEncoder.lookAheadTest(
         context.getMessage(),
         context.pos,
         this.getEncodingMode()
@@ -69,7 +69,7 @@ export class ASCIIEncoder implements Encoder {
           default:
             throw new Error('Illegal mode: ' + newMode);
         }
-      } else if (HighLevelEncoder.isExtendedASCII(c)) {
+      } else if (DataMatrixHighLevelEncoder.isExtendedASCII(c)) {
         context.writeCodeword(UPPER_SHIFT);
         context.writeCodeword(c - 128 + 1);
         context.pos++;
@@ -81,7 +81,7 @@ export class ASCIIEncoder implements Encoder {
   }
 
   private encodeASCIIDigits(digit1: number, digit2: number): number {
-    if (HighLevelEncoder.isDigit(digit1) && HighLevelEncoder.isDigit(digit2)) {
+    if (DataMatrixHighLevelEncoder.isDigit(digit1) && DataMatrixHighLevelEncoder.isDigit(digit2)) {
       const num = (digit1 - 48) * 10 + (digit2 - 48);
       return num + 130;
     }

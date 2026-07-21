@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import ResultPoint from '../ResultPoint';
-import BitMatrix from '../common/BitMatrix';
-import DetectorResult from '../common/DetectorResult';
+import { ResultPoint } from '../ResultPoint';
+import { BitMatrix } from '../common/BitMatrix';
+import { DetectorResult } from '../common/DetectorResult';
 
 /**
  * <p>Extends {@link DetectorResult} with more information specific to the Aztec format,
@@ -24,7 +24,7 @@ import DetectorResult from '../common/DetectorResult';
  *
  * @author Sean Owen
  */
-export default class AztecDetectorResult extends DetectorResult {
+export class AztecDetectorResult extends DetectorResult {
 
     private compact: boolean;
     private nbDatablocks: number;

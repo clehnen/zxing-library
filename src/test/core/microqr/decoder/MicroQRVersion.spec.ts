@@ -1,4 +1,4 @@
-import MicroQRVersion from '../../../../core/microqr/decoder/MicroQRVersion';
+import {MicroQRVersion} from '../../../../core/microqr/decoder/MicroQRVersion';
 
 describe('MicroQRVersion', () => {
 

@@ -1,10 +1,10 @@
-import BitMatrix from '../../common/BitMatrix';
-import WhiteRectangleDetector from '../../common/detector/WhiteRectangleDetector';
-import DetectorResult from '../../common/DetectorResult';
-import GridSamplerInstance from '../../common/GridSamplerInstance';
-import NotFoundException from '../../NotFoundException';
+import { BitMatrix } from '../../common/BitMatrix';
+import { WhiteRectangleDetector } from '../../common/detector/WhiteRectangleDetector';
+import { DetectorResult } from '../../common/DetectorResult';
+import { GridSamplerInstance } from '../../common/GridSamplerInstance';
+import { NotFoundException } from '../../NotFoundException';
 import { float, int } from '../../../customTypings';
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 
 
 /*
@@ -29,7 +29,7 @@ import ResultPoint from '../../ResultPoint';
  *
  * @author Sean Owen
  */
-export default class Detector {
+export class Detector {
 
   private image: BitMatrix;
   private rectangleDetector: WhiteRectangleDetector;

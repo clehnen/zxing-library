@@ -1,9 +1,9 @@
-import EncodeHintType from '../core/EncodeHintType';
-import Encoder from '../core/qrcode/encoder/Encoder';
-import QRCode from '../core/qrcode/encoder/QRCode';
-import ErrorCorrectionLevel from '../core/qrcode/decoder/ErrorCorrectionLevel';
-import IllegalArgumentException from '../core/IllegalArgumentException';
-import IllegalStateException from '../core/IllegalStateException';
+import { EncodeHintType } from '../core/EncodeHintType';
+import { QRCodeEncoder } from '../core/qrcode/encoder/QRCodeEncoder';
+import { QRCodeEncoderQRCode } from '../core/qrcode/encoder/QRCodeEncoderQRCode';
+import { QRCodeDecoderErrorCorrectionLevel } from '../core/qrcode/decoder/QRCodeDecoderErrorCorrectionLevel';
+import { IllegalArgumentException } from '../core/IllegalArgumentException';
+import { IllegalStateException } from '../core/IllegalStateException';
 
 /**
  * @deprecated Moving to @zxing/browser
@@ -44,13 +44,13 @@ class BrowserQRCodeSvgWriter {
             throw new IllegalArgumentException('Requested dimensions are too small: ' + width + 'x' + height);
         }
 
-        let errorCorrectionLevel = ErrorCorrectionLevel.L;
+        let errorCorrectionLevel = QRCodeDecoderErrorCorrectionLevel.L;
         let quietZone = BrowserQRCodeSvgWriter.QUIET_ZONE_SIZE;
 
         if (hints !== null) {
 
             if (undefined !== hints.get(EncodeHintType.ERROR_CORRECTION)) {
-                errorCorrectionLevel = ErrorCorrectionLevel.fromString(hints.get(EncodeHintType.ERROR_CORRECTION).toString());
+                errorCorrectionLevel = QRCodeDecoderErrorCorrectionLevel.fromString(hints.get(EncodeHintType.ERROR_CORRECTION).toString());
             }
 
             if (undefined !== hints.get(EncodeHintType.MARGIN)) {
@@ -58,7 +58,7 @@ class BrowserQRCodeSvgWriter {
             }
         }
 
-        const code = Encoder.encode(contents, errorCorrectionLevel, hints);
+        const code = QRCodeEncoder.encode(contents, errorCorrectionLevel, hints);
 
         return this.renderResult(code, width, height, quietZone);
     }
@@ -88,7 +88,7 @@ class BrowserQRCodeSvgWriter {
      * Note that the input matrix uses 0 == white, 1 == black.
      * The output matrix uses 0 == black, 255 == white (i.e. an 8 bit greyscale bitmap).
      */
-    private renderResult(code: QRCode, width: number /*int*/, height: number /*int*/, quietZone: number /*int*/): SVGSVGElement {
+    private renderResult(code: QRCodeEncoderQRCode, width: number /*int*/, height: number /*int*/, quietZone: number /*int*/): SVGSVGElement {
 
         const input = code.getMatrix();
 

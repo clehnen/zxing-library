@@ -16,11 +16,10 @@
 
 /*namespace com.google.zxing {*/
 
-import BitMatrix from './common/BitMatrix';
-import BarcodeFormat from './BarcodeFormat';
-import EncodeHintType from './EncodeHintType';
+import { BitMatrix } from './common/BitMatrix';
+import { BarcodeFormat } from './BarcodeFormat';
+import { EncodeHintType } from './EncodeHintType';
 
-export default Writer;
 
 /*import java.util.Map;*/
 
@@ -29,7 +28,7 @@ export default Writer;
  *
  * @author dswitkin@google.com (Daniel Switkin)
  */
-interface Writer {
+export interface Writer {
 
     /**
      * Encode a barcode using the default settings.

@@ -41,3 +41,7 @@ export const LATCH_TABLE: Int32Array[] = [
     0
   ])
 ];
+
+export default {
+  LATCH_TABLE
+}

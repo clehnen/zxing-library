@@ -16,18 +16,18 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import ChecksumException from '../ChecksumException';
-// import BinaryBitmap from '../BinaryBitmap';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
-import FormatException from '../FormatException';
-import NotFoundException from '../NotFoundException';
-// import Reader from '../Reader';
-import Result from '../Result';
-// import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-import OneDReader from './OneDReader';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { ChecksumException } from '../ChecksumException';
+// import { BinaryBitmap } from '../BinaryBitmap';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
+import { FormatException } from '../FormatException';
+import { NotFoundException } from '../NotFoundException';
+// import { Reader } from '../Reader';
+import { Result } from '../Result';
+// import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+import { OneDReader } from './OneDReader';
 
 
 /**
@@ -35,7 +35,7 @@ import OneDReader from './OneDReader';
  *
  * @author Sean Owen
  */
-export default class Code128Reader extends OneDReader {
+export class Code128Reader extends OneDReader {
 
     private static CODE_PATTERNS: Int32Array[] = [
         Int32Array.from([2, 1, 2, 2, 2, 2]),

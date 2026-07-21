@@ -19,7 +19,7 @@
 /**
  * General math-related and numeric utility functions.
  */
-export default class MathUtils {
+export class MathUtils {
   private constructor() {}
 
   /**

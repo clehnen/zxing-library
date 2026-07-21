@@ -16,11 +16,11 @@
 
 /*namespace com.google.zxing.common.reedsolomon {*/
 
-// import GenericGFPoly from './GenericGFPoly';
+// import { GenericGFPoly } from './GenericGFPoly';
 
-import Integer from '../../util/Integer';
-import IllegalArgumentException from '../../IllegalArgumentException';
-import ArithmeticException from '../../ArithmeticException';
+import { ZXingInteger } from '../../util/ZXingInteger';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
+import { ArithmeticException } from '../../ArithmeticException';
 
 /**
  * <p>This class contains utility methods for performing mathematical operations over
@@ -33,7 +33,7 @@ import ArithmeticException from '../../ArithmeticException';
  * @author Sean Owen
  * @author David Olivier
  */
-export default abstract class AbstractGenericGF {
+export abstract class AbstractGenericGF {
   protected expTable: Int32Array;
   protected logTable: Int32Array;
 

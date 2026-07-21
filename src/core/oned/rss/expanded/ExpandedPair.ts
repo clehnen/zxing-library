@@ -1,7 +1,7 @@
-import DataCharacter from '../../rss/DataCharacter';
-import FinderPattern from '../../rss/FinderPattern';
+import { DataCharacter } from '../../rss/DataCharacter';
+import { FinderPattern } from '../../rss/FinderPattern';
 
-export default class ExpandedPair {
+export class ExpandedPair {
   private readonly leftChar: DataCharacter | null;
   private readonly rightChar: DataCharacter | null;
   private readonly finderPattern: FinderPattern | null;

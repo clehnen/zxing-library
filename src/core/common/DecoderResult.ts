@@ -25,7 +25,7 @@
  *
  * @author Sean Owen
  */
-export default class DecoderResult {
+export class DecoderResult {
 
     private numBits: number; /*int*/
     private errorsCorrected: number; /*Integer*/

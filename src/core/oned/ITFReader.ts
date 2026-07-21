@@ -16,16 +16,16 @@
 
 /*namespace com.google.zxing.oned {*/
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
-import DecodeHintType from '../DecodeHintType';
-import FormatException from '../FormatException';
-import NotFoundException from '../NotFoundException';
-import Result from '../Result';
-import ResultPoint from '../ResultPoint';
-import StringBuilder from '../util/StringBuilder';
-import System from '../util/System';
-import OneDReader from './OneDReader';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
+import { DecodeHintType } from '../DecodeHintType';
+import { FormatException } from '../FormatException';
+import { NotFoundException } from '../NotFoundException';
+import { Result } from '../Result';
+import { ResultPoint } from '../ResultPoint';
+import { ZXingStringBuilder } from '../util/StringBuilder';
+import { ZXingSystem } from '../util/ZXingSystem';
+import { OneDReader } from './OneDReader';
 
 
 /**
@@ -33,7 +33,7 @@ import OneDReader from './OneDReader';
  *
  * @author Tjieco
  */
-export default class ITFReader extends OneDReader {
+export class ITFReader extends OneDReader {
 
   // private static W = 3; // Pixel width of a 3x wide line
   // private static w = 2; // Pixel width of a 2x wide line
@@ -99,7 +99,7 @@ export default class ITFReader extends OneDReader {
     let startRange: number[] = this.decodeStart(row);
     let endRange: number[] = this.decodeEnd(row);
 
-    let result: StringBuilder = new StringBuilder();
+    let result: ZXingStringBuilder = new ZXingStringBuilder();
     ITFReader.decodeMiddle(row, startRange[1], endRange[0], result);
     let resultString: string = result.toString();
 
@@ -160,7 +160,7 @@ export default class ITFReader extends OneDReader {
     row: BitArray,
     payloadStart: number,
     payloadEnd: number,
-    resultString: StringBuilder
+    resultString: ZXingStringBuilder
   ) {
 
     // Digits are interleaved in pairs - 5 black lines for one digit, and the
@@ -354,7 +354,7 @@ export default class ITFReader extends OneDReader {
             return [patternStart, x];
           }
           patternStart += counters[0] + counters[1];
-          System.arraycopy(counters, 2, counters, 0, counterPosition - 1);
+          ZXingSystem.arraycopy(counters, 2, counters, 0, counterPosition - 1);
           counters[counterPosition - 1] = 0;
           counters[counterPosition] = 0;
           counterPosition--;

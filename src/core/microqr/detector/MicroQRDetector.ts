@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import BitMatrix from '../../common/BitMatrix';
-import DetectorResult from '../../common/DetectorResult';
-import GridSamplerInstance from '../../common/GridSamplerInstance';
-import PerspectiveTransform from '../../common/PerspectiveTransform';
-import DecodeHintType from '../../DecodeHintType';
-import NotFoundException from '../../NotFoundException';
-import ResultPoint from '../../ResultPoint';
-import ResultPointCallback from '../../ResultPointCallback';
-import MicroQRFinderPattern from './MicroQRFinderPattern';
+import { BitMatrix } from '../../common/BitMatrix';
+import { DetectorResult } from '../../common/DetectorResult';
+import { GridSamplerInstance } from '../../common/GridSamplerInstance';
+import { PerspectiveTransform } from '../../common/PerspectiveTransform';
+import { DecodeHintType } from '../../DecodeHintType';
+import { NotFoundException } from '../../NotFoundException';
+import { ResultPoint } from '../../ResultPoint';
+import { ResultPointCallback } from '../../ResultPointCallback';
+import { MicroQRFinderPattern } from './MicroQRFinderPattern';
 
 /**
  * Detects a Micro QR Code in an image.
@@ -35,7 +35,7 @@ import MicroQRFinderPattern from './MicroQRFinderPattern';
  *   5. Build perspective transform from 3 anchor points.
  *   6. Sample the grid.
  */
-export default class MicroQRDetector {
+export class MicroQRDetector {
 
     private resultPointCallback: ResultPointCallback | null;
 

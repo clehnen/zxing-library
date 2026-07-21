@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import BitSource from '../../common/BitSource';
-import DecoderResult from '../../common/DecoderResult';
-import StringUtils from '../../common/StringUtils';
-import DecodeHintType from '../../DecodeHintType';
-import FormatException from '../../FormatException';
-import StringBuilder from '../../util/StringBuilder';
-import StringEncoding from '../../util/StringEncoding';
-import MicroQRVersion from './MicroQRVersion';
+import { BitSource } from '../../common/BitSource';
+import { DecoderResult } from '../../common/DecoderResult';
+import { StringUtils } from '../../common/StringUtils';
+import { DecodeHintType } from '../../DecodeHintType';
+import { FormatException } from '../../FormatException';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
+import { ZXingStringEncoding } from '../../util/ZXingStringEncoding';
+import { MicroQRVersion } from './MicroQRVersion';
 
 /**
  * Decodes Micro QR Code codeword bytes to text.
@@ -40,7 +40,7 @@ import MicroQRVersion from './MicroQRVersion';
  * The terminator is detected when count==0 after reading a mode indicator.
  * For M1 (no mode indicator), it's detected when count==0.
  */
-export default class MicroQRDecodedBitStreamParser {
+export class MicroQRDecodedBitStreamParser {
 
     private static readonly ALPHANUMERIC_CHARS =
         '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:';
@@ -56,7 +56,7 @@ export default class MicroQRDecodedBitStreamParser {
         hints: Map<DecodeHintType, any> | null
     ): DecoderResult {
         const bits = new BitSource(bytes);
-        const result = new StringBuilder();
+        const result = new ZXingStringBuilder();
         const byteSegments: Uint8Array[] = [];
         const versionNumber = version.getVersionNumber();
         const modeIndicatorBits = version.getModeIndicatorBits();
@@ -172,7 +172,7 @@ export default class MicroQRDecodedBitStreamParser {
         }
     }
 
-    private static decodeNumeric(bits: BitSource, result: StringBuilder, count: number): void {
+    private static decodeNumeric(bits: BitSource, result: ZXingStringBuilder, count: number): void {
         let remaining = count;
         while (remaining >= 3) {
             if (bits.available() < 10) throw new FormatException();
@@ -197,7 +197,7 @@ export default class MicroQRDecodedBitStreamParser {
         }
     }
 
-    private static decodeAlphanumeric(bits: BitSource, result: StringBuilder, count: number): void {
+    private static decodeAlphanumeric(bits: BitSource, result: ZXingStringBuilder, count: number): void {
         let remaining = count;
         while (remaining > 1) {
             if (bits.available() < 11) throw new FormatException();
@@ -214,7 +214,7 @@ export default class MicroQRDecodedBitStreamParser {
 
     private static decodeByte(
         bits: BitSource,
-        result: StringBuilder,
+        result: ZXingStringBuilder,
         byteSegments: Uint8Array[],
         count: number,
         hints: Map<DecodeHintType, any> | null
@@ -226,14 +226,14 @@ export default class MicroQRDecodedBitStreamParser {
         }
         const encoding = StringUtils.guessEncoding(readBytes, hints);
         try {
-            result.append(StringEncoding.decode(readBytes, encoding));
+            result.append(ZXingStringEncoding.decode(readBytes, encoding));
         } catch (e) {
             throw new FormatException();
         }
         byteSegments.push(readBytes);
     }
 
-    private static decodeKanji(bits: BitSource, result: StringBuilder, count: number): void {
+    private static decodeKanji(bits: BitSource, result: ZXingStringBuilder, count: number): void {
         if (13 * count > bits.available()) throw new FormatException();
         const buffer = new Uint8Array(2 * count);
         let offset = 0;
@@ -245,7 +245,7 @@ export default class MicroQRDecodedBitStreamParser {
             buffer[offset++] = assembled & 0xFF;
         }
         try {
-            result.append(StringEncoding.decode(buffer, StringUtils.SHIFT_JIS));
+            result.append(ZXingStringEncoding.decode(buffer, StringUtils.SHIFT_JIS));
         } catch (e) {
             throw new FormatException();
         }

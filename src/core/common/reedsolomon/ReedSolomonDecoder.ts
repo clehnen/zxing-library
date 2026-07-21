@@ -16,11 +16,11 @@
 
 /*namespace com.google.zxing.common.reedsolomon {*/
 
-import GenericGF from './GenericGF';
-import GenericGFPoly from './GenericGFPoly';
+import { GenericGF } from './GenericGF';
+import { GenericGFPoly } from './GenericGFPoly';
 
-import ReedSolomonException from '../../ReedSolomonException';
-import IllegalStateException from '../../IllegalStateException';
+import { ReedSolomonException } from '../../ReedSolomonException';
+import { IllegalStateException } from '../../IllegalStateException';
 
 /**
  * <p>Implements Reed-Solomon decoding, as the name implies.</p>
@@ -44,7 +44,7 @@ import IllegalStateException from '../../IllegalStateException';
  * @author William Rucklidge
  * @author sanfordsquires
  */
-export default class ReedSolomonDecoder {
+export class ReedSolomonDecoder {
 
     public constructor(private field: GenericGF) { }
 

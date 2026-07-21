@@ -1,9 +1,9 @@
-import StringUtils from '../../common/StringUtils';
-import StringBuilder from '../../util/StringBuilder';
+import { StringUtils } from '../../common/StringUtils';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
 import { EDIFACT_ENCODATION, ASCII_ENCODATION } from './constants';
 import { Encoder } from './Encoder';
 import { EncoderContext } from './EncoderContext';
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 
 export class EdifactEncoder implements Encoder {
   public getEncodingMode() {
@@ -12,7 +12,7 @@ export class EdifactEncoder implements Encoder {
 
   public encode(context: EncoderContext) {
     // step F
-    const buffer = new StringBuilder();
+    const buffer = new ZXingStringBuilder();
     while (context.hasMoreCharacters()) {
       const c = context.getCurrentChar();
       this.encodeChar(c, buffer);
@@ -31,7 +31,7 @@ export class EdifactEncoder implements Encoder {
         //  buffer.deleteCharAt(i);
         // }
 
-        const newMode = HighLevelEncoder.lookAheadTest(
+        const newMode = DataMatrixHighLevelEncoder.lookAheadTest(
           context.getMessage(),
           context.pos,
           this.getEncodingMode()
@@ -53,7 +53,7 @@ export class EdifactEncoder implements Encoder {
    * @param context the encoder context
    * @param buffer  the buffer with the remaining encoded characters
    */
-  private handleEOD(context: EncoderContext, buffer: StringBuilder) {
+  private handleEOD(context: EncoderContext, buffer: ZXingStringBuilder) {
     try {
       const count = buffer.length();
       if (count === 0) {
@@ -109,13 +109,13 @@ export class EdifactEncoder implements Encoder {
     }
   }
 
-  private encodeChar(c: number, sb: StringBuilder) {
+  private encodeChar(c: number, sb: ZXingStringBuilder) {
     if (c >= ' '.charCodeAt(0) && c <= '?'.charCodeAt(0)) {
       sb.append(c);
     } else if (c >= '@'.charCodeAt(0) && c <= '^'.charCodeAt(0)) {
       sb.append(StringUtils.getCharAt(c - 64));
     } else {
-      HighLevelEncoder.illegalCharacter(StringUtils.getCharAt(c));
+      DataMatrixHighLevelEncoder.illegalCharacter(StringUtils.getCharAt(c));
     }
   }
 
@@ -133,7 +133,7 @@ export class EdifactEncoder implements Encoder {
     const cw1 = (v >> 16) & 255;
     const cw2 = (v >> 8) & 255;
     const cw3 = v & 255;
-    const res = new StringBuilder();
+    const res = new ZXingStringBuilder();
     res.append(cw1);
     if (len >= 2) {
       res.append(cw2);

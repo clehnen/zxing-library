@@ -17,14 +17,14 @@
 // package com.google.zxing.aztec.encoder;
 
 // import com.google.zxing.common.BitArray;
-import BitArray from '../../common/BitArray';
+import { BitArray } from '../../common/BitArray';
 
-import Token from './Token';
-import SimpleToken from './SimpleToken';
+import { Token } from './Token';
+import { SimpleToken } from './SimpleToken';
 
 import { short, int } from '../../../customTypings';
 
-export default /*final*/ class BinaryShiftToken extends SimpleToken {
+export /*final*/ class BinaryShiftToken extends SimpleToken {
 
   private /*final*/  binaryShiftStart: short;
   private /*final*/  binaryShiftByteCount: short;

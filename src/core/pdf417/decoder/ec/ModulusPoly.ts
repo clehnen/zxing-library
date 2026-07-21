@@ -16,16 +16,16 @@
 
 // package com.google.zxing.pdf417.decoder.ec;
 
-import IllegalArgumentException from '../../../IllegalArgumentException';
-import System from '../../../util/System';
-import StringBuilder from '../../../util/StringBuilder';
-import ModulusBase from './ModulusBase';
+import { IllegalArgumentException } from '../../../IllegalArgumentException';
+import { ZXingSystem } from '../../../util/ZXingSystem';
+import { ZXingStringBuilder } from '../../../util/StringBuilder';
+import { ModulusBase } from './ModulusBase';
 
 /**
  * @author Sean Owen
  * @see com.google.zxing.common.reedsolomon.GenericGFPoly
  */
-export default /*final*/ class ModulusPoly {
+export /*final*/ class ModulusPoly {
 
   private /*final*/ field: ModulusBase;
   private /*final*/ coefficients: Int32Array;
@@ -46,7 +46,7 @@ export default /*final*/ class ModulusPoly {
         this.coefficients = new Int32Array([0]);
       } else {
         this.coefficients = new Int32Array(coefficientsLength - firstNonZero);
-        System.arraycopy(coefficients,
+        ZXingSystem.arraycopy(coefficients,
           firstNonZero,
           this.coefficients,
           0,
@@ -127,7 +127,7 @@ export default /*final*/ class ModulusPoly {
     let sumDiff: Int32Array = new Int32Array(largerCoefficients.length);
     let lengthDiff: /*int*/ number = largerCoefficients.length - smallerCoefficients.length;
     // Copy high-order terms only found in higher-degree polynomial's coefficients
-    System.arraycopy(largerCoefficients, 0, sumDiff, 0, lengthDiff);
+    ZXingSystem.arraycopy(largerCoefficients, 0, sumDiff, 0, lengthDiff);
 
     for (let i /*int*/ = lengthDiff; i < largerCoefficients.length; i++) {
       sumDiff[i] = this.field.add(smallerCoefficients[i - lengthDiff], largerCoefficients[i]);
@@ -244,7 +244,7 @@ export default /*final*/ class ModulusPoly {
 
   // @Override
   public toString(): String {
-    let result: StringBuilder = new StringBuilder(/*8 * this.getDegree()*/); // dynamic string size in JS
+    let result: ZXingStringBuilder = new ZXingStringBuilder(/*8 * this.getDegree()*/); // dynamic string size in JS
     for (let degree /*int*/ = this.getDegree(); degree >= 0; degree--) {
       let coefficient: /*int*/ number = this.getCoefficient(degree);
       if (coefficient !== 0) {

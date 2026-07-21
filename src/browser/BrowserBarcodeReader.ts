@@ -1,6 +1,6 @@
 import { BrowserCodeReader } from './BrowserCodeReader';
-import MultiFormatOneDReader from '../core/oned/MultiFormatOneDReader';
-import DecodeHintType from '../core/DecodeHintType';
+import { MultiFormatOneDReader } from '../core/oned/MultiFormatOneDReader';
+import { DecodeHintType } from '../core/DecodeHintType';
 
 /**
  * @deprecated Moving to @zxing/browser

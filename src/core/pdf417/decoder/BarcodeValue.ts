@@ -17,7 +17,7 @@
 // package com.google.zxing.pdf417.decoder;
 
 // import com.google.zxing.pdf417.PDF417Common;
-import PDF417Common from '../PDF417Common';
+import { PDF417Common } from '../PDF417Common';
 
 import { int, Collection } from '../../../customTypings';
 
@@ -30,7 +30,7 @@ import { int, Collection } from '../../../customTypings';
 /**
  * @author Guenther Grau
  */
-export default /*final*/ class BarcodeValue {
+export /*final*/ class BarcodeValue {
   private /*final*/ values = new Map<int, int>();
 
   /**

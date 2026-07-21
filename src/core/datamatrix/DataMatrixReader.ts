@@ -1,16 +1,16 @@
-import BarcodeFormat from '../BarcodeFormat';
-import BinaryBitmap from '../BinaryBitmap';
-import BitMatrix from '../common/BitMatrix';
-import DecoderResult from '../common/DecoderResult';
-import DecodeHintType from '../DecodeHintType';
-import NotFoundException from '../NotFoundException';
-import Reader from '../Reader';
-import Result from '../Result';
-import ResultMetadataType from '../ResultMetadataType';
-import ResultPoint from '../ResultPoint';
-import System from '../util/System';
-import Decoder from './decoder/Decoder';
-import Detector from './detector/Detector';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BinaryBitmap } from '../BinaryBitmap';
+import { BitMatrix } from '../common/BitMatrix';
+import { DecoderResult } from '../common/DecoderResult';
+import { DecodeHintType } from '../DecodeHintType';
+import { NotFoundException } from '../NotFoundException';
+import { Reader } from '../Reader';
+import { Result } from '../Result';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { ResultPoint } from '../ResultPoint';
+import { ZXingSystem } from '../util/ZXingSystem';
+import { Decoder } from './decoder/Decoder';
+import { Detector } from './detector/Detector';
 
 
 /*
@@ -34,7 +34,7 @@ import Detector from './detector/Detector';
  *
  * @author bbrown@google.com (Brian Brown)
  */
-export default class DataMatrixReader implements Reader {
+export class DataMatrixReader implements Reader {
 
   private static NO_POINTS: ResultPoint[] = [];
 
@@ -74,7 +74,7 @@ export default class DataMatrixReader implements Reader {
       8 * rawBytes.length,
       points,
       BarcodeFormat.DATA_MATRIX,
-      System.currentTimeMillis()
+      ZXingSystem.currentTimeMillis()
     );
 
     const byteSegments = decoderResult.getByteSegments();

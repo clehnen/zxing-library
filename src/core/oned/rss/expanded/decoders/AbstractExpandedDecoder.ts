@@ -1,7 +1,7 @@
-import BitArray from '../../../../common/BitArray';
-import GeneralAppIdDecoder from './GeneralAppIdDecoder';
+import { BitArray } from '../../../../common/BitArray';
+import { GeneralAppIdDecoder } from './GeneralAppIdDecoder';
 
-export default abstract class AbstractExpandedDecoder {
+export abstract class AbstractExpandedDecoder {
 
   private readonly information: BitArray;
 

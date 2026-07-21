@@ -1,8 +1,8 @@
-import BitArray from '../../../../common/BitArray';
-import StringBuilder from '../../../../util/StringBuilder';
-import AbstractExpandedDecoder from './AbstractExpandedDecoder';
+import { BitArray } from '../../../../common/BitArray';
+import { ZXingStringBuilder } from '../../../../util/StringBuilder';
+import { AbstractExpandedDecoder } from './AbstractExpandedDecoder';
 
-export default abstract class AI01decoder extends AbstractExpandedDecoder {
+export abstract class AI01decoder extends AbstractExpandedDecoder {
 
   static readonly GTIN_SIZE: number = 40;
 
@@ -10,7 +10,7 @@ export default abstract class AI01decoder extends AbstractExpandedDecoder {
     super(information);
   }
 
-  encodeCompressedGtin(buf: StringBuilder, currentPos: number): void {
+  encodeCompressedGtin(buf: ZXingStringBuilder, currentPos: number): void {
     buf.append('(01)');
     const initialPosition = buf.length();
     buf.append('9');
@@ -18,7 +18,7 @@ export default abstract class AI01decoder extends AbstractExpandedDecoder {
     this.encodeCompressedGtinWithoutAI(buf, currentPos, initialPosition);
   }
 
-  encodeCompressedGtinWithoutAI(buf: StringBuilder, currentPos: number, initialBufferPosition: number): void {
+  encodeCompressedGtinWithoutAI(buf: ZXingStringBuilder, currentPos: number, initialBufferPosition: number): void {
     for (let i = 0; i < 4; ++i) {
       const currentBlock /* int */ = this.getGeneralDecoder().extractNumericValueFromBitArray(currentPos + 10 * i, 10);
       // Pad with leading zeroes.
@@ -34,7 +34,7 @@ export default abstract class AI01decoder extends AbstractExpandedDecoder {
     AI01decoder.appendCheckDigit(buf, initialBufferPosition);
   }
 
-  private static appendCheckDigit(buf: StringBuilder, currentPos: number): void {
+  private static appendCheckDigit(buf: ZXingStringBuilder, currentPos: number): void {
     let checkDigit = 0;
     for (let i = 0; i < 13; i++) {
       const digit = buf.charAt(i + currentPos).charCodeAt(0) - '0'.charCodeAt(0);

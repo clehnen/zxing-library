@@ -17,37 +17,37 @@
 // package com.google.zxing.pdf417;
 
 // import com.google.zxing.BarcodeFormat;
-import BarcodeFormat from '../BarcodeFormat';
+import { BarcodeFormat } from '../BarcodeFormat';
 // import com.google.zxing.BinaryBitmap;
-import BinaryBitmap from '../BinaryBitmap';
+import { BinaryBitmap } from '../BinaryBitmap';
 // import com.google.zxing.ChecksumException;
-import ChecksumException from '../ChecksumException';
+import { ChecksumException } from '../ChecksumException';
 // import com.google.zxing.DecodeHintType;
-import DecodeHintType from '../DecodeHintType';
+import { DecodeHintType } from '../DecodeHintType';
 // import com.google.zxing.FormatException;
-import FormatException from '../FormatException';
+import { FormatException } from '../FormatException';
 // import com.google.zxing.NotFoundException;
-import NotFoundException from '../NotFoundException';
+import { NotFoundException } from '../NotFoundException';
 // import com.google.zxing.Reader;
-import Reader from '../Reader';
+import { Reader } from '../Reader';
 // import com.google.zxing.Result;
-import Result from '../Result';
+import { Result } from '../Result';
 // import com.google.zxing.ResultMetadataType;
 // import com.google.zxing.ResultPoint;
-import ResultPoint from '../ResultPoint';
+import { ResultPoint } from '../ResultPoint';
 // import com.google.zxing.common.DecoderResult;
 // import com.google.zxing.multi.MultipleBarcodeReader;
 // import com.google.zxing.pdf417.decoder.PDF417ScanningDecoder;
 // import com.google.zxing.pdf417.detector.Detector;
 // import com.google.zxing.pdf417.detector.PDF417DetectorResult;
 
-import PDF417Common from './PDF417Common';
-import Integer from '../util/Integer';
-import PDF417ResultMetadata from './PDF417ResultMetadata';
-import ResultMetadataType from '../ResultMetadataType';
-import MultipleBarcodeReader from '../multi/MultipleBarcodeReader';
-import Detector from './detector/Detector';
-import PDF417ScanningDecoder from './decoder/PDF417ScanningDecoder';
+import { PDF417Common } from './PDF417Common';
+import { ZXingInteger } from '../util/ZXingInteger';
+import { PDF417ResultMetadata } from './PDF417ResultMetadata';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { MultipleBarcodeReader } from '../multi/MultipleBarcodeReader';
+import { Detector } from './detector/Detector';
+import { PDF417ScanningDecoder } from './decoder/PDF417ScanningDecoder';
 
 import { int } from '../../customTypings';
 
@@ -61,7 +61,7 @@ import { int } from '../../customTypings';
  *
  * @author Guenther Grau
  */
-export default /*public final*/ class PDF417Reader implements Reader, MultipleBarcodeReader {
+export /*public final*/ class PDF417Reader implements Reader, MultipleBarcodeReader {
 
   // private static /*final Result[]*/ EMPTY_RESULT_ARRAY: Result[] = new Result([0]);
 
@@ -137,7 +137,7 @@ export default /*public final*/ class PDF417Reader implements Reader, MultipleBa
 
   private static getMinWidth(p1: ResultPoint, p2: ResultPoint): number /*int*/ {
     if (p1 == null || p2 == null) {
-      return Integer.MAX_VALUE;
+      return ZXingInteger.MAX_VALUE;
     }
     return <int> Math.trunc(Math.abs(p1.getX() - p2.getX()));
   }

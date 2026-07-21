@@ -16,22 +16,22 @@
 
 /*namespace com.google.zxing.qrcode.detector {*/
 
-import BitMatrix from '../../common/BitMatrix';
-import MathUtils from '../../common/detector/MathUtils';
-import DetectorResult from '../../common/DetectorResult';
-// import GridSampler from '../../common/GridSampler';
-import GridSamplerInstance from '../../common/GridSamplerInstance';
-import PerspectiveTransform from '../../common/PerspectiveTransform';
-import DecodeHintType from '../../DecodeHintType';
-import NotFoundException from '../../NotFoundException';
-import ResultPoint from '../../ResultPoint';
-import ResultPointCallback from '../../ResultPointCallback';
-import Version from '../decoder/Version';
-import AlignmentPattern from './AlignmentPattern';
-import AlignmentPatternFinder from './AlignmentPatternFinder';
-import FinderPattern from './FinderPattern';
-import FinderPatternFinder from './FinderPatternFinder';
-import FinderPatternInfo from './FinderPatternInfo';
+import { BitMatrix } from '../../common/BitMatrix';
+import { MathUtils } from '../../common/detector/MathUtils';
+import { DetectorResult } from '../../common/DetectorResult';
+// import { GridSampler } from '../../common/GridSampler';
+import { GridSamplerInstance } from '../../common/GridSamplerInstance';
+import { PerspectiveTransform } from '../../common/PerspectiveTransform';
+import { DecodeHintType } from '../../DecodeHintType';
+import { NotFoundException } from '../../NotFoundException';
+import { ResultPoint } from '../../ResultPoint';
+import { ResultPointCallback } from '../../ResultPointCallback';
+import { QRCodeVersion } from '../decoder/QRCodeVersion';
+import { AlignmentPattern } from './AlignmentPattern';
+import { AlignmentPatternFinder } from './AlignmentPatternFinder';
+import { FinderPattern } from './FinderPattern';
+import { FinderPatternFinder } from './FinderPatternFinder';
+import { FinderPatternInfo } from './FinderPatternInfo';
 
 
 /*import java.util.Map;*/
@@ -42,7 +42,7 @@ import FinderPatternInfo from './FinderPatternInfo';
  *
  * @author Sean Owen
  */
-export default class Detector {
+export class Detector {
 
   private resultPointCallback: ResultPointCallback;
 
@@ -97,7 +97,7 @@ export default class Detector {
       throw new NotFoundException('No pattern found in proccess finder.');
     }
     const dimension = Detector.computeDimension(topLeft, topRight, bottomLeft, moduleSize);
-    const provisionalVersion: Version = Version.getProvisionalVersionForDimension(dimension);
+    const provisionalVersion: QRCodeVersion = QRCodeVersion.getProvisionalVersionForDimension(dimension);
     const modulesBetweenFPCenters = provisionalVersion.getDimensionForVersion() - 7;
 
     let alignmentPattern: AlignmentPattern = null;

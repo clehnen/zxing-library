@@ -16,10 +16,10 @@
 
 /*namespace com.google.zxing.common.reedsolomon {*/
 
-import AbstractGenericGF from './AbstractGenericGF';
+import { AbstractGenericGF } from './AbstractGenericGF';
 
-import System from '../../util/System';
-import IllegalArgumentException from '../../IllegalArgumentException';
+import { ZXingSystem } from '../../util/ZXingSystem';
+import { IllegalArgumentException } from '../../IllegalArgumentException';
 
 /**
  * <p>Represents a polynomial whose coefficients are elements of a GF.
@@ -30,7 +30,7 @@ import IllegalArgumentException from '../../IllegalArgumentException';
  *
  * @author Sean Owen
  */
-export default class GenericGFPoly {
+export class GenericGFPoly {
 
     private field: AbstractGenericGF;
     private coefficients: Int32Array;
@@ -60,7 +60,7 @@ export default class GenericGFPoly {
                 this.coefficients = Int32Array.from([0]);
             } else {
                 this.coefficients = new Int32Array(coefficientsLength - firstNonZero);
-                System.arraycopy(coefficients,
+                ZXingSystem.arraycopy(coefficients,
                     firstNonZero,
                     this.coefficients,
                     0,
@@ -145,7 +145,7 @@ export default class GenericGFPoly {
         let sumDiff = new Int32Array(largerCoefficients.length);
         const lengthDiff = largerCoefficients.length - smallerCoefficients.length;
         // Copy high-order terms only found in higher-degree polynomial's coefficients
-        System.arraycopy(largerCoefficients, 0, sumDiff, 0, lengthDiff);
+        ZXingSystem.arraycopy(largerCoefficients, 0, sumDiff, 0, lengthDiff);
 
         for (let i = lengthDiff; i < largerCoefficients.length; i++) {
             sumDiff[i] = AbstractGenericGF.addOrSubtract(smallerCoefficients[i - lengthDiff], largerCoefficients[i]);

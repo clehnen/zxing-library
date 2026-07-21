@@ -1,4 +1,4 @@
-import MicroQRFormatInformation from '../../../../core/microqr/decoder/MicroQRFormatInformation';
+import {MicroQRFormatInformation} from '../../../../core/microqr/decoder/MicroQRFormatInformation';
 
 describe('MicroQRFormatInformation', () => {
 

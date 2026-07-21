@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-import BarcodeFormat from '../BarcodeFormat';
-import BitArray from '../common/BitArray';
+import { BarcodeFormat } from '../BarcodeFormat';
+import { BitArray } from '../common/BitArray';
 
-// import UPCEANReader from './UPCEANReader';
-import AbstractUPCEANReader from './AbstractUPCEANReader';
-import Result from '../Result';
-import ResultPoint from '../ResultPoint';
-import ResultMetadataType from '../ResultMetadataType';
-import NotFoundException from '../NotFoundException';
+// import { UPCEANReader } from './UPCEANReader';
+import { AbstractUPCEANReader } from './AbstractUPCEANReader';
+import { Result } from '../Result';
+import { ResultPoint } from '../ResultPoint';
+import { ResultMetadataType } from '../ResultMetadataType';
+import { NotFoundException } from '../NotFoundException';
 
 /**
  * @see UPCEANExtension2Support
  */
-export default class UPCEANExtension5Support {
+export class UPCEANExtension5Support {
     private CHECK_DIGIT_ENCODINGS = [0x18, 0x14, 0x12, 0x11, 0x0C, 0x06, 0x03, 0x0A, 0x09, 0x05];
     private decodeMiddleCounters = Int32Array.from([0, 0, 0, 0]);
     private decodeRowStringBuffer = '';

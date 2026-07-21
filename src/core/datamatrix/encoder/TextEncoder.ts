@@ -1,4 +1,4 @@
-import StringBuilder from '../../util/StringBuilder';
+import { ZXingStringBuilder } from '../../util/StringBuilder';
 import { char } from '../../../customTypings';
 import { C40Encoder } from './C40Encoder';
 import { TEXT_ENCODATION } from './constants';
@@ -8,7 +8,7 @@ export class TextEncoder extends C40Encoder {
     return TEXT_ENCODATION;
   }
 
-  encodeChar(c: char, sb: StringBuilder): number {
+  encodeChar(c: char, sb: ZXingStringBuilder): number {
     if (c === ' '.charCodeAt(0)) {
       sb.append(0o3);
       return 1;

@@ -16,14 +16,14 @@
 
 /*namespace com.google.zxing.qrcode.detector {*/
 
-import DecodeHintType from '../../DecodeHintType';
-import ResultPoint from '../../ResultPoint';
-import ResultPointCallback from '../../ResultPointCallback';
-import BitMatrix from '../../common/BitMatrix';
-import FinderPattern from './FinderPattern';
-import FinderPatternInfo from './FinderPatternInfo';
+import { DecodeHintType } from '../../DecodeHintType';
+import { ResultPoint } from '../../ResultPoint';
+import { ResultPointCallback } from '../../ResultPointCallback';
+import { BitMatrix } from '../../common/BitMatrix';
+import { FinderPattern } from './FinderPattern';
+import { FinderPatternInfo } from './FinderPatternInfo';
 
-import NotFoundException from '../../NotFoundException';
+import { NotFoundException } from '../../NotFoundException';
 
 import { float } from '../../../customTypings';
 
@@ -42,7 +42,7 @@ import { float } from '../../../customTypings';
  *
  * @author Sean Owen
  */
-export default class FinderPatternFinder {
+export class FinderPatternFinder {
 
     private static CENTER_QUORUM = 2;
     protected static MIN_SKIP = 3; // 1 pixel/module times 3 modules/center

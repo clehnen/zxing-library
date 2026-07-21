@@ -16,7 +16,7 @@
 
 /*namespace com.google.zxing.qrcode.detector {*/
 
-import ResultPoint from '../../ResultPoint';
+import { ResultPoint } from '../../ResultPoint';
 
 /**
  * <p>Encapsulates an alignment pattern, which are the smaller square patterns found in
@@ -24,7 +24,7 @@ import ResultPoint from '../../ResultPoint';
  *
  * @author Sean Owen
  */
-export default class AlignmentPattern extends ResultPoint {
+export class AlignmentPattern extends ResultPoint {
 
     public constructor(posX: number/*float*/, posY: number/*float*/, private estimatedModuleSize: number/*float*/) {
         super(posX, posY);

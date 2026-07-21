@@ -1,6 +1,6 @@
 import * as C from './EncoderConstants';
-import Arrays from '../../util/Arrays';
-import StringUtils from '../../common/StringUtils';
+import { ZXingArrays } from '../../util/ZXingArrays';
+import { StringUtils } from '../../common/StringUtils';
 
 import { int } from '../../../customTypings';
 
@@ -105,4 +105,4 @@ export function static_CHAR_MAP(CHAR_MAP: Int32Array[]): Int32Array[] {
   return CHAR_MAP;
 }
 
-export const CHAR_MAP: Int32Array[] = static_CHAR_MAP(Arrays.createInt32Array(5, 256));
+export const CHAR_MAP: Int32Array[] = static_CHAR_MAP(ZXingArrays.createInt32Array(5, 256));

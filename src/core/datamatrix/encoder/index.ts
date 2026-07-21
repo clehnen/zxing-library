@@ -1,13 +1,13 @@
 import { ASCIIEncoder } from './ASCIIEncoder';
 import { Base256Encoder } from './Base256Encoder';
 import { C40Encoder } from './C40Encoder';
-import DefaultPlacement from './DefaultPlacement';
+import { DataMatrixDefaultPlacement } from './DataMatrixDefaultPlacement';
 import { EdifactEncoder } from './EdifactEncoder';
 import { EncoderContext } from './EncoderContext';
-import ErrorCorrection from './ErrorCorrection';
-import HighLevelEncoder from './HighLevelEncoder';
+import { DataMatrixErrorCorrection } from './DataMatrixErrorCorrection';
+import { DataMatrixHighLevelEncoder } from './DataMatrixHighLevelEncoder';
 import { MinimalEncoder } from './MinimalEncoder';
-import SymbolInfo from './SymbolInfo';
+import { DataMatrixSymbolInfo } from './DataMatrixSymbolInfo';
 import { TextEncoder } from './TextEncoder';
 import { X12Encoder } from './X12Encoder';
 
@@ -17,11 +17,11 @@ export {
   C40Encoder,
   EdifactEncoder,
   EncoderContext,
-  ErrorCorrection,
-  DefaultPlacement,
-  HighLevelEncoder,
+  DataMatrixErrorCorrection,
+  DataMatrixDefaultPlacement,
+  DataMatrixHighLevelEncoder,
   MinimalEncoder,
-  SymbolInfo,
+  DataMatrixSymbolInfo,
   TextEncoder,
   X12Encoder,
 };

@@ -16,9 +16,9 @@
 
 /*namespace com.google.zxing {*/
 
-import MathUtils from './common/detector/MathUtils';
-import Float from './util/Float';
-import { float, int } from '../customTypings';
+import { MathUtils } from './common/detector/MathUtils';
+import { Float } from './util/Float';
+import { float, int } from  '../customTypings';
 
 /**
  * <p>Encapsulates a point of interest in an image containing a barcode. Typically, this
@@ -26,7 +26,7 @@ import { float, int } from '../customTypings';
  *
  * @author Sean Owen
  */
-export default class ResultPoint {
+export class ResultPoint {
 
     public constructor(private x: float, private y: float) { }
 
