@@ -22,12 +22,9 @@ var LuminanceSource = require('./core/LuminanceSource');
 var MultiFormatReader = require('./core/MultiFormatReader');
 var MultiFormatWriter = require('./core/MultiFormatWriter');
 var PlanarYUVLuminanceSource = require('./core/PlanarYUVLuminanceSource');
-var Reader = require('./core/Reader');
 var Result = require('./core/Result');
 var ResultMetadataType = require('./core/ResultMetadataType');
-var ResultPointCallback = require('./core/ResultPointCallback');
 var RGBLuminanceSource = require('./core/RGBLuminanceSource');
-var Writer = require('./core/Writer');
 var ResultPoint = require('./core/ResultPoint');
 var ZXingSystem = require('./core/util/ZXingSystem');
 var StringBuilder = require('./core/util/StringBuilder');
@@ -196,10 +193,6 @@ Object.defineProperty(exports, "PlanarYUVLuminanceSource", {
   enumerable: true,
   get: function () { return PlanarYUVLuminanceSource.PlanarYUVLuminanceSource; }
 });
-Object.defineProperty(exports, "Reader", {
-  enumerable: true,
-  get: function () { return Reader.Reader; }
-});
 Object.defineProperty(exports, "Result", {
   enumerable: true,
   get: function () { return Result.Result; }
@@ -208,17 +201,9 @@ Object.defineProperty(exports, "ResultMetadataType", {
   enumerable: true,
   get: function () { return ResultMetadataType.ResultMetadataType; }
 });
-Object.defineProperty(exports, "ResultPointCallback", {
-  enumerable: true,
-  get: function () { return ResultPointCallback.ResultPointCallback; }
-});
 Object.defineProperty(exports, "RGBLuminanceSource", {
   enumerable: true,
   get: function () { return RGBLuminanceSource.RGBLuminanceSource; }
-});
-Object.defineProperty(exports, "Writer", {
-  enumerable: true,
-  get: function () { return Writer.Writer; }
 });
 Object.defineProperty(exports, "ResultPoint", {
   enumerable: true,

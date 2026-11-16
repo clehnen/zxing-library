@@ -24,12 +24,12 @@ export { LuminanceSource } from './core/LuminanceSource';
 export { MultiFormatReader } from './core/MultiFormatReader';
 export { MultiFormatWriter } from './core/MultiFormatWriter';
 export { PlanarYUVLuminanceSource } from './core/PlanarYUVLuminanceSource';
-export { Reader } from './core/Reader';
+export type { Reader } from './core/Reader';
 export { Result } from './core/Result';
 export { ResultMetadataType } from './core/ResultMetadataType';
-export { ResultPointCallback } from './core/ResultPointCallback';
+export type { ResultPointCallback } from './core/ResultPointCallback';
 export { RGBLuminanceSource } from './core/RGBLuminanceSource';
-export { Writer } from './core/Writer';
+export type { Writer } from './core/Writer';
 export { ResultPoint } from './core/ResultPoint';
 
 // core/util
